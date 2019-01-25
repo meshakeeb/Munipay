@@ -20,33 +20,49 @@
 </head>
 
 <body <?php body_class(); ?>>
-<div id="page" class="site">
-	<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'twentynineteen' ); ?></a>
+<div id="page" class="wrapper">
 
-		<header id="masthead" class="<?php echo is_singular() && twentynineteen_can_show_post_thumbnail() ? 'site-header featured-image' : 'site-header'; ?>">
+	<header>
 
-			<div class="site-branding-container">
-				<?php get_template_part( 'template-parts/header/site', 'branding' ); ?>
-			</div><!-- .layout-wrap -->
+		<div class="container">
 
-			<?php if ( is_singular() && twentynineteen_can_show_post_thumbnail() ) : ?>
-				<div class="site-featured-image">
-					<?php
-						twentynineteen_post_thumbnail();
-						the_post();
-						$discussion = ! is_page() && twentynineteen_can_show_post_thumbnail() ? twentynineteen_get_discussion_data() : null;
+			<div class="row align-items-center">
 
-						$classes = 'entry-header';
-					if ( ! empty( $discussion ) && absint( $discussion->responses ) > 0 ) {
-						$classes = 'entry-header has-discussion';
-					}
-					?>
-					<div class="<?php echo $classes; ?>">
-						<?php get_template_part( 'template-parts/header/entry', 'header' ); ?>
-					</div><!-- .entry-header -->
-					<?php rewind_posts(); ?>
+				<div class="col-5">
+					<a href="<?php home_url(); ?>" class="logo"><img src="<?php echo munipay()->assets() . '/images/logo.png'; ?>" class="img-responsive"></a>
 				</div>
-			<?php endif; ?>
-		</header><!-- #masthead -->
 
-	<div id="content" class="site-content">
+				<div class="col-7">
+					<span class="link">ERICSSON CHECK REQUEST PORTAL</span>
+				</div>
+
+			</div>
+
+		</div>
+
+	</header>
+
+	<nav class="main-navbar navbar navbar-expand-md navbar-dark">
+
+		<div class="container">
+
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<?php
+			wp_nav_menu(
+				[
+					'theme_location'  => 'main_navigation',
+					'container'       => 'div',
+					'container_class' => 'collapse navbar-collapse',
+					'container_id'    => 'navbarNav',
+					'menu_class'      => 'navbar-nav ml-auto',
+					'walker'          => new \Munipay\Bootstrap_Walker,
+				]
+			);
+			?>
+
+		</div>
+
+	</nav>

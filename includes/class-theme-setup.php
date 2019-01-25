@@ -31,8 +31,14 @@ class Theme_Setup {
 		// Add contact methods for author page.
 		$this->filter( 'user_contactmethods', 'add_user_contact_methods' );
 
+		// Logout Link
+		$this->filter( 'wp_nav_menu_items', 'add_loginout_link', 10, 2 );
+
 		// Allow shortcodes in widget text.
 		add_filter( 'widget_text', 'do_shortcode' );
+
+		// Initiate.
+		new Disable_emojis;
 	}
 
 	/**
@@ -115,31 +121,40 @@ class Theme_Setup {
 		$assets = munipay()->assets();
 		$styles = [
 			'google-fonts' => '//fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900',
-			'bootstrap'    => $assets . '/vendors/bootstrap/bootstrap.min.css',
-			'font-awesome' => $assets . '/vendors/font-awesome/css/font-awesome.min.css',
+			'bootstrap'    => $assets . '/vendor/bootstrap/bootstrap.min.css',
+			'font-awesome' => $assets . '/vendor/font-awesome/css/font-awesome.min.css',
 			'theme'        => $assets . '/css/theme.css',
 		];
 
 		foreach ( $styles as $handle => $src ) {
 			wp_enqueue_style( $handle, $src, null, munipay()->version );
 		}
-
-		wp_enqueue_script( 'like_post', get_template_directory_uri() . '/js/post-like.js', '1.0', 1 );
-		wp_localize_script(
-			'like_post',
-			'ajax_var',
-			array(
-				'url'   => admin_url( 'admin-ajax.php' ),
-				'nonce' => wp_create_nonce( 'ajaxnonce' ),
-			)
-		);
 	}
 
 	/**
 	 * Register navigation menus.
 	 */
 	public function register_nav_menus() {
-		register_nav_menus( [ 'main_navigation' => __( 'Main Navigation', 'munipay' ) ] );
+		register_nav_menus(
+			[
+				'main_navigation'   => __( 'Main Navigation', 'munipay' ),
+				'footer_navigation' => __( 'Footer Navigation', 'munipay' ),
+			]
+		);
+	}
+
+	/**
+	 * Add logout link to both location.
+	 *
+	 * @param string   $items The HTML list content for the menu items.
+	 * @param stdClass $args  An object containing wp_nav_menu() arguments.
+	 */
+	public function add_loginout_link( $items, $args ) {
+		if ( is_user_logged_in() && in_array( $args->theme_location, [ 'main_navigation', 'footer_navigation' ] ) ) {
+			$items .= '<li class="nav-item"><a class="nav-link" href="' . wp_logout_url() . '">Log Out</a></li>';
+		}
+
+		return $items;
 	}
 
 	/**
