@@ -27,6 +27,7 @@ class Theme_Setup {
 		$this->action( 'after_setup_theme', 'setup_theme', 2 );
 		$this->action( 'after_setup_theme', 'register_nav_menus' );
 		$this->action( 'wp_enqueue_scripts', 'enqueue' );
+		$this->action( 'login_enqueue_scripts', 'login_enqueue' );
 
 		// Add contact methods for author page.
 		$this->filter( 'user_contactmethods', 'add_user_contact_methods' );
@@ -36,6 +37,9 @@ class Theme_Setup {
 
 		// Allow shortcodes in widget text.
 		add_filter( 'widget_text', 'do_shortcode' );
+
+		// Authenticate.
+		$this->action( 'template_redirect', 'authenticate_user' );
 
 		// Initiate.
 		new Disable_emojis;
@@ -131,6 +135,11 @@ class Theme_Setup {
 		}
 	}
 
+	public function login_enqueue() {
+		$this->enqueue();
+		wp_enqueue_style( 'theme-login', munipay()->assets() . '/css/theme-login.css', null, munipay()->version );
+	}
+
 	/**
 	 * Register navigation menus.
 	 */
@@ -155,6 +164,21 @@ class Theme_Setup {
 		}
 
 		return $items;
+	}
+
+	/**
+	 * Authenticate user.
+	 */
+	public function authenticate_user() {
+
+		// Exceptions for AJAX, Cron, or WP-CLI requests
+		if ( ( defined( 'DOING_AJAX' ) && DOING_AJAX ) || ( defined( 'DOING_CRON' ) && DOING_CRON ) || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
+			return;
+		}
+
+		if ( ! is_user_logged_in() ) {
+			auth_redirect();
+		}
 	}
 
 	/**

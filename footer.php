@@ -26,12 +26,15 @@
 
 				<div class="col-8">
 
-					<?php wp_nav_menu([
-						'theme_location'  => 'footer_navigation',
-						'container_class' => 'navbar navbar-expand-lg navbar-dark',
-						'menu_class'      => 'navbar-nav ml-auto',
-						'walker'          => new \Munipay\Bootstrap_Walker,
-					]);
+					<?php
+					wp_nav_menu(
+						[
+							'theme_location'  => 'footer_navigation',
+							'container_class' => 'navbar navbar-expand-lg navbar-dark',
+							'menu_class'      => 'navbar-nav ml-auto',
+							'walker'          => new \Munipay\Bootstrap_Walker,
+						]
+					);
 					?>
 
 				</div>
@@ -44,6 +47,7 @@
 
 </div><!-- #page -->
 
+<?php get_template_part( 'templates/tracking-code' ); ?>
 <?php wp_footer(); ?>
 
 </body>

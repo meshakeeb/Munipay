@@ -1,0 +1,76 @@
+// compileCompressed: ../css/$1.css
+
+/*!
+ * Theme:	Munipay.io
+ * URL:		https://boltmedia.ca/munipay.io/
+ * Name:	theme.css
+ */
+
+body {
+	font-family: 'Work Sans', sans-serif;
+	font-size: 16px;
+	line-height: 22px;
+
+	color: #002054;
+}
+
+p {
+	font-family: 'Work Sans', sans-serif;
+
+	margin-bottom: 20px;
+
+	color: #002054;
+}
+
+.container {
+	max-width: 1240px;
+}
+
+.wrapper {
+	position: relative;
+
+	overflow: hidden;
+
+	width: 100%;
+}
+
+header .link {
+	font-size: 22px;
+	font-weight: 600;
+	line-height: 106px;
+
+	float: right;
+
+	color: #002054;
+}
+
+.main-navbar {
+	background: #002054;
+
+	.nav-link {
+		font-size: 16px;
+
+		text-transform: uppercase;
+
+		color: #7da3df;
+	}
+}
+
+footer {
+	font-size: 14px;
+	font-weight: 500;
+
+	padding: 20px 0;
+
+	letter-spacing: .03em;
+
+	color: #fff;
+	background: #426eb3;
+
+	.navbar-dark .navbar-nav .nav-link {
+		text-decoration: underline;
+		text-transform: uppercase;
+
+		color: #fff;
+	}
+}
