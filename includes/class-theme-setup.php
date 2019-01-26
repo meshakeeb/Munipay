@@ -29,9 +29,6 @@ class Theme_Setup {
 		$this->action( 'wp_enqueue_scripts', 'enqueue' );
 		$this->action( 'login_enqueue_scripts', 'login_enqueue' );
 
-		// Add contact methods for author page.
-		$this->filter( 'user_contactmethods', 'add_user_contact_methods' );
-
 		// Logout Link
 		$this->filter( 'wp_nav_menu_items', 'add_loginout_link', 10, 2 );
 
@@ -41,8 +38,13 @@ class Theme_Setup {
 		// Authenticate.
 		$this->action( 'template_redirect', 'authenticate_user' );
 
+		// Change email sernder name and email from.
+		$this->filter( 'wp_mail_from', 'mail_from' );
+		$this->filter( 'wp_mail_from_name', 'mail_from_name' );
+
 		// Initiate.
-		new Disable_emojis;
+		new Disable_Emojis;
+		new Registration;
 	}
 
 	/**
@@ -182,21 +184,24 @@ class Theme_Setup {
 	}
 
 	/**
-	 * Modifies user contact methods and adds some more social networks.
+	 * Email address to send from.
 	 *
-	 * @param  array $fields The profile fields.
-	 * @return array The profile fields with additional contact methods.
+	 * @param string $from_email Email address to send from.
+	 *
+	 * @return string
 	 */
-	public function add_user_contact_methods( $fields ) {
-		$fields['author_email']    = 'Email (Author Page)';
-		$fields['author_facebook'] = 'Facebook (Author Page)';
-		$fields['author_twitter']  = 'Twitter (Author Page)';
-		$fields['author_linkedin'] = 'LinkedIn (Author Page)';
-		$fields['author_dribble']  = 'Dribble (Author Page)';
-		$fields['author_gplus']    = 'Google+ (Author Page)';
-		$fields['author_whatsapp'] = 'WhatsApp (Author Page)';
-		$fields['author_custom']   = 'Custom Message (Author Page)';
+	public function mail_from( $from_email ) {
+		return 'Munipay';
+	}
 
-		return $fields;
+	/**
+	 * Name to associate with the “from” email address.
+	 *
+	 * @param string $from_name Name associated with the "from" email address.
+	 *
+	 * @return string
+	 */
+	public function mail_from_name( $from_name ) {
+		return 'ericssonhelp@munipay.io';
 	}
 }

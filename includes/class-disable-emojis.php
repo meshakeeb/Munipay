@@ -14,9 +14,9 @@ use Munipay\Traits\Hooker;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Disable_emojis class.
+ * Disable_Emojis class.
  */
-class Disable_emojis {
+class Disable_Emojis {
 
 	use Hooker;
 
@@ -71,7 +71,7 @@ class Disable_emojis {
 			$emoji_svg_url_bit = 'https://s.w.org/images/core/emoji/';
 			foreach ( $urls as $key => $url ) {
 				if ( strpos( $url, $emoji_svg_url_bit ) !== false ) {
-					unset( $urls[$key] );
+					unset( $urls[ $key ] );
 				}
 			}
 		}
