@@ -27,7 +27,10 @@ class ComposerStaticInit20a90e5a47a8472fda3994caedd0bc48
     public static $classMap = array (
         'Munipay' => __DIR__ . '/../..' . '/includes/class-munipay.php',
         'Munipay\\Bootstrap_Walker' => __DIR__ . '/../..' . '/includes/class-bootstrap-walker.php',
+        'Munipay\\Check' => __DIR__ . '/../..' . '/includes/class-check.php',
+        'Munipay\\Check_Form' => __DIR__ . '/../..' . '/includes/class-check-form.php',
         'Munipay\\Disable_Emojis' => __DIR__ . '/../..' . '/includes/class-disable-emojis.php',
+        'Munipay\\Order' => __DIR__ . '/../..' . '/includes/class-order.php',
         'Munipay\\Profile' => __DIR__ . '/../..' . '/includes/class-profile.php',
         'Munipay\\Registration' => __DIR__ . '/../..' . '/includes/class-registration.php',
         'Munipay\\Theme_Setup' => __DIR__ . '/../..' . '/includes/class-theme-setup.php',

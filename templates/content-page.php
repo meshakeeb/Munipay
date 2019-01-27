@@ -9,17 +9,20 @@
  * @author  BoltMedia <info@boltmedia.ca>
  */
 
+$is_fullwidth = is_page_template( 'page-fullwidth.php' );
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class( 'container py-5' ); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class( $is_fullwidth ? '' : 'container py-5' ); ?>>
 
+	<?php if ( ! $is_fullwidth ) : ?>
 	<header class="entry-header">
 
 		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 
 	</header>
+	<?php endif; ?>
 
-	<div class="entry-content pt-4">
+	<div class="entry-content <?php echo $is_fullwidth ? '' : ' pt-4'; ?>">
 		<?php
 		the_content();
 

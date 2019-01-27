@@ -87,7 +87,10 @@ class Registration {
 	 * @return array The profile fields with additional contact methods.
 	 */
 	public function add_on_profile( $fields ) {
-		foreach ( self::get_fields() as $id => $field ) {
+		$fields = self::get_fields();
+		unset( $fields['first_name'], $fields['last_name'] );
+
+		foreach ( $fields as $id => $field ) {
 			$fields[ $id ] = $field['title'];
 		}
 
