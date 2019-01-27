@@ -49,6 +49,17 @@ class Registration {
 		// Finally, save our extra registration user meta.
 		$this->action( 'user_register', 'save' );
 		$this->action( 'edit_user_created_user', 'save' );
+
+		$this->filter( 'login_redirect', 'login_redirect' );
+	}
+
+	/**
+	 * Login redirect.
+	 *
+	 * @return string
+	 */
+	public function login_redirect() {
+		return home_url( 'profile' );
 	}
 
 	/**
@@ -57,7 +68,7 @@ class Registration {
 	public function add() {
 		?>
 		<div class="row">
-		<?php foreach ( $this->get_fields() as $id => $field ) { ?>
+		<?php foreach ( self::get_fields() as $id => $field ) { ?>
 			<p class="col-<?php echo $field['grid']; ?>">
 				<label for="<?php echo $id; ?>"><?php echo $field['title']; ?><br/>
 					<input type="text" id="<?php echo $id; ?>" name="<?php echo $id; ?>" value="<?php echo isset( $_POST[ $id ] ) ? esc_attr( $_POST[ $id ] ) : ''; ?>" class="input">
@@ -76,7 +87,7 @@ class Registration {
 	 * @return array The profile fields with additional contact methods.
 	 */
 	public function add_on_profile( $fields ) {
-		foreach ( $this->get_fields() as $id => $field ) {
+		foreach ( self::get_fields() as $id => $field ) {
 			$fields[ $id ] = $field['title'];
 		}
 
@@ -94,7 +105,7 @@ class Registration {
 			return;
 		}
 
-		$fields = $this->get_fields();
+		$fields = self::get_fields();
 		unset( $fields['first_name'], $fields['last_name'] );
 		?>
 		<table class="form-table">
@@ -120,7 +131,7 @@ class Registration {
 	 * @return WP_Error
 	 */
 	public function validate( $errors ) {
-		foreach ( $this->get_fields() as $id => $field ) {
+		foreach ( self::get_fields() as $id => $field ) {
 			if ( empty( $_POST[ $id ] ) ) {
 				/* translators: field name */
 				$errors->add( $id . '_error', sprintf( __( '<strong>ERROR</strong>: Please enter %s.', 'munipay' ), $field['title'] ) );
@@ -139,7 +150,7 @@ class Registration {
 	 * @return WP_Error
 	 */
 	public function validate_new_user( $errors, $update ) {
-		foreach ( $this->get_fields() as $id => $field ) {
+		foreach ( self::get_fields() as $id => $field ) {
 			if ( empty( $_POST[ $id ] ) ) {
 				/* translators: field name */
 				$errors->add( $id . '_error', sprintf( __( '<strong>ERROR</strong>: Please enter %s.', 'munipay' ), $field['title'] ) );
@@ -155,14 +166,14 @@ class Registration {
 	 * @param int $user_id User ID.
 	 */
 	public function save( $user_id ) {
-		foreach ( $this->get_fields() as $id => $field ) {
+		foreach ( self::get_fields() as $id => $field ) {
 			if ( ! empty( $_POST[ $id ] ) ) {
 				update_user_meta( $user_id, $id, sanitize_text_field( $_POST[ $id ] ) );
 			}
 		}
 	}
 
-	private function get_fields() {
+	public static function get_fields() {
 		return [
 			'first_name'  => [
 				'title' => __( 'First Name', 'munipay' ),

@@ -28,6 +28,7 @@ class ComposerStaticInit20a90e5a47a8472fda3994caedd0bc48
         'Munipay' => __DIR__ . '/../..' . '/includes/class-munipay.php',
         'Munipay\\Bootstrap_Walker' => __DIR__ . '/../..' . '/includes/class-bootstrap-walker.php',
         'Munipay\\Disable_Emojis' => __DIR__ . '/../..' . '/includes/class-disable-emojis.php',
+        'Munipay\\Profile' => __DIR__ . '/../..' . '/includes/class-profile.php',
         'Munipay\\Registration' => __DIR__ . '/../..' . '/includes/class-registration.php',
         'Munipay\\Theme_Setup' => __DIR__ . '/../..' . '/includes/class-theme-setup.php',
         'Munipay\\Traits\\Hooker' => __DIR__ . '/../..' . '/includes/traits/class-hooker.php',

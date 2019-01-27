@@ -45,6 +45,7 @@ class Theme_Setup {
 		// Initiate.
 		new Disable_Emojis;
 		new Registration;
+		new Profile;
 	}
 
 	/**
