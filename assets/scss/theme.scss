@@ -74,3 +74,33 @@ footer {
 		color: #fff;
 	}
 }
+
+
+body {
+	background: #f9f9f9;
+}
+
+.order-accordion {
+
+	.order-title {
+		cursor: pointer;
+	}
+
+	.dashicons {
+		font-size: 25px;
+		margin-top: 2px;
+	}
+
+	.dashicons-arrow-up-alt2 { display: inline-block; }
+	.dashicons-arrow-down-alt2 { display: none; }
+
+	.collapsed {
+		.dashicons-arrow-up-alt2 { display: none; }
+		.dashicons-arrow-down-alt2 { display: inline-block; }
+	}
+
+	.btn-link:hover,
+	.btn-link:focus {
+		text-decoration: none;
+	}
+}

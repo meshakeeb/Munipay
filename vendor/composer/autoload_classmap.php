@@ -11,6 +11,7 @@ return array(
     'Munipay\\Check' => $baseDir . '/includes/class-check.php',
     'Munipay\\Check_Form' => $baseDir . '/includes/class-check-form.php',
     'Munipay\\Disable_Emojis' => $baseDir . '/includes/class-disable-emojis.php',
+    'Munipay\\Form' => $baseDir . '/includes/class-form.php',
     'Munipay\\Order' => $baseDir . '/includes/class-order.php',
     'Munipay\\Profile' => $baseDir . '/includes/class-profile.php',
     'Munipay\\Registration' => $baseDir . '/includes/class-registration.php',

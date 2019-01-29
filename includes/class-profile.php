@@ -23,13 +23,6 @@ class Profile {
 	use Hooker;
 
 	/**
-	 * Current user.
-	 *
-	 * @var WP_User
-	 */
-	private $user = null;
-
-	/**
 	 * Hold errors.
 	 *
 	 * @var WP_Error
@@ -50,18 +43,11 @@ class Profile {
 	 * Render profile page.
 	 */
 	public function profile() {
-		$this->user = wp_get_current_user();
 		ob_start();
 
-		if ( ! empty( $this->errors->errors ) ) {
-			?>
-			<div class="alert alert-danger" role="alert">
-				<ul class="list-unstyled mb-0">
-					<?php echo '<li>' . join( '</li><li>', $this->errors->get_error_messages() ) . '</li>'; ?>
-				</ul>
-			</div>
-			<?php
-		}
+		Form::display_errors( $this->errors );
+
+		$current_user = wp_get_current_user();
 		?>
 		<div class="jumbotron py-4 px-2">
 
@@ -71,22 +57,73 @@ class Profile {
 
 				<div class="row">
 
-					<?php $this->render_field( 'first_name', 'First Name' ); ?>
-					<?php $this->render_field( 'last_name', 'Last Name' ); ?>
+					<?php
+
+					Form::text(
+						[
+							'id'    => 'first_name',
+							'title' => 'First Name',
+							'value' => $current_user->get( 'first_name' ),
+						]
+					);
+
+					Form::text(
+						[
+							'id'    => 'last_name',
+							'title' => 'Last Name',
+							'value' => $current_user->get( 'last_name' ),
+						]
+					);
+
+					?>
 
 				</div>
 
 				<div class="row pt-4">
 
-					<?php $this->render_field( 'user_email', 'Email' ); ?>
-					<?php $this->render_field( 'phone', 'Phone' ); ?>
+					<?php
+
+					Form::text(
+						[
+							'id'    => 'user_email',
+							'title' => 'Email',
+							'value' => $current_user->get( 'user_email' ),
+						]
+					);
+
+					Form::text(
+						[
+							'id'    => 'phone',
+							'title' => 'Phone',
+							'value' => $current_user->get( 'phone' ),
+						]
+					);
+
+					?>
 
 				</div>
 
 				<div class="row pt-4">
 
-					<?php $this->render_field( 'signum', 'Signum' ); ?>
-					<?php $this->render_field( 'cost_center', 'Cost Center' ); ?>
+					<?php
+
+					Form::text(
+						[
+							'id'    => 'signum',
+							'title' => 'Signum',
+							'value' => $current_user->get( 'signum' ),
+						]
+					);
+
+					Form::text(
+						[
+							'id'    => 'cost_center',
+							'title' => 'Cost Center',
+							'value' => $current_user->get( 'cost_center' ),
+						]
+					);
+
+					?>
 
 				</div>
 
@@ -107,15 +144,46 @@ class Profile {
 
 				<div class="row">
 
-					<?php $this->render_field( 'user_login', 'Username' ); ?>
-					<?php $this->render_field( 'password_current', 'Current Password' ); ?>
+					<?php
+
+					Form::text(
+						[
+							'id'    => 'user_login',
+							'title' => 'Username',
+							'value' => $current_user->get( 'user_login' ),
+						]
+					);
+
+					Form::text(
+						[
+							'id'    => 'password_current',
+							'title' => 'Current Password',
+						]
+					);
+
+					?>
 
 				</div>
 
 				<div class="row pt-4">
 
-					<?php $this->render_field( 'password_1', 'New Password' ); ?>
-					<?php $this->render_field( 'password_2', 'Re-Enter New Password' ); ?>
+					<?php
+
+					Form::text(
+						[
+							'id'    => 'password_1',
+							'title' => 'New Password',
+						]
+					);
+
+					Form::text(
+						[
+							'id'    => 'password_2',
+							'title' => 'Re-Enter New Password',
+						]
+					);
+
+					?>
 
 				</div>
 
@@ -129,21 +197,6 @@ class Profile {
 		</div>
 		<?php
 		return ob_get_clean();
-	}
-
-	/**
-	 * Render field.
-	 *
-	 * @param string $id    Field id.
-	 * @param string $title Field title.
-	 */
-	private function render_field( $id, $title ) {
-		?>
-		<div class="col">
-			<input type="text" class="form-control" name="<?php echo $id; ?>" placeholder="<?php echo $title; ?>" value="<?php echo $this->user->get( $id ); ?>">
-			<small class="form-text pl-2 text-muted"><?php echo $title; ?></small>
-		</div>
-		<?php
 	}
 
 	/**

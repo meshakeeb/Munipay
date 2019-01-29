@@ -134,9 +134,12 @@ class Theme_Setup {
 			'theme'        => $assets . '/css/theme.css',
 		];
 
+		wp_enqueue_style( 'dashicons' );
 		foreach ( $styles as $handle => $src ) {
 			wp_enqueue_style( $handle, $src, null, munipay()->version );
 		}
+
+		wp_enqueue_script( 'bootstrap', $assets . '/vendor/bootstrap/bootstrap.min.js', [ 'jquery' ], '4.2.1', true );
 	}
 
 	public function login_enqueue() {
