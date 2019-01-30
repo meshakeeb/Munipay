@@ -18,11 +18,76 @@
 				this.wrap    = $( '#orders' )
 				this.cloneMe = $( '.order-check-0' )
 
+				// Sanitize data.
+				munipay.orderID = parseInt( munipay.orderID )
+				munipay.userID = parseInt( munipay.userID )
+
 				this.accounts()
 				this.requests()
 			},
 
 			requests: function() {
+				this.saveRequest()
+				this.addNewRequest()
+			},
+
+			saveRequest: function() {
+				var app = this
+
+				app.wrap.on( 'click', '.order-check-save', function( event ) {
+					event.preventDefault()
+
+					var button = $( this )
+
+					button.prop( 'disabled', true )
+
+					if ( 0 === munipay.orderID ) {
+						app.saveOrder( button )
+						return
+					}
+
+					app.saveCheck( button )
+				})
+			},
+
+			saveCheck: function( button ) {
+				var app  = this,
+					data = button.closest( 'form' ).serializeJSON()
+
+				data.order_id     = munipay.orderID
+				data.requester_id = munipay.userID
+
+				app.post( 'create_check', data )
+					.always(function() {
+						button.prop( 'disabled', false )
+					})
+					.done( function() {
+						if ( result && ! result.success ) {
+							return
+						}
+					})
+			},
+
+			saveOrder: function( button ) {
+				var app  = this,
+					data = $( '#order-requester' ).serializeJSON()
+
+				data.requester_id = munipay.userID
+				app.post( 'create_order', data )
+					.always(function() {
+						button.prop( 'disabled', false )
+					})
+					.done( function() {
+						if ( result && ! result.success ) {
+							return
+						}
+
+						munipay.orderID = parseInt( result.orderID )
+						button.trigger( 'click' )
+					})
+			},
+
+			addNewRequest: function() {
 				var app = this
 				$( '.order-request-add' ).on( 'click', function( event ) {
 					event.preventDefault()
@@ -69,6 +134,18 @@
 
 					$( this ).closest( '.check-account' ).remove()
 				})
+			},
+
+			post: function( action, data, method ) {
+				return $.ajax({
+					url: munipay.endpoint,
+					type: method || 'POST',
+					dataType: 'json',
+					data: $.extend( true, {
+						action: 'munipay_' + action,
+						security: munipay.security
+					}, data )
+				});
 			}
 		};
 

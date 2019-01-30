@@ -12,6 +12,8 @@
  */
 namespace Munipay;
 
+use WP_Post;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -115,6 +117,23 @@ abstract class Data {
 	 */
 	public function get_html_id( $prefix ) {
 		echo $prefix . '-' . $this->get_id();
+	}
+
+	/**
+	 * Get values from $_POST.
+	 *
+	 * @return array
+	 */
+	public function get_values() {
+		$data = [];
+
+		foreach ( $this->defaults as $key => $value ) {
+			if ( isset( $_POST[ $key ] ) ) {
+				$data[ $key ] = $_POST[ $key ];
+			}
+		}
+
+		return $data;
 	}
 
 	/**

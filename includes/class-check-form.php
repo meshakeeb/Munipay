@@ -30,12 +30,17 @@ class Check_Form {
 	private $errors = null;
 
 	/**
+	 * Hold order for screen.
+	 *
+	 * @var Order
+	 */
+	protected $order = false;
+
+	/**
 	 * The class constructor.
 	 */
 	public function __construct() {
 		$this->errors = new WP_Error;
-		$this->action( 'template_redirect', 'save' );
-
 		add_shortcode( 'check_form', [ $this, 'form' ] );
 	}
 
@@ -47,6 +52,7 @@ class Check_Form {
 
 		Form::display_errors( $this->errors );
 
+		$this->set_current_order();
 		$this->get_template( 'header' );
 		?>
 
@@ -57,6 +63,12 @@ class Check_Form {
 			<h3 class="mb-3">Requests</h3>
 
 			<div id="orders" class="order-accordion">
+				<?php
+				foreach ( $this->order->checks as $check ) {
+					$this->current_check = $check;
+					$this->get_template( 'check' );
+				}
+				?>
 			</div>
 
 			<div class="text-center my-5">
@@ -75,45 +87,9 @@ class Check_Form {
 		return ob_get_clean();
 	}
 
-	/**
-	 * Save forms.
-	 */
-	public function save() {
-		if ( isset( $_POST['munipay_save_profile'] ) && check_admin_referer( 'munipay_save_profile', 'security' ) ) {
-			$this->save_profile();
-		}
-	}
-
-	/**
-	 * Save profile.
-	 */
-	public function save_profile() {
-		$user = wp_get_current_user();
-		foreach ( Registration::get_fields() as $id => $field ) {
-			if ( empty( $_POST[ $id ] ) ) {
-				/* translators: field name */
-				$this->errors->add( $id . '_error', sprintf( __( '<strong>WARNING</strong>: %s cannot be empty. Revert to old value.', 'munipay' ), $field['title'] ) );
-				continue;
-			}
-
-			update_user_meta( $user->ID, $id, sanitize_text_field( $_POST[ $id ] ) );
-		}
-
-		// Email.
-		if ( empty( $_POST['user_email'] ) ) {
-			/* translators: field name */
-			$this->errors->add( 'user_email_error', __( '<strong>WARNING</strong>: Email cannot be empty. Revert to old value.', 'munipay' ) );
-			return;
-		}
-
-		if ( ! is_email( $_POST['user_email'] ) ) {
-			/* translators: field name */
-			$this->errors->add( 'invalid_email', __( '<strong>WARNING</strong>: The email address isn&#8217;t correct.', 'munipay' ) );
-			return;
-		}
-
-		$user->user_email = $_POST['user_email'];
-		wp_update_user( $user );
+	private function set_current_order() {
+		$current_user = wp_get_current_user();
+		$this->order  = new Order( $current_user->current_order );
 	}
 
 	/**

@@ -48,6 +48,7 @@ class Theme_Setup {
 		new Check_Form;
 		new Profile;
 		new Post_Types;
+		new Ajax;
 	}
 
 	/**
@@ -141,7 +142,22 @@ class Theme_Setup {
 		}
 
 		wp_enqueue_script( 'bootstrap', $assets . '/vendor/bootstrap/bootstrap.min.js', [ 'jquery' ], '4.2.1', true );
+		wp_enqueue_script( 'serializejson', $assets . '/vendor/jquery.serializejson.min.js', [ 'jquery' ], '2.9.0', true );
 		wp_enqueue_script( 'theme', $assets . '/js/theme.js', [ 'jquery' ], '1.0.0', true );
+
+		$current_user = wp_get_current_user();
+		$order_id     = $current_user->current_order;
+		$order_id     = $order_id ? $order_id : 0;
+		wp_localize_script(
+			'theme',
+			'munipay',
+			[
+				'endpoint' => admin_url( 'admin-ajax.php' ),
+				'security' => wp_create_nonce( 'munipay_security_salt' ),
+				'orderID'  => $order_id,
+				'userID'   => $current_user->ID,
+			]
+		);
 	}
 
 	public function login_enqueue() {

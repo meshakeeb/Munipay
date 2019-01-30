@@ -7,9 +7,10 @@
 
 use Munipay\Form;
 
+$order        = $this->order;
 $current_user = wp_get_current_user();
 ?>
-<form class="jumbotron p-4">
+<form class="jumbotron p-4" id="order-requester">
 
 	<h5 class="pb-3">Check Requester</h5>
 
@@ -22,7 +23,7 @@ $current_user = wp_get_current_user();
 				'id'       => 'request_date',
 				'title'    => 'Date',
 				'value'    => date( get_option( 'date_format' ) ),
-				'disabled' => 'disabled',
+				'readonly' => 'readonly',
 			]
 		);
 
@@ -30,7 +31,7 @@ $current_user = wp_get_current_user();
 			[
 				'id'    => 'requester_email',
 				'title' => 'Email',
-				'value' => $current_user->get( 'user_email' ),
+				'value' => $order ? $order->get_meta( 'requester_email' ) : $current_user->get( 'user_email' ),
 			]
 		);
 
@@ -46,7 +47,7 @@ $current_user = wp_get_current_user();
 			[
 				'id'    => 'requester_name',
 				'title' => 'Requester Name',
-				'value' => $current_user->get( 'user_login' ),
+				'value' => $order ? $order->get_meta( 'requester_name' ) : $current_user->get( 'display_name' ),
 			]
 		);
 
@@ -54,7 +55,7 @@ $current_user = wp_get_current_user();
 			[
 				'id'    => 'requester_phone',
 				'title' => 'Phone',
-				'value' => $current_user->get( 'phone' ),
+				'value' => $order ? $order->get_meta( 'requester_phone' ) : $current_user->get( 'phone' ),
 			]
 		);
 
@@ -70,7 +71,7 @@ $current_user = wp_get_current_user();
 			[
 				'id'    => 'requester_signum',
 				'title' => 'Signum',
-				'value' => $current_user->get( 'signum' ),
+				'value' => $order ? $order->get_meta( 'requester_signum' ) : $current_user->get( 'signum' ),
 			]
 		);
 
@@ -78,7 +79,7 @@ $current_user = wp_get_current_user();
 			[
 				'id'    => 'requester_cost_center',
 				'title' => 'Cost center',
-				'value' => $current_user->get( 'cost_center' ),
+				'value' => $order ? $order->get_meta( 'requester_cost_center' ) : $current_user->get( 'cost_center' ),
 			]
 		);
 

@@ -357,7 +357,7 @@ $check = $this->current_check;
 			</div>
 
 			<div class="text-center mt-5">
-				<button type="button" class="btn btn-primary btn-lg">Save Check Request</button>
+				<button type="button" class="btn btn-primary btn-lg order-check-save">Save Check Request</button>
 			</div>
 
 		</form>
