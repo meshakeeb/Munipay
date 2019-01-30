@@ -14,7 +14,7 @@
 			"Munipay\\": "includes/"
 		},
 		"classmap" : [ "includes/" ],
-		"files": [ "vendor/cmb2/cmb2/init.php" ]
+		"files": [ ]
 	},
 	"config": {
 		"optimize-autoloader": true

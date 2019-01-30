@@ -9,7 +9,7 @@ use Munipay\Form;
 
 $current_user = wp_get_current_user();
 ?>
-<div class="jumbotron p-4">
+<form class="jumbotron p-4">
 
 	<h5 class="pb-3">Check Requester</h5>
 
@@ -86,4 +86,4 @@ $current_user = wp_get_current_user();
 
 	</div>
 
-</div>
+</form>

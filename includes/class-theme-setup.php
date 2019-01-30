@@ -47,6 +47,7 @@ class Theme_Setup {
 		new Registration;
 		new Check_Form;
 		new Profile;
+		new Post_Types;
 	}
 
 	/**
@@ -140,6 +141,7 @@ class Theme_Setup {
 		}
 
 		wp_enqueue_script( 'bootstrap', $assets . '/vendor/bootstrap/bootstrap.min.js', [ 'jquery' ], '4.2.1', true );
+		wp_enqueue_script( 'theme', $assets . '/js/theme.js', [ 'jquery' ], '1.0.0', true );
 	}
 
 	public function login_enqueue() {

@@ -82,11 +82,11 @@ body {
 
 .order-accordion {
 
-	.order-title {
+	.order-check-title {
 		cursor: pointer;
 	}
 
-	.dashicons {
+	.order-check-header .dashicons {
 		font-size: 25px;
 		margin-top: 2px;
 	}
@@ -98,9 +98,11 @@ body {
 		.dashicons-arrow-up-alt2 { display: none; }
 		.dashicons-arrow-down-alt2 { display: inline-block; }
 	}
+}
 
-	.btn-link:hover,
-	.btn-link:focus {
-		text-decoration: none;
+.check-accounts {
+	.check-account {
+		&:first-child .order-check-account-remove { display: none }
+		&:not(:first-child) .order-check-account-add { display: none }
 	}
 }

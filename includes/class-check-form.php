@@ -50,17 +50,27 @@ class Check_Form {
 		$this->get_template( 'header' );
 		?>
 
-		<form class="container mt-5 mb-5">
+		<div class="container mt-5 mb-5">
 
 			<?php $this->get_template( 'requester' ); ?>
 
 			<h3 class="mb-3">Requests</h3>
 
 			<div id="orders" class="order-accordion">
-				<?php $this->get_template( 'check' ); ?>
 			</div>
 
-		</form>
+			<div class="text-center my-5">
+
+				<div class="d-none">
+					<?php $this->current_check = new Check( 0 ); ?>
+					<?php $this->get_template( 'check' ); ?>
+				</div>
+
+				<button type="button" class="btn btn-primary btn-lg order-request-add">Add New Request</button>
+
+			</div>
+
+		</div>
 		<?php
 		return ob_get_clean();
 	}
