@@ -74,7 +74,6 @@ class Ajax {
 
 		// Get order total.
 		$order = new Order( $_POST['order_id'] );
-		unset( $order->checks[0] );
 
 		$this->success(
 			[

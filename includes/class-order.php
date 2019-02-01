@@ -229,6 +229,15 @@ class Order extends Data {
 	}
 
 	/**
+	 * Has any checks.
+	 *
+	 * @return boolean
+	 */
+	public function has_checks() {
+		return ! empty( $this->checks );
+	}
+
+	/**
 	 * Get current in-progress order for current user.
 	 *
 	 * @return Order

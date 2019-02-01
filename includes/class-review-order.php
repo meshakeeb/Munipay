@@ -56,6 +56,7 @@ class Review_Order {
 
 				<div class="col-6 offset-2">
 
+					<?php if ( $this->order->has_checks() ) : ?>
 					<ul class="list-group">
 						<?php
 						foreach ( $this->order->checks as $check ) {
@@ -71,13 +72,21 @@ class Review_Order {
 						</div>
 						<h3 class="my-0" id="order-total-amount"><?php echo $this->order->get_total(); ?></h3>
 					</div>
+					<?php else : ?>
+					No checks added to the order yet.<br>
+					<div class="mt-2">
+						<a href="<?php echo home_url( '/enter-check' ); ?>" class="btn btn-warning btn-lg">Enter Checks</a>
+					</div>
+					<?php endif; ?>
 
 				</div>
 
 			</div>
 
 			<div class="text-right my-5">
+				<?php if ( $this->order->has_checks() ) : ?>
 				<a href="<?php echo home_url( '/checkout' ); ?>" class="btn btn-warning btn-lg">Checkout</a>
+				<?php endif; ?>
 			</div>
 
 		</div>
