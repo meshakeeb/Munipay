@@ -7,8 +7,7 @@
 
 use Munipay\Form;
 
-$order        = $this->order;
-$current_user = wp_get_current_user();
+$order = $this->order;
 ?>
 <form class="jumbotron p-4" id="order-requester">
 
@@ -22,7 +21,7 @@ $current_user = wp_get_current_user();
 			[
 				'id'       => 'request_date',
 				'title'    => 'Date',
-				'value'    => date( get_option( 'date_format' ) ),
+				'value'    => $order->get_order_date(),
 				'readonly' => 'readonly',
 			]
 		);
@@ -31,7 +30,7 @@ $current_user = wp_get_current_user();
 			[
 				'id'    => 'requester_email',
 				'title' => 'Email',
-				'value' => $order ? $order->get_meta( 'requester_email' ) : $current_user->get( 'user_email' ),
+				'value' => $order->get_requester_email(),
 			]
 		);
 
@@ -47,7 +46,7 @@ $current_user = wp_get_current_user();
 			[
 				'id'    => 'requester_name',
 				'title' => 'Requester Name',
-				'value' => $order ? $order->get_meta( 'requester_name' ) : $current_user->get( 'display_name' ),
+				'value' => $order->get_requester_name(),
 			]
 		);
 
@@ -55,7 +54,7 @@ $current_user = wp_get_current_user();
 			[
 				'id'    => 'requester_phone',
 				'title' => 'Phone',
-				'value' => $order ? $order->get_meta( 'requester_phone' ) : $current_user->get( 'phone' ),
+				'value' => $order->get_requester_phone(),
 			]
 		);
 
@@ -71,7 +70,7 @@ $current_user = wp_get_current_user();
 			[
 				'id'    => 'requester_signum',
 				'title' => 'Signum',
-				'value' => $order ? $order->get_meta( 'requester_signum' ) : $current_user->get( 'signum' ),
+				'value' => $order->get_requester_signum(),
 			]
 		);
 
@@ -79,7 +78,7 @@ $current_user = wp_get_current_user();
 			[
 				'id'    => 'requester_cost_center',
 				'title' => 'Cost center',
-				'value' => $order ? $order->get_meta( 'requester_cost_center' ) : $current_user->get( 'cost_center' ),
+				'value' => $order->get_requester_cost_center(),
 			]
 		);
 

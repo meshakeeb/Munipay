@@ -45,10 +45,14 @@ class Theme_Setup {
 		// Initiate.
 		new Disable_Emojis;
 		new Registration;
-		new Check_Form;
-		new Profile;
 		new Post_Types;
 		new Ajax;
+
+		// Shortcodes.
+		new Profile;
+		new Checkout;
+		new Check_Form;
+		new Review_Order;
 	}
 
 	/**

@@ -24,6 +24,61 @@
 
 				this.accounts()
 				this.requests()
+				this.reviewOrder();
+
+				if ( window.location.hash ) {
+					$( window.location.hash ).collapse( 'show' );
+				}
+
+				// Form validation.
+				window.addEventListener( 'load', function() {
+					// Fetch all the forms we want to apply custom Bootstrap validation styles to
+					var forms = document.getElementsByClassName( 'needs-validation' )
+
+					// Loop over them and prevent submission
+					var validation = Array.prototype.filter.call( forms, function( form ) {
+						form.addEventListener( 'submit', function( event ) {
+							if ( false === form.checkValidity() ) {
+								event.preventDefault()
+								event.stopPropagation()
+							}
+
+							form.classList.add( 'was-validated' )
+						}, false )
+					})
+				}, false )
+			},
+
+			reviewOrder: function() {
+				var app = this,
+					orderTotal = $( '#order-total-amount' )
+
+				$( '.order-check-remove' ).on( 'click', function( event ) {
+					event.preventDefault()
+					if ( false === confirm( 'Are you sure?' ) ) {
+						return
+					}
+
+					var button = $( this ),
+						data = {
+							order_id: munipay.orderID,
+							check_id: button.data( 'check-id' )
+						},
+						rows = button.closest( 'ul' ).find( '.check-' + button.data( 'check-id' ) )
+
+					button.prop( 'disabled', true )
+					rows.addClass( 'disabled' )
+
+					app.post( 'delete_check', data )
+						.done( function( result ) {
+							if ( result && ! result.success ) {
+								return
+							}
+
+							rows.remove()
+							orderTotal.html( result.orderTotal )
+						})
+				})
 			},
 
 			requests: function() {
@@ -61,7 +116,7 @@
 					.always(function() {
 						button.prop( 'disabled', false )
 					})
-					.done( function() {
+					.done( function( result ) {
 						if ( result && ! result.success ) {
 							return
 						}
@@ -77,7 +132,7 @@
 					.always(function() {
 						button.prop( 'disabled', false )
 					})
-					.done( function() {
+					.done( function( result ) {
 						if ( result && ! result.success ) {
 							return
 						}

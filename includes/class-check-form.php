@@ -1,6 +1,6 @@
 <?php
 /**
- * User Check_Form
+ * Checks entry form.
  *
  * @since      1.0.0
  * @package    Munipay
@@ -52,7 +52,7 @@ class Check_Form {
 
 		Form::display_errors( $this->errors );
 
-		$this->set_current_order();
+		$this->order = Order::get_current_order();
 		$this->get_template( 'header' );
 		?>
 
@@ -79,17 +79,13 @@ class Check_Form {
 				</div>
 
 				<button type="button" class="btn btn-primary btn-lg order-request-add">Add New Request</button>
+				<a href="<?php echo home_url( '/review-checks' ); ?>" class="btn btn-warning btn-lg">Review Request</a>
 
 			</div>
 
 		</div>
 		<?php
 		return ob_get_clean();
-	}
-
-	private function set_current_order() {
-		$current_user = wp_get_current_user();
-		$this->order  = new Order( $current_user->current_order );
 	}
 
 	/**

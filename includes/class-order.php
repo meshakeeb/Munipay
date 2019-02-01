@@ -45,7 +45,7 @@ class Order extends Data {
 	 *
 	 * @var array
 	 */
-	public  $checks = array();
+	public $checks = array();
 
 	/**
 	 * Get the order if ID is passed, oterwise the check is new and empty.
@@ -64,6 +64,8 @@ class Order extends Data {
 	 * Read post.
 	 */
 	public function read() {
+		$this->current_user = wp_get_current_user();
+
 		if ( $this->get_id() < 1 ) {
 			return;
 		}
@@ -122,5 +124,117 @@ class Order extends Data {
 
 		$this->set_id( $order_id );
 		update_user_meta( $values['requester_id'], 'current_order', $order_id );
+	}
+
+	/**
+	 * Get order date.
+	 *
+	 * @return string
+	 */
+	public function get_order_date() {
+		return $this->get_id() > 1 ? mysql2date( get_option( 'date_format' ), $this->object->post_date ) : date( get_option( 'date_format' ) );
+	}
+
+	/**
+	 * Get requester email.
+	 *
+	 * @return string
+	 */
+	public function get_requester_email() {
+		return $this->get_id() > 1 ? $this->get_meta( 'requester_email' ) : $this->current_user->get( 'user_email' );
+	}
+
+	/**
+	 * Get requester name.
+	 *
+	 * @return string
+	 */
+	public function get_requester_name() {
+		return $this->get_id() > 1 ? $this->get_meta( 'requester_name' ) : $this->current_user->get( 'display_name' );
+	}
+
+	/**
+	 * Get requester phone.
+	 *
+	 * @return string
+	 */
+	public function get_requester_phone() {
+		return $this->get_id() > 1 ? $this->get_meta( 'requester_phone' ) : $this->current_user->get( 'phone' );
+	}
+
+	/**
+	 * Get requester signum.
+	 *
+	 * @return string
+	 */
+	public function get_requester_signum() {
+		return $this->get_id() > 1 ? $this->get_meta( 'requester_signum' ) : $this->current_user->get( 'signum' );
+	}
+
+	/**
+	 * Get requester cost_center.
+	 *
+	 * @return string
+	 */
+	public function get_requester_cost_center() {
+		return $this->get_id() > 1 ? $this->get_meta( 'requester_cost_center' ) : $this->current_user->get( 'cost_center' );
+	}
+
+	/**
+	 * Get order total amount.
+	 *
+	 * @param string $context Context: view or raw.
+	 *
+	 * @return mixed
+	 */
+	public function get_total( $context = 'view' ) {
+		$total = 0;
+		foreach ( $this->checks as $check ) {
+			$total += $check->get_total( 'raw' );
+		}
+
+		return $this->format_price( $total, $context );
+	}
+
+	/**
+	 * Get order delivery charges.
+	 *
+	 * @param string $context Context: view or raw.
+	 *
+	 * @return mixed
+	 */
+	public function get_delivery_charges( $context = 'view' ) {
+		$total = 0;
+		foreach ( $this->checks as $check ) {
+			$total += $check->get_delivery_fee( 'raw' );
+		}
+
+		return $this->format_price( $total, $context );
+	}
+
+	/**
+	 * Get order transation charges.
+	 *
+	 * @param string $context Context: view or raw.
+	 *
+	 * @return mixed
+	 */
+	public function get_transation_charges( $context = 'view' ) {
+		$total = 0;
+		foreach ( $this->checks as $check ) {
+			$total += $check->get_transaction_fee( 'raw' );
+		}
+
+		return $this->format_price( $total, $context );
+	}
+
+	/**
+	 * Get current in-progress order for current user.
+	 *
+	 * @return Order
+	 */
+	public static function get_current_order() {
+		$current_user = wp_get_current_user();
+		return new Order( $current_user->current_order );
 	}
 }

@@ -24,6 +24,7 @@ class Ajax {
 	public function __construct() {
 		$this->ajax( 'create_order', 'create_order' );
 		$this->ajax( 'create_check', 'create_check' );
+		$this->ajax( 'delete_check', 'delete_check' );
 	}
 
 	/**
@@ -58,6 +59,27 @@ class Ajax {
 			[
 				'checkID' => $check_id,
 				'message' => 'Check successfully saved.',
+			]
+		);
+	}
+
+	/**
+	 * Delete Check.
+	 */
+	public function delete_check() {
+		$this->verify_nonce( 'munipay_security_salt' );
+
+		// Delete Check.
+		Check::delete( $_POST['check_id'] );
+
+		// Get order total.
+		$order = new Order( $_POST['order_id'] );
+		unset( $order->checks[0] );
+
+		$this->success(
+			[
+				'orderTotal' => $order->get_total(),
+				'message'    => 'Check successfully delete.',
 			]
 		);
 	}

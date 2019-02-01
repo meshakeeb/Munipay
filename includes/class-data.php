@@ -50,6 +50,13 @@ abstract class Data {
 	protected $object_type = 'data';
 
 	/**
+	 * CUrrent user.
+	 *
+	 * @var WP_User
+	 */
+	protected $current_user = null;
+
+	/**
 	 * Getter property.
 	 *
 	 * @param string $key Key to get.
@@ -139,13 +146,18 @@ abstract class Data {
 	/**
 	 * Format price.
 	 *
-	 * @param float $price Raw price.
+	 * @param float  $price   Raw price.
+	 * @param string $context Context: view or raw.
 	 *
 	 * @return string
 	 */
-	protected function format_price( $price ) {
+	protected function format_price( $price, $context = 'view' ) {
 		if ( empty( $price ) ) {
 			return '';
+		}
+
+		if ( 'raw' === $context ) {
+			return $price;
 		}
 
 		return '$' . number_format( $price, 2, '.', ',' );

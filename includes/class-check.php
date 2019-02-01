@@ -151,4 +151,88 @@ class Check extends Data {
 
 		_e( 'Request', 'munipay' );
 	}
+
+	/**
+	 * Get check amount.
+	 *
+	 * @param string $context Context: view or raw.
+	 *
+	 * @return mixed
+	 */
+	public function get_amount( $context = 'view' ) {
+		return $this->format_price( $this->get_meta( 'request_amount' ), $context );
+	}
+
+	/**
+	 * Get check transaction_fee.
+	 *
+	 * @param string $context Context: view or raw.
+	 *
+	 * @return mixed
+	 */
+	public function get_transaction_fee( $context = 'view' ) {
+		$amount = $this->get_meta( 'request_amount' );
+		$amount = ( $amount * 6 ) / 100;
+
+		return $this->format_price( $amount, $context );
+	}
+
+	/**
+	 * Get delivery method.
+	 *
+	 * @return string
+	 */
+	public function get_delivery_method( $context = 'view' ) {
+		$method  = $this->get_meta( 'request_delivery_method' );
+		$methods = [
+			'1' => 'USPS Priority - 2 Day',
+			'2' => 'USPS Priority Express Overnight',
+			'3' => 'Bundle',
+		];
+
+		return 'view' === $context ? $methods[ $method ] : $method;
+	}
+
+	/**
+	 * Get delivery fee.
+	 *
+	 * @param string $context Context: view or raw.
+	 *
+	 * @return mixed
+	 */
+	public function get_delivery_fee( $context = 'view' ) {
+		$method  = $this->get_meta( 'request_delivery_method' );
+		$methods = [
+			'1' => 15,
+			'2' => 45,
+			'3' => 36,
+		];
+
+		return $this->format_price( $methods[ $method ], $context );
+	}
+
+	/**
+	 * Get check total amount.
+	 *
+	 * @param string $context Context: view or raw.
+	 *
+	 * @return mixed
+	 */
+	public function get_total( $context = 'view' ) {
+		$total  = 0;
+		$total += $this->get_amount( 'raw' );
+		$total += $this->get_delivery_fee( 'raw' );
+		$total += $this->get_transaction_fee( 'raw' );
+
+		return $this->format_price( $total, $context );
+	}
+
+	/**
+	 * Delete check.
+	 *
+	 * @param int $id Check id to delete.
+	 */
+	public static function delete( $id ) {
+		wp_delete_post( $id, true );
+	}
 }
