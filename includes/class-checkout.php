@@ -7,6 +7,7 @@
  * @subpackage Munipay\Core
  * @author     BoltMedia <info@boltmedia.ca>
  */
+
 namespace Munipay;
 
 use Munipay\Traits\Hooker;
@@ -46,14 +47,14 @@ class Checkout {
 
 		<div class="container mt-5 mb-5">
 
-			<h3 class="mb-5">Checkout</h3>
+			<h3 class="mb-5"><?php esc_html_e( 'Checkout', 'munipay' ); ?></h3>
 
 			<div class="row">
 
 				<div class="col-md-4 offset-md-1 order-md-2 mb-4">
 
 					<h4 class="d-flex justify-content-between align-items-center mb-3">
-						<span class="text-muted">Your cart</span>
+						<span class="text-muted"><?php esc_html_e( 'Your cart', 'munipay' ); ?></span>
 						<span class="badge badge-secondary badge-pill"><?php echo count( $this->order->checks ); ?></span>
 					</h4>
 
@@ -62,7 +63,7 @@ class Checkout {
 						<li class="list-group-item d-flex justify-content-between lh-condensed">
 							<div>
 								<h6 class="my-0"><?php echo $check->get_meta( 'payee_name' ); ?></h6>
-								<small class="text-muted"><em>for</em> <?php echo $check->get_meta( 'request_reason' ); ?></small>
+								<small class="text-muted"><em><?php echo esc_html_x( 'for', 'checkout form', 'munipay' ); ?></em> <?php echo $check->get_meta( 'request_reason' ); ?></small>
 							</div>
 							<span class="text-muted"><?php echo $check->get_amount(); ?></span>
 						</li>
@@ -70,26 +71,26 @@ class Checkout {
 
 						<li class="list-group-item d-flex justify-content-between bg-light">
 							<div class="text-success">
-								<h6 class="my-0">Delivery Chanrges</h6>
+								<h6 class="my-0"><?php esc_html_e( 'Delivery Chanrges', 'munipay' ); ?></h6>
 							</div>
 							<span class="text-success"><?php echo $this->order->get_delivery_charges(); ?></span>
 						</li>
 
 						<li class="list-group-item d-flex justify-content-between bg-light">
 							<div class="text-success">
-								<h6 class="my-0">Transation Chanrges</h6>
+								<h6 class="my-0"><?php esc_html_e( 'Transation Chanrges', 'munipay' ); ?></h6>
 							</div>
 							<span class="text-success"><?php echo $this->order->get_transation_charges(); ?></span>
 						</li>
 
 						<li class="list-group-item d-flex justify-content-between">
-							<span>Total (USD)</span>
+							<span><?php esc_html_e( 'Total (USD)', 'munipay' ); ?></span>
 							<strong><?php echo $this->order->get_total(); ?></strong>
 						</li>
 
 					</ul>
 
-					<button class="btn btn-primary btn-lg btn-block mt-4" type="submit">Continue to checkout</button>
+					<button class="btn btn-primary btn-lg btn-block mt-4" type="submit"><?php esc_html_e( 'Continue to checkout', 'munipay' ); ?></button>
 
 				</div>
 

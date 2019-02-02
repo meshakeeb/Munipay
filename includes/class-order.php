@@ -7,6 +7,7 @@
  * @subpackage Munipay\Core
  * @author     BoltMedia <info@boltmedia.ca>
  */
+
 namespace Munipay;
 
 use WP_Post;

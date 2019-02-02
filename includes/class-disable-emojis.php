@@ -7,6 +7,7 @@
  * @subpackage Munipay\Core
  * @author     BoltMedia <info@boltmedia.ca>
  */
+
 namespace Munipay;
 
 use Munipay\Traits\Hooker;
@@ -45,7 +46,7 @@ class Disable_Emojis {
 	/**
 	 * Filter function used to remove the tinymce emoji plugin.
 	 *
-	 * @param array $plugins
+	 * @param array $plugins Array of active plugins.
 	 *
 	 * @return array Difference betwen the two arrays
 	 */
@@ -67,7 +68,8 @@ class Disable_Emojis {
 	 */
 	public function remove_dns_prefetch( $urls, $relation_type ) {
 		if ( 'dns-prefetch' == $relation_type ) {
-			// Strip out any URLs referencing the WordPress.org emoji location
+
+			// Strip out any URLs referencing the WordPress.org emoji location.
 			$emoji_svg_url_bit = 'https://s.w.org/images/core/emoji/';
 			foreach ( $urls as $key => $url ) {
 				if ( strpos( $url, $emoji_svg_url_bit ) !== false ) {

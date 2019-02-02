@@ -28,7 +28,7 @@ $is_fullwidth = is_page_template( 'page-fullwidth.php' );
 
 		wp_link_pages(
 			array(
-				'before' => '<div class="page-links">' . __( 'Pages:', 'twentynineteen' ),
+				'before' => '<div class="page-links">' . __( 'Pages:', 'munipay' ),
 				'after'  => '</div>',
 			)
 		);

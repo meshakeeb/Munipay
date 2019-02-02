@@ -81,43 +81,121 @@ body {
 }
 
 .order-accordion {
-
 	.order-check-title {
 		cursor: pointer;
 	}
 
 	.order-check-header .dashicons {
 		font-size: 25px;
+
 		margin-top: 2px;
 	}
 
-	.dashicons-arrow-up-alt2 { display: inline-block; }
-	.dashicons-arrow-down-alt2 { display: none; }
+	.dashicons-arrow-up-alt2 {
+		display: inline-block;
+	}
+	.dashicons-arrow-down-alt2 {
+		display: none;
+	}
 
 	.collapsed {
-		.dashicons-arrow-up-alt2 { display: none; }
-		.dashicons-arrow-down-alt2 { display: inline-block; }
+		.dashicons-arrow-up-alt2 {
+			display: none;
+		}
+		.dashicons-arrow-down-alt2 {
+			display: inline-block;
+		}
 	}
 }
 
 .check-accounts {
 	.check-account {
-		&:first-child .order-check-account-remove { display: none }
-		&:not(:first-child) .order-check-account-add { display: none }
+		&:first-child .order-check-account-remove {
+			display: none;
+		}
+		&:not(:first-child) .order-check-account-add {
+			display: none;
+		}
 	}
 }
 
 .list-group-item-secondary {
 	background: #f0f0f0;
 
-	a { text-decoration: none; }
+	a {
+		text-decoration: none;
+	}
 }
 
 .list-group-item.disabled {
 	background: #f2f2f2;
 
-	&, * {
-		opacity: 0.7;
+	&,
+	* {
+		opacity: .7;
 		color: #999 !important;
+	}
+}
+
+@-webkit-keyframes animation-rotate {
+	100% {
+		-webkit-transform: rotate(360deg);
+	}
+}
+@keyframes animation-rotate {
+	100% {
+		-webkit-transform: rotate(360deg);
+				transform: rotate(360deg);
+	}
+}
+
+.button--loading {
+	cursor: wait;
+	opacity: .8 !important;
+
+	-webkit-appearance: none;
+	   -moz-appearance: none;
+			appearance: none;
+
+	&,
+	span {
+		position: relative;
+	}
+
+	span {
+		display: block;
+
+		white-space: nowrap;
+		-webkit-transition: all 350ms ease;
+				transition: all 350ms ease;
+	}
+
+	&:before {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+
+		width: 24px;
+		height: 24px;
+		margin: -13px 0 0 -13px;
+
+		content: '';
+		-webkit-animation: animation-rotate 750ms linear infinite;
+				animation: animation-rotate 750ms linear infinite;
+
+		border: rgba(255, 255, 255, .25) 2px solid;
+		border-top-color: #fff;
+		-webkit-border-radius: 24px;
+		   -moz-border-radius: 24px;
+				border-radius: 24px;
+		-webkit-background-clip: padding-box;
+		   -moz-background-clip: padding;
+				background-clip: padding-box;
+	}
+
+	span,
+	&:hover span,
+	&:active span {
+		color: transparent;
 	}
 }

@@ -10,6 +10,7 @@
  * @package Munipay
  * @author  BoltMedia <info@boltmedia.ca>
  */
+
 ?>
 
 	<footer id="colophon" class="site-footer">

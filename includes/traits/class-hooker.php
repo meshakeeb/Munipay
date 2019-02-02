@@ -7,6 +7,7 @@
  * @subpackage Munipay\Traits
  * @author     BoltMedia <info@boltmedia.ca>
  */
+
 namespace Munipay\Traits;
 
 defined( 'ABSPATH' ) || exit;

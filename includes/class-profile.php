@@ -7,6 +7,7 @@
  * @subpackage Munipay\Core
  * @author     BoltMedia <info@boltmedia.ca>
  */
+
 namespace Munipay;
 
 use stdClass;
@@ -51,7 +52,7 @@ class Profile {
 		?>
 		<div class="jumbotron py-4 px-2">
 
-			<h3 class="pl-3 pb-2">Personal Information</h3>
+			<h3 class="pl-3 pb-2"><?php esc_html_e( 'Personal Information', 'munipay' ); ?></h3>
 
 			<form action="" method="post" class="container">
 
@@ -62,7 +63,7 @@ class Profile {
 					Form::text(
 						[
 							'id'    => 'first_name',
-							'title' => 'First Name',
+							'title' => esc_html__( 'First Name', 'munipay' ),
 							'value' => $current_user->get( 'first_name' ),
 						]
 					);
@@ -70,7 +71,7 @@ class Profile {
 					Form::text(
 						[
 							'id'    => 'last_name',
-							'title' => 'Last Name',
+							'title' => esc_html__( 'Last Name', 'munipay' ),
 							'value' => $current_user->get( 'last_name' ),
 						]
 					);
@@ -86,7 +87,7 @@ class Profile {
 					Form::text(
 						[
 							'id'    => 'user_email',
-							'title' => 'Email',
+							'title' => esc_html__( 'Email', 'munipay' ),
 							'value' => $current_user->get( 'user_email' ),
 						]
 					);
@@ -94,7 +95,7 @@ class Profile {
 					Form::text(
 						[
 							'id'    => 'phone',
-							'title' => 'Phone',
+							'title' => esc_html__( 'Phone', 'munipay' ),
 							'value' => $current_user->get( 'phone' ),
 						]
 					);
@@ -110,7 +111,7 @@ class Profile {
 					Form::text(
 						[
 							'id'    => 'signum',
-							'title' => 'Signum',
+							'title' => esc_html__( 'Signum', 'munipay' ),
 							'value' => $current_user->get( 'signum' ),
 						]
 					);
@@ -118,7 +119,7 @@ class Profile {
 					Form::text(
 						[
 							'id'    => 'cost_center',
-							'title' => 'Cost Center',
+							'title' => esc_html__( 'Cost Center', 'munipay' ),
 							'value' => $current_user->get( 'cost_center' ),
 						]
 					);
@@ -129,7 +130,7 @@ class Profile {
 
 				<div class="pt-4 text-right">
 					<?php wp_nonce_field( 'munipay_save_profile', 'security', false ); ?>
-					<button type="submit" class="btn btn-primary mb-2" name="munipay_save_profile">Save Changes</button>
+					<button type="submit" class="btn btn-primary mb-2" name="munipay_save_profile"><?php esc_html_e( 'Save Changes', 'munipay' ); ?></button>
 				</div>
 
 			</form>
@@ -138,7 +139,7 @@ class Profile {
 
 		<div class="jumbotron py-4 px-2">
 
-			<h3 class="pl-3 pb-2">Your Password</h3>
+			<h3 class="pl-3 pb-2"><?php esc_html_e( 'Your Password', 'munipay' ); ?></h3>
 
 			<form action="" method="post" class="container">
 
@@ -189,7 +190,7 @@ class Profile {
 
 				<div class="pt-4 text-right">
 					<?php wp_nonce_field( 'munipay_save_profile', 'security', false ); ?>
-					<button type="submit" class="btn btn-primary mb-2" name="munipay_change_password">Change Password</button>
+					<button type="submit" class="btn btn-primary mb-2" name="munipay_change_password"><?php esc_html_e( 'Change Password', 'munipay' ); ?></button>
 				</div>
 
 			</form>

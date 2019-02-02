@@ -7,6 +7,7 @@
  * @subpackage Munipay\Core
  * @author     BoltMedia <info@boltmedia.ca>
  */
+
 namespace Munipay;
 
 defined( 'ABSPATH' ) || exit;
@@ -84,7 +85,7 @@ class Check extends Data {
 	}
 
 	/**
-	 * Create order.
+	 * Create check.
 	 */
 	public function create() {
 		$values   = $this->get_values();
@@ -137,7 +138,60 @@ class Check extends Data {
 			return;
 		}
 
-		$this->set_id( $order_id );
+		$this->set_id( $check_id );
+	}
+
+	/**
+	 * Update check.
+	 */
+	public function update() {
+		$values = $this->get_values();
+		$title  = [
+			__( 'Request', 'munipay' ),
+			$values['payee_name'],
+			$this->format_price( $values['request_amount'] ),
+		];
+
+		wp_update_post(
+			[
+				'ID'         => $this->get_id(),
+				'post_title' => join( ' &ndash; ', array_filter( $title ) ),
+			]
+		);
+		$meta_input = [
+			// Payee.
+			'payee_name'              => $values['payee_name'],
+			'payee_email'             => $values['payee_email'],
+			'payee_number'            => $values['payee_number'],
+			'payee_address'           => $values['payee_address'],
+			'payee_address_2'         => $values['payee_address_2'],
+			'payee_phone'             => $values['payee_phone'],
+			'payee_city'              => $values['payee_city'],
+			'payee_state'             => $values['payee_state'],
+			'payee_zipcode'           => $values['payee_zipcode'],
+
+			// Request.
+			'request_reason'          => $values['request_reason'],
+			'request_description'     => $values['request_description'],
+			'request_reason_2'        => $values['request_reason_2'],
+			'request_amount'          => $values['request_amount'],
+			'request_delivery_method' => $values['request_delivery_method'],
+			'request_delivery_date'   => $values['request_delivery_date'],
+			'request_document'        => $values['request_document'],
+
+			// Approver.
+			'approver'                => $values['approver'],
+			'approved_date'           => $values['approved_date'],
+			'approver_email'          => $values['approver_email'],
+			'approver_phone'          => $values['approver_phone'],
+
+			// Acounts.
+			'accounts'                => $values['accounts'],
+		];
+
+		foreach ( $meta_input as $meta_key => $meta_value ) {
+			update_post_meta( $this->get_id(), $meta_key, $meta_value );
+		}
 	}
 
 	/**
@@ -180,14 +234,16 @@ class Check extends Data {
 	/**
 	 * Get delivery method.
 	 *
+	 * @param string $context Context: view or raw.
+	 *
 	 * @return string
 	 */
 	public function get_delivery_method( $context = 'view' ) {
 		$method  = $this->get_meta( 'request_delivery_method' );
 		$methods = [
-			'1' => 'USPS Priority - 2 Day',
-			'2' => 'USPS Priority Express Overnight',
-			'3' => 'Bundle',
+			'1' => esc_html__( 'USPS Priority - 2 Day', 'munipay' ),
+			'2' => esc_html__( 'USPS Priority Express Overnight', 'munipay' ),
+			'3' => esc_html__( 'Bundle', 'munipay' ),
 		];
 
 		return 'view' === $context ? $methods[ $method ] : $method;

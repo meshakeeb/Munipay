@@ -112,14 +112,19 @@
 				data.order_id     = munipay.orderID
 				data.requester_id = munipay.userID
 
-				app.post( 'create_check', data )
+				button.addClass( 'button--loading disabled' )
+				app.post( 'update_check', data )
 					.always(function() {
 						button.prop( 'disabled', false )
+						button.removeClass( 'button--loading disabled' )
 					})
 					.done( function( result ) {
 						if ( result && ! result.success ) {
 							return
 						}
+
+						button.html( '<span>' + munipay.l10n.button_update + '</span>' )
+						button.prev( 'input' ).val( result.checkID )
 					})
 			},
 

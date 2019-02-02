@@ -7,6 +7,7 @@
  * @subpackage Munipay\Core
  * @author     BoltMedia <info@boltmedia.ca>
  */
+
 namespace Munipay;
 
 use Munipay\Traits\Hooker;
@@ -46,7 +47,7 @@ class Review_Order {
 
 		<div class="container mt-5 mb-5">
 
-			<h3 class="mb-5">Review Requests</h3>
+			<h3 class="mb-5"><?php esc_html_e( 'Review Requests', 'munipay' ); ?></h3>
 
 			<div class="row">
 
@@ -68,14 +69,14 @@ class Review_Order {
 
 					<div class="d-flex justify-content-between p-4">
 						<div>
-							<h4 class="my-0">Total Charge</h4>
+							<h4 class="my-0"><?php esc_html_e( 'Total Charge', 'munipay' ); ?></h4>
 						</div>
 						<h3 class="my-0" id="order-total-amount"><?php echo $this->order->get_total(); ?></h3>
 					</div>
 					<?php else : ?>
-					No checks added to the order yet.<br>
+						<?php esc_html_e( 'No checks added to the order yet.', 'munipay' ); ?><br>
 					<div class="mt-2">
-						<a href="<?php echo home_url( '/enter-check' ); ?>" class="btn btn-warning btn-lg">Enter Checks</a>
+						<a href="<?php echo home_url( '/enter-check' ); ?>" class="btn btn-warning btn-lg"><?php esc_html_e( 'Enter Checks', 'munipay' ); ?></a>
 					</div>
 					<?php endif; ?>
 
@@ -85,7 +86,7 @@ class Review_Order {
 
 			<div class="text-right my-5">
 				<?php if ( $this->order->has_checks() ) : ?>
-				<a href="<?php echo home_url( '/checkout' ); ?>" class="btn btn-warning btn-lg">Checkout</a>
+				<a href="<?php echo home_url( '/checkout' ); ?>" class="btn btn-warning btn-lg"><?php esc_html_e( 'Checkout', 'munipay' ); ?></a>
 				<?php endif; ?>
 			</div>
 

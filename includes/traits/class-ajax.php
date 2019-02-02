@@ -39,7 +39,7 @@ trait Ajax {
 	 */
 	public function verify_nonce( $action ) {
 		if ( ! isset( $_REQUEST['security'] ) || ! \wp_verify_nonce( $_REQUEST['security'], $action ) ) {
-			$this->error( __( 'Error: Nonce verification failed', 'rank-math' ) );
+			$this->error( __( 'Error: Nonce verification failed', 'munipay' ) );
 		}
 	}
 

@@ -7,6 +7,7 @@
  * @subpackage Munipay\Core
  * @author     BoltMedia <info@boltmedia.ca>
  */
+
 namespace Munipay;
 
 defined( 'ABSPATH' ) || exit;
@@ -131,7 +132,7 @@ class Form {
 		<div class="col">
 			<div class="custom-file">
 				<input<?php echo self::attributes_to_string( $args ); ?>>
-				<label class="custom-file-label" for="<?php echo $args['id']; ?>">Choose file...</label>
+				<label class="custom-file-label" for="<?php echo $args['id']; ?>"><?php esc_html_e( 'Choose file...', 'munipay' ); ?></label>
 			</div>
 			<small class="form-text pl-2 text-muted"><?php echo $title; ?></small>
 		</div>

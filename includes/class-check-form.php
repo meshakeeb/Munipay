@@ -7,6 +7,7 @@
  * @subpackage Munipay\Core
  * @author     BoltMedia <info@boltmedia.ca>
  */
+
 namespace Munipay;
 
 use stdClass;
@@ -60,7 +61,7 @@ class Check_Form {
 
 			<?php $this->get_template( 'requester' ); ?>
 
-			<h3 class="mb-3">Requests</h3>
+			<h3 class="mb-3"><?php esc_html_e( 'Requests', 'munipay' ); ?></h3>
 
 			<div id="orders" class="order-accordion">
 				<?php
@@ -78,8 +79,8 @@ class Check_Form {
 					<?php $this->get_template( 'check' ); ?>
 				</div>
 
-				<button type="button" class="btn btn-primary btn-lg order-request-add">Add New Request</button>
-				<a href="<?php echo home_url( '/review-checks' ); ?>" class="btn btn-warning btn-lg">Review Request</a>
+				<button type="button" class="button btn btn-primary btn-lg order-request-add"><span><?php esc_html_e( 'Add New Request', 'munipay' ); ?></span></button>
+				<a href="<?php echo home_url( '/review-checks' ); ?>" class="btn btn-warning btn-lg"><?php esc_html_e( 'Review Request', 'munipay' ); ?></a>
 
 			</div>
 

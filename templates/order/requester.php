@@ -11,7 +11,7 @@ $order = $this->order;
 ?>
 <form class="jumbotron p-4" id="order-requester">
 
-	<h5 class="pb-3">Check Requester</h5>
+	<h5 class="pb-3"><?php esc_html_e( 'Check Requester', 'munipay' ); ?></h5>
 
 	<div class="row">
 
@@ -20,7 +20,7 @@ $order = $this->order;
 		Form::text(
 			[
 				'id'       => 'request_date',
-				'title'    => 'Date',
+				'title'    => esc_html__( 'Date', 'munipay' ),
 				'value'    => $order->get_order_date(),
 				'readonly' => 'readonly',
 			]
@@ -29,7 +29,7 @@ $order = $this->order;
 		Form::text(
 			[
 				'id'    => 'requester_email',
-				'title' => 'Email',
+				'title' => esc_html__( 'Email', 'munipay' ),
 				'value' => $order->get_requester_email(),
 			]
 		);
@@ -45,7 +45,7 @@ $order = $this->order;
 		Form::text(
 			[
 				'id'    => 'requester_name',
-				'title' => 'Requester Name',
+				'title' => esc_html__( 'Requester Name', 'munipay' ),
 				'value' => $order->get_requester_name(),
 			]
 		);
@@ -53,7 +53,7 @@ $order = $this->order;
 		Form::text(
 			[
 				'id'    => 'requester_phone',
-				'title' => 'Phone',
+				'title' => esc_html__( 'Phone', 'munipay' ),
 				'value' => $order->get_requester_phone(),
 			]
 		);
@@ -69,7 +69,7 @@ $order = $this->order;
 		Form::text(
 			[
 				'id'    => 'requester_signum',
-				'title' => 'Signum',
+				'title' => esc_html__( 'Signum', 'munipay' ),
 				'value' => $order->get_requester_signum(),
 			]
 		);
@@ -77,7 +77,7 @@ $order = $this->order;
 		Form::text(
 			[
 				'id'    => 'requester_cost_center',
-				'title' => 'Cost center',
+				'title' => esc_html__( 'Cost center', 'munipay' ),
 				'value' => $order->get_requester_cost_center(),
 			]
 		);

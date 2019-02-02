@@ -10,6 +10,7 @@
  * @package Munipay
  * @author  BoltMedia <info@boltmedia.ca>
  */
+
 ?><!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -33,7 +34,7 @@
 				</div>
 
 				<div class="col-7">
-					<span class="link">ERICSSON CHECK REQUEST PORTAL</span>
+					<span class="link"><?php esc_html_e( 'ERICSSON CHECK REQUEST PORTAL', 'munipay' ); ?></span>
 				</div>
 
 			</div>

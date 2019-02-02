@@ -7,12 +7,16 @@
  * @subpackage Munipay\Core
  * @author     BoltMedia <info@boltmedia.ca>
  */
+
 namespace Munipay;
 
 use Walker_Nav_Menu;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Bootstrap menu walker
+ */
 class Bootstrap_Walker extends Walker_Nav_Menu {
 
 	/**
@@ -24,7 +28,7 @@ class Bootstrap_Walker extends Walker_Nav_Menu {
 	 *
 	 * @param string $output Passed by reference. Used to append additional content.
 	 * @param int    $depth  Depth of menu item. Used for padding.
-	 * @param array  $args   An array of arguments. @see wp_nav_menu()
+	 * @param array  $args   An array of arguments. @see wp_nav_menu().
 	 */
 	public function start_lvl( &$output, $depth = 0, $args = [] ) {
 		$indent  = str_repeat( "\t", $depth );
@@ -40,7 +44,7 @@ class Bootstrap_Walker extends Walker_Nav_Menu {
 	 *
 	 * @param string $output Passed by reference. Used to append additional content.
 	 * @param int    $depth  Depth of menu item. Used for padding.
-	 * @param array  $args   An array of arguments. @see wp_nav_menu()
+	 * @param array  $args   An array of arguments. @see wp_nav_menu().
 	 */
 	public function end_lvl( &$output, $depth = 0, $args = [] ) {
 		$indent  = str_repeat( "\t", $depth );
@@ -57,7 +61,7 @@ class Bootstrap_Walker extends Walker_Nav_Menu {
 	 * @param string $output Passed by reference. Used to append additional content.
 	 * @param object $item   Menu item data object.
 	 * @param int    $depth  Depth of menu item. Used for padding.
-	 * @param array  $args   An array of arguments. @see wp_nav_menu()
+	 * @param array  $args   An array of arguments. @see wp_nav_menu().
 	 * @param int    $id     Current item ID.
 	 */
 	public function start_el( &$output, $item, $depth = 0, $args = [], $id = 0 ) {
@@ -79,9 +83,7 @@ class Bootstrap_Walker extends Walker_Nav_Menu {
 		 */
 		$class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args, $depth ) );
 
-		// New
 		$class_names .= ' nav-item';
-
 		if ( in_array( 'menu-item-has-children', $classes ) ) {
 			$class_names .= ' dropdown';
 		}
@@ -89,7 +91,6 @@ class Bootstrap_Walker extends Walker_Nav_Menu {
 		if ( in_array( 'current-menu-item', $classes ) ) {
 			$class_names .= ' active';
 		}
-		//
 
 		$class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
 
@@ -107,11 +108,9 @@ class Bootstrap_Walker extends Walker_Nav_Menu {
 		$id = apply_filters( 'nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args, $depth );
 		$id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
 
-		// New
 		if ( 0 === $depth ) {
 			$output .= $indent . '<li' . $id . $class_names . '>';
 		}
-		//
 
 		$atts           = [];
 		$atts['title']  = ! empty( $item->attr_title ) ? $item->attr_title : '';
@@ -119,7 +118,6 @@ class Bootstrap_Walker extends Walker_Nav_Menu {
 		$atts['rel']    = ! empty( $item->xfn ) ? $item->xfn : '';
 		$atts['href']   = ! empty( $item->url ) ? $item->url : '';
 
-		// New
 		if ( 0 === $depth ) {
 			$atts['class'] = 'nav-link';
 		}
@@ -137,7 +135,6 @@ class Bootstrap_Walker extends Walker_Nav_Menu {
 		if ( in_array( 'current-menu-item', $item->classes ) ) {
 			$atts['class'] .= ' active';
 		}
-		//
 
 		/**
 		 * Filter the HTML attributes applied to a menu item's anchor element.
@@ -201,7 +198,7 @@ class Bootstrap_Walker extends Walker_Nav_Menu {
 	 * @param string $output Passed by reference. Used to append additional content.
 	 * @param object $item   Page data object. Not used.
 	 * @param int    $depth  Depth of page. Not Used.
-	 * @param array  $args   An array of arguments. @see wp_nav_menu()
+	 * @param array  $args   An array of arguments. @see wp_nav_menu().
 	 */
 	public function end_el( &$output, $item, $depth = 0, $args = [] ) {
 		if ( 0 === $depth ) {

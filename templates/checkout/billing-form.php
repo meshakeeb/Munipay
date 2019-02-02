@@ -7,18 +7,18 @@
 
 $order = $this->order;
 ?>
-<h4 class="mb-3">Billing address</h4>
+<h4 class="mb-3"><?php esc_html_e( 'Billing address', 'munipay' ); ?></h4>
 
 <form class="needs-validation" novalidate>
 
 	<div class="mb-3">
 
-		<label for="requester_name">Requester Name</label>
+		<label for="requester_name"><?php esc_html_e( 'Requester Name', 'munipay' ); ?></label>
 
 		<input type="text" class="form-control" id="requester_name" name="requester_name" value="<?php echo $order->get_requester_name(); ?>" required>
 
 		<div class="invalid-feedback">
-			Valid requester name is required.
+			<?php esc_html_e( 'Valid requester name is required.', 'munipay' ); ?>
 		</div>
 
 	</div>
@@ -27,7 +27,7 @@ $order = $this->order;
 
 		<div class="col-md-6 mb-3">
 
-			<label for="requester_email">Email</label>
+			<label for="requester_email"><?php esc_html_e( 'Email', 'munipay' ); ?></label>
 
 			<div class="input-group">
 
@@ -38,7 +38,7 @@ $order = $this->order;
 				<input type="text" class="form-control" id="requester_email" name="requester_email" value="<?php echo $order->get_requester_email(); ?>" required>
 
 				<div class="invalid-feedback">
-					Valid email is required.
+					<?php esc_html_e( 'Valid email is required.', 'munipay' ); ?>
 				</div>
 
 			</div>
@@ -47,12 +47,12 @@ $order = $this->order;
 
 		<div class="col-md-6 mb-3">
 
-			<label for="requester_phone">Phone</label>
+			<label for="requester_phone"><?php esc_html_e( 'Phone', 'munipay' ); ?></label>
 
 			<input type="text" class="form-control" id="requester_phone" name="requester_phone" value="<?php echo $order->get_requester_phone(); ?>" required>
 
 			<div class="invalid-feedback">
-				Valid phone is required.
+				<?php esc_html_e( 'Valid phone is required.', 'munipay' ); ?>
 			</div>
 
 		</div>
@@ -63,24 +63,24 @@ $order = $this->order;
 
 		<div class="col-md-6 mb-3">
 
-			<label for="requester_signum">Signum</label>
+			<label for="requester_signum"><?php esc_html_e( 'Signum', 'munipay' ); ?></label>
 
 			<input type="text" class="form-control" id="requester_signum" name="requester_signum" value="<?php echo $order->get_requester_signum(); ?>" required>
 
 			<div class="invalid-feedback">
-				Valid signum is required.
+				<?php esc_html_e( 'Valid signum is required.', 'munipay' ); ?>
 			</div>
 
 		</div>
 
 		<div class="col-md-6 mb-3">
 
-			<label for="requester_cost_center">Cost Center</label>
+			<label for="requester_cost_center"><?php esc_html_e( 'Cost Center', 'munipay' ); ?></label>
 
 			<input type="text" class="form-control" id="requester_cost_center" name="requester_cost_center" value="<?php echo $order->get_requester_cost_center(); ?>" required>
 
 			<div class="invalid-feedback">
-				Valid cost center is required.
+				<?php esc_html_e( 'Valid cost center is required.', 'munipay' ); ?>
 			</div>
 
 		</div>
@@ -89,19 +89,19 @@ $order = $this->order;
 
 	<div class="mb-3">
 
-		<label for="payment_address">Address</label>
+		<label for="payment_address"><?php esc_html_e( 'Address', 'munipay' ); ?></label>
 
 		<input type="text" class="form-control" id="payment_address" name="payment_address" placeholder="1234 Main St" required>
 
 		<div class="invalid-feedback">
-			Please enter your shipping address.
+			<?php esc_html_e( 'Please enter your shipping address.', 'munipay' ); ?>
 		</div>
 
 	</div>
 
 	<div class="mb-3">
 
-		<label for="payment_address_2">Address 2 <span class="text-muted">(Optional)</span></label>
+		<label for="payment_address_2"><?php esc_html_e( 'Address 2', 'munipay' ); ?> <span class="text-muted"><?php esc_html_e( '(Optional)', 'munipay' ); ?></span></label>
 
 		<input type="text" class="form-control" id="payment_address_2" name="payment_address" placeholder="Apartment or suite">
 
@@ -111,42 +111,42 @@ $order = $this->order;
 
 		<div class="col-md-5 mb-3">
 
-			<label for="payment_state">State</label>
+			<label for="payment_state"><?php esc_html_e( 'State', 'munipay' ); ?></label>
 
 			<select class="custom-select d-block w-100" id="payment_state" name="payment_state" required>
-				<option value="">Choose...</option>
-				<option>United States</option>
+				<option value=""><?php esc_html_e( 'Choose...', 'munipay' ); ?></option>
+				<option><?php esc_html_e( 'United States', 'munipay' ); ?></option>
 			</select>
 
 			<div class="invalid-feedback">
-				Please select a valid state.
+				<?php esc_html_e( 'Please select a valid state.', 'munipay' ); ?>
 			</div>
 
 		</div>
 
 		<div class="col-md-4 mb-3">
 
-			<label for="state">State</label>
+			<label for="state"><?php esc_html_e( 'State', 'munipay' ); ?></label>
 
 			<select class="custom-select d-block w-100" id="state" required>
-				<option value="">Choose...</option>
-				<option>California</option>
+				<option value=""><?php esc_html_e( 'Choose...', 'munipay' ); ?></option>
+				<option><?php esc_html_e( 'California', 'munipay' ); ?></option>
 			</select>
 
 			<div class="invalid-feedback">
-				Please provide a valid state.
+				<?php esc_html_e( 'Please provide a valid state.', 'munipay' ); ?>
 			</div>
 
 		</div>
 
 		<div class="col-md-3 mb-3">
 
-			<label for="zip">Zip</label>
+			<label for="zip"><?php esc_html_e( 'Zip', 'munipay' ); ?></label>
 
 			<input type="text" class="form-control" id="zip" placeholder="" required>
 
 			<div class="invalid-feedback">
-				Zip code required.
+				<?php esc_html_e( 'Zip code required.', 'munipay' ); ?>
 			</div>
 
 		</div>
@@ -155,32 +155,32 @@ $order = $this->order;
 
 	<hr class="mb-4">
 
-	<h4 class="mb-3">Payment</h4>
+	<h4 class="mb-3"><?php esc_html_e( 'Payment', 'munipay' ); ?></h4>
 
 	<div class="row">
 
 		<div class="col-md-6 mb-3">
 
-			<label for="cc-name">Name on card</label>
+			<label for="cc-name"><?php esc_html_e( 'Name on card', 'munipay' ); ?></label>
 
 			<input type="text" class="form-control" id="cc-name" placeholder="" required>
 
-			<small class="text-muted">Full name as displayed on card</small>
+			<small class="text-muted"><?php esc_html_e( 'Full name as displayed on card', 'munipay' ); ?></small>
 
 			<div class="invalid-feedback">
-				Name on card is required
+				<?php esc_html_e( 'Name on card is required', 'munipay' ); ?>
 			</div>
 
 		</div>
 
 		<div class="col-md-6 mb-3">
 
-			<label for="cc-number">Credit card number</label>
+			<label for="cc-number"><?php esc_html_e( 'Credit card number', 'munipay' ); ?></label>
 
 			<input type="text" class="form-control" id="cc-number" placeholder="" required>
 
 			<div class="invalid-feedback">
-				Credit card number is required
+				<?php esc_html_e( 'Credit card number is required', 'munipay' ); ?>
 			</div>
 
 		</div>
@@ -191,24 +191,24 @@ $order = $this->order;
 
 		<div class="col-md-3 mb-3">
 
-			<label for="cc-expiration">Expiration</label>
+			<label for="cc-expiration"><?php esc_html_e( 'Expiration', 'munipay' ); ?></label>
 
 			<input type="text" class="form-control" id="cc-expiration" placeholder="" required>
 
 			<div class="invalid-feedback">
-				Expiration date required
+				<?php esc_html_e( 'Expiration date required', 'munipay' ); ?>
 			</div>
 
 		</div>
 
 		<div class="col-md-3 mb-3">
 
-			<label for="cc-cvv">CVV</label>
+			<label for="cc-cvv"><?php esc_html_e( 'CVV', 'munipay' ); ?></label>
 
 			<input type="text" class="form-control" id="cc-cvv" placeholder="" required>
 
 			<div class="invalid-feedback">
-				Security code required
+				<?php esc_html_e( 'Security code required', 'munipay' ); ?>
 			</div>
 
 		</div>
@@ -217,6 +217,6 @@ $order = $this->order;
 
 	<hr class="mb-4">
 
-	<button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+	<button class="btn btn-primary btn-lg btn-block" type="submit"><?php esc_html_e( 'Continue to checkout', 'munipay' ); ?></button>
 
 </form>

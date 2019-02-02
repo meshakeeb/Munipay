@@ -7,6 +7,7 @@
  * @subpackage Munipay\Core
  * @author     BoltMedia <info@boltmedia.ca>
  */
+
 namespace Munipay;
 
 use Munipay\Traits\Hooker;
@@ -29,7 +30,7 @@ class Theme_Setup {
 		$this->action( 'wp_enqueue_scripts', 'enqueue' );
 		$this->action( 'login_enqueue_scripts', 'login_enqueue' );
 
-		// Logout Link
+		// Logout Link.
 		$this->filter( 'wp_nav_menu_items', 'add_loginout_link', 10, 2 );
 
 		// Allow shortcodes in widget text.
@@ -160,10 +161,16 @@ class Theme_Setup {
 				'security' => wp_create_nonce( 'munipay_security_salt' ),
 				'orderID'  => $order_id,
 				'userID'   => $current_user->ID,
+				'l10n'     => [
+					'button_update' => esc_html__( 'Update Check Request', 'munipay' ),
+				],
 			]
 		);
 	}
 
+	/**
+	 * Enqueue styles on loging page.
+	 */
 	public function login_enqueue() {
 		$this->enqueue();
 		wp_enqueue_style( 'theme-login', munipay()->assets() . '/css/theme-login.css', null, munipay()->version );
@@ -200,7 +207,7 @@ class Theme_Setup {
 	 */
 	public function authenticate_user() {
 
-		// Exceptions for AJAX, Cron, or WP-CLI requests
+		// Exceptions for AJAX, Cron, or WP-CLI requests.
 		if ( ( defined( 'DOING_AJAX' ) && DOING_AJAX ) || ( defined( 'DOING_CRON' ) && DOING_CRON ) || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 			return;
 		}

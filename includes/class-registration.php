@@ -7,6 +7,7 @@
  * @subpackage Munipay\Core
  * @author     BoltMedia <info@boltmedia.ca>
  */
+
 namespace Munipay;
 
 use Munipay\Traits\Hooker;
@@ -25,7 +26,9 @@ class Registration {
 	 */
 	public function __construct() {
 
-		// Add -----------------------------------------------------
+		/**
+		 * Add -----------------------------------------------------
+		 */
 
 		// Add fields on registration page.
 		$this->action( 'register_form', 'add' );
@@ -36,7 +39,9 @@ class Registration {
 		// Add fields on author profile page.
 		$this->filter( 'user_contactmethods', 'add_on_profile' );
 
-		// Validation ----------------------------------------------
+		/**
+		 * Validation ----------------------------------------------
+		 */
 
 		// Add validation for registration page.
 		$this->filter( 'registration_errors', 'validate' );
@@ -44,7 +49,9 @@ class Registration {
 		// Add validation for backend new user page.
 		$this->action( 'user_profile_update_errors', 'validate_new_user', 10, 3 );
 
-		// Save Fields ---------------------------------------------
+		/**
+		 * Save Fields ---------------------------------------------
+		 */
 
 		// Finally, save our extra registration user meta.
 		$this->action( 'user_register', 'save' );
@@ -176,30 +183,35 @@ class Registration {
 		}
 	}
 
+	/**
+	 * Get custom fields.
+	 *
+	 * @return array
+	 */
 	public static function get_fields() {
 		return [
 			'first_name'  => [
-				'title' => __( 'First Name', 'munipay' ),
+				'title' => esc_html__( 'First Name', 'munipay' ),
 				'grid'  => 6,
 			],
 
 			'last_name'   => [
-				'title' => __( 'Last Name', 'munipay' ),
+				'title' => esc_html__( 'Last Name', 'munipay' ),
 				'grid'  => 6,
 			],
 
 			'phone'       => [
-				'title' => __( 'Phone', 'munipay' ),
+				'title' => esc_html__( 'Phone', 'munipay' ),
 				'grid'  => 6,
 			],
 
 			'signum'      => [
-				'title' => __( 'Signum', 'munipay' ),
+				'title' => esc_html__( 'Signum', 'munipay' ),
 				'grid'  => 6,
 			],
 
 			'cost_center' => [
-				'title' => __( 'Cost Center', 'munipay' ),
+				'title' => esc_html__( 'Cost Center', 'munipay' ),
 				'grid'  => 12,
 			],
 		];

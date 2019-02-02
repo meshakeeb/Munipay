@@ -7,6 +7,7 @@
  * @subpackage Munipay\Core
  * @author     BoltMedia <info@boltmedia.ca>
  */
+
 namespace Munipay;
 
 defined( 'ABSPATH' ) || exit;
@@ -23,7 +24,7 @@ class Ajax {
 	 */
 	public function __construct() {
 		$this->ajax( 'create_order', 'create_order' );
-		$this->ajax( 'create_check', 'create_check' );
+		$this->ajax( 'update_check', 'update_check' );
 		$this->ajax( 'delete_check', 'delete_check' );
 	}
 
@@ -33,13 +34,13 @@ class Ajax {
 	public function create_order() {
 		$this->verify_nonce( 'munipay_security_salt' );
 
-		// Create Order
-		$order    = new Order( 0 );
-		$order_id = $order->save();
+		// Create Order.
+		$order = new Order( 0 );
+		$order->save();
 
 		$this->success(
 			[
-				'orderID' => $order_id,
+				'orderID' => $order->get_id(),
 				'message' => 'Order successfully saved.',
 			]
 		);
@@ -48,16 +49,16 @@ class Ajax {
 	/**
 	 * Create Check.
 	 */
-	public function create_check() {
+	public function update_check() {
 		$this->verify_nonce( 'munipay_security_salt' );
 
-		// Create Check
-		$check    = new Check( 0 );
-		$check_id = $check->save();
+		// Create Check.
+		$check = new Check( $_POST['check_id'] );
+		$check->save();
 
 		$this->success(
 			[
-				'checkID' => $check_id,
+				'checkID' => $check->get_id(),
 				'message' => 'Check successfully saved.',
 			]
 		);

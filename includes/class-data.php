@@ -10,6 +10,7 @@
  * @subpackage Munipay\Core
  * @author     BoltMedia <info@boltmedia.ca>
  */
+
 namespace Munipay;
 
 use WP_Post;
@@ -119,8 +120,6 @@ abstract class Data {
 	 * Generate html ids with data id.
 	 *
 	 * @param string $prefix Prefix to add with id.
-	 *
-	 * @return string
 	 */
 	public function get_html_id( $prefix ) {
 		echo $prefix . '-' . $this->get_id();

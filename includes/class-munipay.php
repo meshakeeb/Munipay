@@ -135,11 +135,6 @@ final class Munipay {
 	 */
 	private function instantiate() {
 		include MUNIPAY_PATH . '/vendor/autoload.php';
-
-		// if ( is_admin() ) {
-		// 	new \Munipay\Admin\Admin;
-		// }
-		//
 		new \Munipay\Theme_Setup;
 	}
 }
