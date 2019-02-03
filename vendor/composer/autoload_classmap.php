@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'Munipay' => $baseDir . '/includes/class-munipay.php',
     'Munipay\\Ajax' => $baseDir . '/includes/class-ajax.php',
+    'Munipay\\Authorize' => $baseDir . '/includes/class-authorize.php',
     'Munipay\\Bootstrap_Walker' => $baseDir . '/includes/class-bootstrap-walker.php',
     'Munipay\\Check' => $baseDir . '/includes/class-check.php',
     'Munipay\\Check_Form' => $baseDir . '/includes/class-check-form.php',

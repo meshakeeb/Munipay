@@ -27,7 +27,7 @@ class Form {
 			return;
 		}
 		?>
-		<div class="alert alert-danger" role="alert">
+		<div class="alert alert-<?php echo 'success' === $errors->get_error_code() ? 'success' : 'danger'; ?>" role="alert">
 			<ul class="list-unstyled mb-0">
 				<?php echo '<li>' . join( '</li><li>', $errors->get_error_messages() ) . '</li>'; ?>
 			</ul>
@@ -62,6 +62,7 @@ class Form {
 		unset( $args['title'] );
 
 		$input = sprintf( '<input%s>', self::attributes_to_string( $args ) );
+
 		if ( $only ) {
 			echo $input;
 			return;
@@ -78,8 +79,9 @@ class Form {
 	 * Render select field.
 	 *
 	 * @param array $args Field args.
+	 * @param bool  $only Only input.
 	 */
-	public static function select( $args = [] ) {
+	public static function select( $args = [], $only = false ) {
 		$args = wp_parse_args(
 			$args,
 			[
@@ -99,13 +101,26 @@ class Form {
 		$value   = $args['value'];
 		$options = $args['options'];
 		unset( $args['title'], $args['options'], $args['value'] );
+
+		// Input.
+		$input = sprintf( '<select%s>', self::attributes_to_string( $args ) );
+		foreach ( $options as $key => $label ) {
+			$input .= sprintf(
+				'<option value="%1$s"%3$s>%2$s</option>',
+				$key,
+				$label,
+				selected( $value, $key, false )
+			);
+		}
+		$input .= '</select>';
+
+		if ( $only ) {
+			echo $input;
+			return;
+		}
 		?>
 		<div class="col">
-			<select<?php echo self::attributes_to_string( $args ); ?>>
-			<?php foreach ( $options as $key => $label ) : ?>
-				<option value="<?php echo $key; ?>"<?php selected( $value, $key ); ?>><?php echo $label; ?></option>
-			<?php endforeach; ?>
-			</select>
+			<?php echo $input; ?>
 			<small class="form-text pl-2 text-muted"><?php echo $title; ?></small>
 		</div>
 		<?php

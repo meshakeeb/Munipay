@@ -5,7 +5,10 @@
  * @package Aheto
  */
 
-$order = $this->order;
+use Munipay\Form;
+
+$order        = $this->order;
+$current_user = wp_get_current_user();
 ?>
 <h4 class="mb-3"><?php esc_html_e( 'Billing address', 'munipay' ); ?></h4>
 
@@ -89,7 +92,17 @@ $order = $this->order;
 
 	<label for="payment_address"><?php esc_html_e( 'Address', 'munipay' ); ?></label>
 
-	<input type="text" class="form-control" id="payment_address" name="payment_address" placeholder="1234 Main St" required>
+	<?php
+	Form::text(
+		[
+			'id'          => 'payment_address',
+			'required'    => '',
+			'placeholder' => '1234 Main St',
+			'value'       => $current_user->get( 'payment_address' ),
+		],
+		true
+	);
+	?>
 
 	<div class="invalid-feedback">
 		<?php esc_html_e( 'Please enter your shipping address.', 'munipay' ); ?>
@@ -101,7 +114,16 @@ $order = $this->order;
 
 	<label for="payment_address_2"><?php esc_html_e( 'Address 2', 'munipay' ); ?> <span class="text-muted"><?php esc_html_e( '(Optional)', 'munipay' ); ?></span></label>
 
-	<input type="text" class="form-control" id="payment_address_2" name="payment_address_2" placeholder="Apartment or suite">
+	<?php
+	Form::text(
+		[
+			'id'          => 'payment_address_2',
+			'placeholder' => 'Apartment or suite',
+			'value'       => $current_user->get( 'payment_address_2' ),
+		],
+		true
+	);
+	?>
 
 </div>
 
@@ -113,63 +135,74 @@ $order = $this->order;
 
 		<label for="payment_state"><?php esc_html_e( 'State', 'munipay' ); ?></label>
 
-		<select class="custom-select d-block w-100" id="payment_state" name="payment_state" required>
-			<option value=""><?php esc_html_e( 'Choose...', 'munipay' ); ?></option>
-			<option value="AL"><?php esc_html_e( 'Alabama', 'munipay' ); ?></option>
-			<option value="AK"><?php esc_html_e( 'Alaska', 'munipay' ); ?></option>
-			<option value="AZ"><?php esc_html_e( 'Arizona', 'munipay' ); ?></option>
-			<option value="AR"><?php esc_html_e( 'Arkansas', 'munipay' ); ?></option>
-			<option value="CA"><?php esc_html_e( 'California', 'munipay' ); ?></option>
-			<option value="CO"><?php esc_html_e( 'Colorado', 'munipay' ); ?></option>
-			<option value="CT"><?php esc_html_e( 'Connecticut', 'munipay' ); ?></option>
-			<option value="DE"><?php esc_html_e( 'Delaware', 'munipay' ); ?></option>
-			<option value="DC"><?php esc_html_e( 'District Of Columbia', 'munipay' ); ?></option>
-			<option value="FL"><?php esc_html_e( 'Florida', 'munipay' ); ?></option>
-			<option value="GA"><?php esc_html_e( 'Georgia', 'munipay' ); ?></option>
-			<option value="HI"><?php esc_html_e( 'Hawaii', 'munipay' ); ?></option>
-			<option value="ID"><?php esc_html_e( 'Idaho', 'munipay' ); ?></option>
-			<option value="IL"><?php esc_html_e( 'Illinois', 'munipay' ); ?></option>
-			<option value="IN"><?php esc_html_e( 'Indiana', 'munipay' ); ?></option>
-			<option value="IA"><?php esc_html_e( 'Iowa', 'munipay' ); ?></option>
-			<option value="KS"><?php esc_html_e( 'Kansas', 'munipay' ); ?></option>
-			<option value="KY"><?php esc_html_e( 'Kentucky', 'munipay' ); ?></option>
-			<option value="LA"><?php esc_html_e( 'Louisiana', 'munipay' ); ?></option>
-			<option value="ME"><?php esc_html_e( 'Maine', 'munipay' ); ?></option>
-			<option value="MD"><?php esc_html_e( 'Maryland', 'munipay' ); ?></option>
-			<option value="MA"><?php esc_html_e( 'Massachusetts', 'munipay' ); ?></option>
-			<option value="MI"><?php esc_html_e( 'Michigan', 'munipay' ); ?></option>
-			<option value="MN"><?php esc_html_e( 'Minnesota', 'munipay' ); ?></option>
-			<option value="MS"><?php esc_html_e( 'Mississippi', 'munipay' ); ?></option>
-			<option value="MO"><?php esc_html_e( 'Missouri', 'munipay' ); ?></option>
-			<option value="MT"><?php esc_html_e( 'Montana', 'munipay' ); ?></option>
-			<option value="NE"><?php esc_html_e( 'Nebraska', 'munipay' ); ?></option>
-			<option value="NV"><?php esc_html_e( 'Nevada', 'munipay' ); ?></option>
-			<option value="NH"><?php esc_html_e( 'New Hampshire', 'munipay' ); ?></option>
-			<option value="NJ"><?php esc_html_e( 'New Jersey', 'munipay' ); ?></option>
-			<option value="NM"><?php esc_html_e( 'New Mexico', 'munipay' ); ?></option>
-			<option value="NY"><?php esc_html_e( 'New York', 'munipay' ); ?></option>
-			<option value="NC"><?php esc_html_e( 'North Carolina', 'munipay' ); ?></option>
-			<option value="ND"><?php esc_html_e( 'North Dakota', 'munipay' ); ?></option>
-			<option value="OH"><?php esc_html_e( 'Ohio', 'munipay' ); ?></option>
-			<option value="OK"><?php esc_html_e( 'Oklahoma', 'munipay' ); ?></option>
-			<option value="OR"><?php esc_html_e( 'Oregon', 'munipay' ); ?></option>
-			<option value="PA"><?php esc_html_e( 'Pennsylvania', 'munipay' ); ?></option>
-			<option value="RI"><?php esc_html_e( 'Rhode Island', 'munipay' ); ?></option>
-			<option value="SC"><?php esc_html_e( 'South Carolina', 'munipay' ); ?></option>
-			<option value="SD"><?php esc_html_e( 'South Dakota', 'munipay' ); ?></option>
-			<option value="TN"><?php esc_html_e( 'Tennessee', 'munipay' ); ?></option>
-			<option value="TX"><?php esc_html_e( 'Texas', 'munipay' ); ?></option>
-			<option value="UT"><?php esc_html_e( 'Utah', 'munipay' ); ?></option>
-			<option value="VT"><?php esc_html_e( 'Vermont', 'munipay' ); ?></option>
-			<option value="VA"><?php esc_html_e( 'Virginia', 'munipay' ); ?></option>
-			<option value="WA"><?php esc_html_e( 'Washington', 'munipay' ); ?></option>
-			<option value="WV"><?php esc_html_e( 'West Virginia', 'munipay' ); ?></option>
-			<option value="WI"><?php esc_html_e( 'Wisconsin', 'munipay' ); ?></option>
-			<option value="WY"><?php esc_html_e( 'Wyoming', 'munipay' ); ?></option>
-			<option value="AA"><?php esc_html_e( 'Armed Forces (AA)', 'munipay' ); ?></option>
-			<option value="AE"><?php esc_html_e( 'Armed Forces (AE)', 'munipay' ); ?></option>
-			<option value="AP"><?php esc_html_e( 'Armed Forces (AP)', 'munipay' ); ?></option>
-		</select>
+		<?php
+		Form::select(
+			[
+				'id'       => 'payment_state',
+				'required' => '',
+				'class'    => 'custom-select d-block w-100',
+				'value'    => $current_user->get( 'payment_state' ),
+				'options'  => [
+					''   => esc_html__( 'Choose...', 'munipay' ),
+					'AL' => esc_html__( 'Alabama', 'munipay' ),
+					'AK' => esc_html__( 'Alaska', 'munipay' ),
+					'AZ' => esc_html__( 'Arizona', 'munipay' ),
+					'AR' => esc_html__( 'Arkansas', 'munipay' ),
+					'CA' => esc_html__( 'California', 'munipay' ),
+					'CO' => esc_html__( 'Colorado', 'munipay' ),
+					'CT' => esc_html__( 'Connecticut', 'munipay' ),
+					'DE' => esc_html__( 'Delaware', 'munipay' ),
+					'DC' => esc_html__( 'District Of Columbia', 'munipay' ),
+					'FL' => esc_html__( 'Florida', 'munipay' ),
+					'GA' => esc_html__( 'Georgia', 'munipay' ),
+					'HI' => esc_html__( 'Hawaii', 'munipay' ),
+					'ID' => esc_html__( 'Idaho', 'munipay' ),
+					'IL' => esc_html__( 'Illinois', 'munipay' ),
+					'IN' => esc_html__( 'Indiana', 'munipay' ),
+					'IA' => esc_html__( 'Iowa', 'munipay' ),
+					'KS' => esc_html__( 'Kansas', 'munipay' ),
+					'KY' => esc_html__( 'Kentucky', 'munipay' ),
+					'LA' => esc_html__( 'Louisiana', 'munipay' ),
+					'ME' => esc_html__( 'Maine', 'munipay' ),
+					'MD' => esc_html__( 'Maryland', 'munipay' ),
+					'MA' => esc_html__( 'Massachusetts', 'munipay' ),
+					'MI' => esc_html__( 'Michigan', 'munipay' ),
+					'MN' => esc_html__( 'Minnesota', 'munipay' ),
+					'MS' => esc_html__( 'Mississippi', 'munipay' ),
+					'MO' => esc_html__( 'Missouri', 'munipay' ),
+					'MT' => esc_html__( 'Montana', 'munipay' ),
+					'NE' => esc_html__( 'Nebraska', 'munipay' ),
+					'NV' => esc_html__( 'Nevada', 'munipay' ),
+					'NH' => esc_html__( 'New Hampshire', 'munipay' ),
+					'NJ' => esc_html__( 'New Jersey', 'munipay' ),
+					'NM' => esc_html__( 'New Mexico', 'munipay' ),
+					'NY' => esc_html__( 'New York', 'munipay' ),
+					'NC' => esc_html__( 'North Carolina', 'munipay' ),
+					'ND' => esc_html__( 'North Dakota', 'munipay' ),
+					'OH' => esc_html__( 'Ohio', 'munipay' ),
+					'OK' => esc_html__( 'Oklahoma', 'munipay' ),
+					'OR' => esc_html__( 'Oregon', 'munipay' ),
+					'PA' => esc_html__( 'Pennsylvania', 'munipay' ),
+					'RI' => esc_html__( 'Rhode Island', 'munipay' ),
+					'SC' => esc_html__( 'South Carolina', 'munipay' ),
+					'SD' => esc_html__( 'South Dakota', 'munipay' ),
+					'TN' => esc_html__( 'Tennessee', 'munipay' ),
+					'TX' => esc_html__( 'Texas', 'munipay' ),
+					'UT' => esc_html__( 'Utah', 'munipay' ),
+					'VT' => esc_html__( 'Vermont', 'munipay' ),
+					'VA' => esc_html__( 'Virginia', 'munipay' ),
+					'WA' => esc_html__( 'Washington', 'munipay' ),
+					'WV' => esc_html__( 'West Virginia', 'munipay' ),
+					'WI' => esc_html__( 'Wisconsin', 'munipay' ),
+					'WY' => esc_html__( 'Wyoming', 'munipay' ),
+					'AA' => esc_html__( 'Armed Forces (AA)', 'munipay' ),
+					'AE' => esc_html__( 'Armed Forces (AE)', 'munipay' ),
+					'AP' => esc_html__( 'Armed Forces (AP)', 'munipay' ),
+				],
+			],
+			true
+		);
+		?>
 
 		<div class="invalid-feedback">
 			<?php esc_html_e( 'Please select a valid state.', 'munipay' ); ?>
@@ -181,7 +214,17 @@ $order = $this->order;
 
 		<label for="payment_city"><?php esc_html_e( 'City', 'munipay' ); ?></label>
 
-		<input type="text" class="form-control" id="payment_city" name="payment_city" placeholder="City" required>
+		<?php
+		Form::text(
+			[
+				'id'          => 'payment_city',
+				'required'    => '',
+				'placeholder' => 'City',
+				'value'       => $current_user->get( 'payment_city' ),
+			],
+			true
+		);
+		?>
 
 		<div class="invalid-feedback">
 			<?php esc_html_e( 'Please provide a city.', 'munipay' ); ?>
@@ -193,7 +236,17 @@ $order = $this->order;
 
 		<label for="payment_zipcode"><?php esc_html_e( 'Zip Code', 'munipay' ); ?></label>
 
-		<input type="text" class="form-control" id="payment_zipcode" name="payment_zipcode" placeholder="" required>
+		<?php
+		Form::text(
+			[
+				'id'          => 'payment_zipcode',
+				'required'    => '',
+				'placeholder' => 'Zipcode',
+				'value'       => $current_user->get( 'payment_zipcode' ),
+			],
+			true
+		);
+		?>
 
 		<div class="invalid-feedback">
 			<?php esc_html_e( 'Zip code required.', 'munipay' ); ?>
@@ -211,9 +264,9 @@ $order = $this->order;
 
 	<div class="col-md-6 mb-3">
 
-		<label for="cc-name"><?php esc_html_e( 'Name on card', 'munipay' ); ?></label>
+		<label for="payment_cc_name"><?php esc_html_e( 'Name on card', 'munipay' ); ?></label>
 
-		<input type="text" class="form-control" id="cc-name" placeholder="" required>
+		<input type="text" class="form-control" id="payment_cc_name" name="payment_cc_name" required>
 
 		<div class="invalid-feedback">
 			<?php esc_html_e( 'Name on card is required', 'munipay' ); ?>
@@ -223,9 +276,9 @@ $order = $this->order;
 
 	<div class="col-md-6 mb-3">
 
-		<label for="cc-number"><?php esc_html_e( 'Credit card number', 'munipay' ); ?></label>
+		<label for="payment_cc_number"><?php esc_html_e( 'Credit card number', 'munipay' ); ?></label>
 
-		<input type="text" class="form-control" id="cc-number" placeholder="" required>
+		<input type="text" class="form-control" id="payment_cc_number" name="payment_cc_number" required>
 
 		<div class="invalid-feedback">
 			<?php esc_html_e( 'Credit card number is required', 'munipay' ); ?>
@@ -239,9 +292,9 @@ $order = $this->order;
 
 	<div class="col-md-6 mb-3">
 
-		<label for="cc-expiration"><?php esc_html_e( 'Expiration', 'munipay' ); ?></label>
+		<label for="payment_cc_expiration"><?php esc_html_e( 'Expiration', 'munipay' ); ?></label>
 
-		<input type="text" class="form-control" id="cc-expiration" placeholder="" required>
+		<input type="text" class="form-control" id="payment_cc_expiration" name="payment_cc_expiration" required>
 
 		<div class="invalid-feedback">
 			<?php esc_html_e( 'Expiration date required', 'munipay' ); ?>
@@ -251,9 +304,9 @@ $order = $this->order;
 
 	<div class="col-md-6 mb-3">
 
-		<label for="cc-cvv"><?php esc_html_e( 'CVV', 'munipay' ); ?></label>
+		<label for="payment_cc_cvv"><?php esc_html_e( 'CVV', 'munipay' ); ?></label>
 
-		<input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+		<input type="text" class="form-control" id="payment_cc_cvv" name="payment_cc_cvv" required>
 
 		<div class="invalid-feedback">
 			<?php esc_html_e( 'Security code required', 'munipay' ); ?>

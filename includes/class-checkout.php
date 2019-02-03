@@ -23,18 +23,25 @@ class Checkout {
 	use Hooker;
 
 	/**
-	 * Hold order for screen.
-	 *
-	 * @var Order
-	 */
-	protected $order = false;
-
-	/**
 	 * Hold errors.
 	 *
 	 * @var WP_Error
 	 */
-	private $errors = null;
+	public $errors = null;
+
+	/**
+	 * Hold order for screen.
+	 *
+	 * @var Order
+	 */
+	public $order = false;
+
+	/**
+	 * Hold form data.
+	 *
+	 * @var array
+	 */
+	public $data = [];
 
 	/**
 	 * The class constructor.
@@ -51,7 +58,6 @@ class Checkout {
 	public function form() {
 		ob_start();
 
-		$this->order = Order::get_current_order();
 		$this->get_template( 'header' );
 
 		?>
@@ -130,6 +136,8 @@ class Checkout {
 	 * Save form.
 	 */
 	public function save() {
+		$this->order = Order::get_current_order();
+
 		if ( empty( $_POST['action'] ) || 'munipay_checkout' !== $_POST['action'] || empty( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'munipay_checkout_payment' ) ) {
 			return;
 		}
@@ -139,19 +147,26 @@ class Checkout {
 			return;
 		}
 
-		$valid = $this->set_values();
+		if ( false === $this->set_values() ) {
+			return;
+		}
+
+		if ( false === $this->do_payment() ) {
+			return;
+		}
+
+		echo 'Processing SmartPayables';
 	}
 
 	/**
 	 * Get values from $_POST.
 	 *
-	 * @return array
+	 * @return bool
 	 */
 	private function set_values() {
-		$data    = [];
 		$valid   = true;
 		$user_id = get_current_user_id();
-		$fields  = [ 'payment_address', 'payment_address_2', 'payment_country', 'payment_state', 'payment_city', 'payment_zipcode' ];
+		$fields  = [ 'payment_address', 'payment_address_2', 'payment_country', 'payment_state', 'payment_city', 'payment_zipcode', 'payment_cc_name', 'payment_cc_number', 'payment_cc_expiration', 'payment_cc_cvv' ];
 
 		foreach ( $fields as $field ) {
 			if ( empty( $_POST[ $field ] ) && 'payment_address_2' !== $field ) {
@@ -161,10 +176,30 @@ class Checkout {
 				continue;
 			}
 
-			update_user_meta( $user_id, $field, sanitize_text_field( $_POST[ $field ] ) );
+			$this->data[ $field ] = sanitize_text_field( $_POST[ $field ] );
+
+			if ( ! in_array( $field, [ 'payment_cc_name', 'payment_cc_number', 'payment_cc_expiration', 'payment_cc_cvv' ], true ) ) {
+				update_user_meta( $user_id, $field, $this->data[ $field ] );
+			}
 		}
 
 		return $valid;
+	}
+
+	/**
+	 * Process the paument.
+	 */
+	private function do_payment() {
+		$authorize = new Authorize( $this );
+		$authorize->set_credit_card(
+			[
+				'ccv'    => $this->data['payment_cc_cvv'],
+				'number' => $this->data['payment_cc_number'],
+				'expire' => $this->data['payment_cc_expiration'],
+			]
+		);
+
+		return $authorize->process();
 	}
 
 	/**
