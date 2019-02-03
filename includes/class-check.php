@@ -88,12 +88,13 @@ class Check extends Data {
 	 * Create check.
 	 */
 	public function create() {
-		$values   = $this->get_values();
-		$title    = [
+		$values = $this->get_values();
+		$title  = [
 			__( 'Request', 'munipay' ),
 			$values['payee_name'],
 			$this->format_price( $values['request_amount'] ),
 		];
+
 		$check_id = wp_insert_post(
 			[
 				'post_title'  => join( ' &ndash; ', array_filter( $title ) ),
@@ -120,7 +121,6 @@ class Check extends Data {
 					'request_amount'          => $values['request_amount'],
 					'request_delivery_method' => $values['request_delivery_method'],
 					'request_delivery_date'   => $values['request_delivery_date'],
-					'request_document'        => $values['request_document'],
 
 					// Approver.
 					'approver'                => $values['approver'],
@@ -139,6 +139,7 @@ class Check extends Data {
 		}
 
 		$this->set_id( $check_id );
+		$this->handle_upload();
 	}
 
 	/**
@@ -177,7 +178,6 @@ class Check extends Data {
 			'request_amount'          => $values['request_amount'],
 			'request_delivery_method' => $values['request_delivery_method'],
 			'request_delivery_date'   => $values['request_delivery_date'],
-			'request_document'        => $values['request_document'],
 
 			// Approver.
 			'approver'                => $values['approver'],
@@ -191,6 +191,33 @@ class Check extends Data {
 
 		foreach ( $meta_input as $meta_key => $meta_value ) {
 			update_post_meta( $this->get_id(), $meta_key, $meta_value );
+		}
+		$this->handle_upload();
+	}
+
+	/**
+	 * Handle file upload.
+	 */
+	private function handle_upload() {
+		require_once( ABSPATH . 'wp-admin/includes/file.php' );
+
+		// Delete previous upload.
+		if ( $attach_id = get_post_meta( $this->get_id(), 'request_document', true ) ) { // phpcs:ignore
+			wp_delete_attachment( $attach_id, true );
+		}
+
+		// Upload new document.
+		$document = wp_handle_upload( $_FILES['request_document'], array( 'test_form' => false ) );
+		if ( $document && ! isset( $document['error'] ) ) {
+			$wp_upload_dir = wp_upload_dir();
+			$attachment    = array(
+				'guid'           => $wp_upload_dir['url'] . '/' . basename( $document['file'] ),
+				'post_mime_type' => $document['type'],
+				'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $document['file'] ) ),
+			);
+
+			$attach_id = wp_insert_attachment( $attachment, $document['file'], $this->get_id() );
+			update_post_meta( $this->get_id(), 'request_document', $attach_id );
 		}
 	}
 

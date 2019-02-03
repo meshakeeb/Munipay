@@ -281,4 +281,28 @@ class Profile {
 		$user->user_email = $_POST['user_email'];
 		wp_update_user( $user );
 	}
+
+	/**
+	 * Get users for dropdown.
+	 *
+	 * @param boolean $all All fields.
+	 *
+	 * @return array
+	 */
+	public static function get_users_choice( $all = false ) {
+		$users = get_users( [ 'role__not_in' => [ 'author', 'contributor', 'subscriber' ] ] );
+		if ( false === $all ) {
+			return [ '' => 'Select One' ] + wp_list_pluck( $users, 'display_name', 'ID' );
+		}
+
+		$data = [];
+		foreach ( $users as $user ) {
+			$data[ $user->ID ] = [
+				'email' => $user->get( 'user_email' ),
+				'phone' => $user->get( 'phone' ),
+			];
+		}
+
+		return $data;
+	}
 }

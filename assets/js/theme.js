@@ -22,31 +22,172 @@
 				munipay.orderID = parseInt( munipay.orderID )
 				munipay.userID = parseInt( munipay.userID )
 
+				this.misc()
 				this.accounts()
 				this.requests()
-				this.reviewOrder();
+				this.reviewOrder()
+				this.formValidation()
+			},
 
+			misc: function() {
 				if ( window.location.hash ) {
 					$( window.location.hash ).collapse( 'show' );
 				}
 
-				// Form validation.
-				window.addEventListener( 'load', function() {
-					// Fetch all the forms we want to apply custom Bootstrap validation styles to
-					var forms = document.getElementsByClassName( 'needs-validation' )
+				if ( 'undefined' !== typeof jQuery.fn.datepicker ) {
+					$( '.js-datepicker', this.wrap ).datepicker()
+				}
+			},
 
-					// Loop over them and prevent submission
-					var validation = Array.prototype.filter.call( forms, function( form ) {
-						form.addEventListener( 'submit', function( event ) {
-							if ( false === form.checkValidity() ) {
-								event.preventDefault()
-								event.stopPropagation()
-							}
+			accounts: function() {
+				// Add account.
+				this.wrap.on( 'click', '.order-check-account-add', function( event ) {
+					event.preventDefault()
 
-							form.classList.add( 'was-validated' )
-						}, false )
+					var button = $( this ),
+						account = button.closest( '.check-account' ),
+						newAccount = account.clone(),
+						newIndex = account.parent().find( '.check-account' ).length
+
+					newIndex = parseInt( Math.random( newIndex, 100 ) * 100 )
+
+					newAccount.find( 'input' ).each( function() {
+						var input = $( this )
+						input.attr( 'id', input.attr( 'id' ).replace( 0, newIndex ) )
+						input.attr( 'name', input.attr( 'name' ).replace( 0, newIndex ) )
+						input.val( '' )
 					})
-				}, false )
+
+					newAccount.attr( 'data-index', newIndex )
+					account.parent().append( newAccount )
+				})
+
+				// Remove account.
+				this.wrap.on( 'click', '.order-check-account-remove', function( event ) {
+					event.preventDefault()
+
+					$( this ).closest( '.check-account' ).remove()
+				})
+			},
+
+			requests: function() {
+				this.saveRequest()
+				this.addNewRequest()
+				this.boxTitleHandler()
+			},
+
+			saveRequest: function() {
+				var app = this
+
+				app.wrap.on( 'click', '.order-check-save', function( event ) {
+					event.preventDefault()
+
+					var button = $( this )
+
+					button.prop( 'disabled', true )
+
+					if ( 0 === munipay.orderID ) {
+						app.saveOrder( button )
+						return
+					}
+
+					app.saveCheck( button )
+				})
+			},
+
+			saveOrder: function( button ) {
+				var app  = this,
+					data = $( '#order-requester' ).serializeJSON()
+
+				data.requester_id = munipay.userID
+				app.post( 'create_order', data )
+					.always(function() {
+						button.prop( 'disabled', false )
+					})
+					.done( function( result ) {
+						if ( result && ! result.success ) {
+							return
+						}
+
+						munipay.orderID = parseInt( result.orderID )
+						button.trigger( 'click' )
+					})
+			},
+
+			saveCheck: function( button ) {
+				var app  = this,
+					formData = new FormData( button.closest( 'form' )[0] )
+
+				formData.append( 'order_id', munipay.orderID )
+				formData.append( 'requester_id', munipay.userID )
+				formData.append( 'action', 'munipay_update_check' )
+				formData.append( 'security', munipay.security )
+
+				button.addClass( 'button--loading disabled' )
+				$.ajax({
+					type:'POST',
+					url: munipay.endpoint,
+					processData: false,
+					contentType: false,
+					async: false,
+					cache: false,
+					data: formData
+				})
+				.always(function() {
+					button.prop( 'disabled', false )
+					button.removeClass( 'button--loading disabled' )
+				})
+				.done( function( result ) {
+					if ( result && ! result.success ) {
+						return
+					}
+
+					button.html( '<span>' + munipay.l10n.button_update + '</span>' )
+					button.prev( 'input' ).val( result.checkID )
+				})
+			},
+
+			addNewRequest: function() {
+				var app = this
+				$( '.order-request-add' ).on( 'click', function( event ) {
+					event.preventDefault()
+
+					var button = $( this ),
+						request = app.cloneMe.clone()
+
+					app.total += 1
+					request = $( '<div/>' ).append( request ).html()
+					request = request
+								.replace( /order-check-0/g, 'order-check-' + app.total )
+								.replace( /check-heading-0/g, 'check-heading-' + app.total )
+
+					app.wrap.append( request )
+
+					$( '.js-datepicker', app.wrap.find( '.order-check:last' ) ).datepicker()
+				})
+			},
+
+			boxTitleHandler: function() {
+				var app = this
+				app.wrap.on( 'input', '[name="payee_name"], [name="request_amount"]', function( event ) {
+					var form = $( this ).closest( '.order-check' ),
+						title =[
+							'Request',
+							form.find( '[name="payee_name"]' ).val(),
+							app.formatMoney( form.find( '[name="request_amount"]' ).val() )
+						].filter(Boolean).join( ' &ndash; ' )
+
+					form.find( '.order-check-title-text' ).html( title )
+				})
+
+				app.wrap.on( 'change', '[name="approver"]', function( event ) {
+					var select = $( this ),
+						user = munipay.users[ select.val() ],
+						form = select.closest( 'form' )
+
+					form.find( '[name="approver_email"]' ).val( user.email )
+					form.find( '[name="approver_phone"]' ).val( user.phone )
+				})
 			},
 
 			reviewOrder: function() {
@@ -81,119 +222,30 @@
 				})
 			},
 
-			requests: function() {
-				this.saveRequest()
-				this.addNewRequest()
+			formValidation: function() {
+				window.addEventListener( 'load', function() {
+					// Fetch all the forms we want to apply custom Bootstrap validation styles to
+					var forms = document.getElementsByClassName( 'needs-validation' )
+
+					// Loop over them and prevent submission
+					var validation = Array.prototype.filter.call( forms, function( form ) {
+						form.addEventListener( 'submit', function( event ) {
+							if ( false === form.checkValidity() ) {
+								event.preventDefault()
+								event.stopPropagation()
+							}
+
+							form.classList.add( 'was-validated' )
+						}, false )
+					})
+				}, false )
 			},
 
-			saveRequest: function() {
-				var app = this
-
-				app.wrap.on( 'click', '.order-check-save', function( event ) {
-					event.preventDefault()
-
-					var button = $( this )
-
-					button.prop( 'disabled', true )
-
-					if ( 0 === munipay.orderID ) {
-						app.saveOrder( button )
-						return
-					}
-
-					app.saveCheck( button )
-				})
-			},
-
-			saveCheck: function( button ) {
-				var app  = this,
-					data = button.closest( 'form' ).serializeJSON()
-
-				data.order_id     = munipay.orderID
-				data.requester_id = munipay.userID
-
-				button.addClass( 'button--loading disabled' )
-				app.post( 'update_check', data )
-					.always(function() {
-						button.prop( 'disabled', false )
-						button.removeClass( 'button--loading disabled' )
-					})
-					.done( function( result ) {
-						if ( result && ! result.success ) {
-							return
-						}
-
-						button.html( '<span>' + munipay.l10n.button_update + '</span>' )
-						button.prev( 'input' ).val( result.checkID )
-					})
-			},
-
-			saveOrder: function( button ) {
-				var app  = this,
-					data = $( '#order-requester' ).serializeJSON()
-
-				data.requester_id = munipay.userID
-				app.post( 'create_order', data )
-					.always(function() {
-						button.prop( 'disabled', false )
-					})
-					.done( function( result ) {
-						if ( result && ! result.success ) {
-							return
-						}
-
-						munipay.orderID = parseInt( result.orderID )
-						button.trigger( 'click' )
-					})
-			},
-
-			addNewRequest: function() {
-				var app = this
-				$( '.order-request-add' ).on( 'click', function( event ) {
-					event.preventDefault()
-
-					var button = $( this ),
-						request = app.cloneMe.clone()
-
-					app.total += 1
-					request = $( '<div/>' ).append( request ).html()
-					request = request
-								.replace( /order-check-0/g, 'order-check-' + app.total )
-								.replace( /check-heading-0/g, 'check-heading-' + app.total )
-
-					app.wrap.append( request )
-				})
-			},
-
-			accounts: function() {
-				// Add account.
-				this.wrap.on( 'click', '.order-check-account-add', function( event ) {
-					event.preventDefault()
-
-					var button = $( this ),
-						account = button.closest( '.check-account' ),
-						newAccount = account.clone(),
-						newIndex = account.parent().find( '.check-account' ).length
-
-					newIndex = parseInt( Math.random( newIndex, 100 ) * 100 )
-
-					newAccount.find( 'input' ).each( function() {
-						var input = $( this )
-						input.attr( 'id', input.attr( 'id' ).replace( 0, newIndex ) )
-						input.attr( 'name', input.attr( 'name' ).replace( 0, newIndex ) )
-						input.val( '' )
-					})
-
-					newAccount.attr( 'data-index', newIndex )
-					account.parent().append( newAccount )
-				})
-
-				// Remove account.
-				this.wrap.on( 'click', '.order-check-account-remove', function( event ) {
-					event.preventDefault()
-
-					$( this ).closest( '.check-account' ).remove()
-				})
+			formatMoney: function( amount ) {
+				if ( '' === amount ) {
+					return ''
+				}
+				return '$' + parseFloat( amount ).toFixed( 2 ).toLocaleString()
 			},
 
 			post: function( action, data, method ) {
@@ -205,7 +257,7 @@
 						action: 'munipay_' + action,
 						security: munipay.security
 					}, data )
-				});
+				})
 			}
 		};
 

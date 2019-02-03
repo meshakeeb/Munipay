@@ -148,6 +148,10 @@ class Theme_Setup {
 
 		wp_enqueue_script( 'bootstrap', $assets . '/vendor/bootstrap/bootstrap.min.js', [ 'jquery' ], '4.2.1', true );
 		wp_enqueue_script( 'serializejson', $assets . '/vendor/jquery.serializejson.min.js', [ 'jquery' ], '2.9.0', true );
+		if ( is_page( 'enter-checks' ) ) {
+			wp_enqueue_style( 'jquery-ui-base', 'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.min.css' );
+			wp_enqueue_script( 'jquery-ui-datepicker' );
+		}
 		wp_enqueue_script( 'theme', $assets . '/js/theme.js', [ 'jquery' ], '1.0.0', true );
 
 		$current_user = wp_get_current_user();
@@ -161,6 +165,7 @@ class Theme_Setup {
 				'security' => wp_create_nonce( 'munipay_security_salt' ),
 				'orderID'  => $order_id,
 				'userID'   => $current_user->ID,
+				'users'    => Profile::get_users_choice( true ),
 				'l10n'     => [
 					'button_update' => esc_html__( 'Update Check Request', 'munipay' ),
 				],
