@@ -157,13 +157,14 @@ class Checkout {
 			if ( empty( $_POST[ $field ] ) && 'payment_address_2' !== $field ) {
 				/* translators: field name */
 				$this->errors->add( $field . '_error', sprintf( __( '<strong>WARNING</strong>: %s cannot be empty.', 'munipay' ), $field ) );
+				$valid = false;
 				continue;
 			}
 
 			update_user_meta( $user_id, $field, sanitize_text_field( $_POST[ $field ] ) );
 		}
 
-		return $data;
+		return $valid;
 	}
 
 	/**

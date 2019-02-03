@@ -2,6 +2,7 @@
 	"name": "boltmedia/munipay",
 	"type": "wordpress-theme",
 	"require": {
+		"authorizenet/authorizenet": "^2.0"
 	},
 	"authors": [
 		{
