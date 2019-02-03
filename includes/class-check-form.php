@@ -51,10 +51,10 @@ class Check_Form {
 	public function form() {
 		ob_start();
 
-		Form::display_errors( $this->errors );
-
 		$this->order = Order::get_current_order();
 		$this->get_template( 'header' );
+
+		Form::display_errors( $this->errors );
 		?>
 
 		<div class="container mt-5 mb-5">

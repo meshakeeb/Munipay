@@ -39,8 +39,9 @@ class Form {
 	 * Render text field.
 	 *
 	 * @param array $args Field args.
+	 * @param bool  $only Only input.
 	 */
-	public static function text( $args = [] ) {
+	public static function text( $args = [], $only = false ) {
 		$args = wp_parse_args(
 			$args,
 			[
@@ -59,9 +60,15 @@ class Form {
 
 		$title = $args['title'];
 		unset( $args['title'] );
+
+		$input = sprintf( '<input%s>', self::attributes_to_string( $args ) );
+		if ( $only ) {
+			echo $input;
+			return;
+		}
 		?>
 		<div class="col">
-			<input<?php echo self::attributes_to_string( $args ); ?>>
+			<?php echo $input; ?>
 			<small class="form-text pl-2 text-muted"><?php echo $title; ?></small>
 		</div>
 		<?php
