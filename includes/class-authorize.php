@@ -130,7 +130,7 @@ class Authorize {
 		// Add values for transaction settings.
 		$duplicate_window_setting = new AnetAPI\SettingType;
 		$duplicate_window_setting->setSettingName( 'duplicateWindow' );
-		$duplicate_window_setting->setSettingValue( '6' );
+		$duplicate_window_setting->setSettingValue( MUNIPAY_SANDBOX ? '6' : '60' );
 
 		// Create a TransactionRequestType object and add the previous objects to it.
 		$transaction_request_type = new AnetAPI\TransactionRequestType;
@@ -151,7 +151,7 @@ class Authorize {
 		// Create the controller and get the response.
 		$controller = new AnetController\CreateTransactionController( $request );
 
-		return $controller->executeWithApiResponse( MUNIPAY_SANDBOX ? \net\authorize\api\constants\ANetEnvironment::SANDBOX : \net\authorize\api\constants\ANetEnvironment::PRODUCTION );
+		return $controller->executeWithApiResponse( $this->get_endpoint() );
 	}
 
 	/**
@@ -167,6 +167,15 @@ class Authorize {
 		$merchant->setTransactionKey( $credentials['transaction_key'] );
 
 		return $merchant;
+	}
+
+	/**
+	 * Get service end-point.
+	 *
+	 * @return string
+	 */
+	private function get_endpoint() {
+		return MUNIPAY_SANDBOX ? \net\authorize\api\constants\ANetEnvironment::SANDBOX : \net\authorize\api\constants\ANetEnvironment::PRODUCTION;
 	}
 
 	/**

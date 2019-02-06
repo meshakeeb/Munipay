@@ -50,6 +50,8 @@ class Checkout {
 		$this->errors = new WP_Error;
 		add_shortcode( 'checkout', [ $this, 'form' ] );
 		$this->action( 'template_redirect', 'save' );
+		$this->action( 'order_completed', 'new_order_notification' );
+		$this->action( 'order_completed', 'clean_order_data', 999 );
 	}
 
 	/**
@@ -59,6 +61,11 @@ class Checkout {
 		ob_start();
 
 		$this->get_template( 'header' );
+
+		if ( isset( $_GET['completed'] ) ) {
+			$this->get_template( 'thank-you' );
+			return ob_get_clean();
+		}
 
 		?>
 
@@ -92,14 +99,14 @@ class Checkout {
 
 							<li class="list-group-item d-flex justify-content-between bg-light">
 								<div class="text-success">
-									<h6 class="my-0"><?php esc_html_e( 'Delivery Chanrges', 'munipay' ); ?></h6>
+									<h6 class="my-0"><?php esc_html_e( 'Delivery Charges', 'munipay' ); ?></h6>
 								</div>
 								<span class="text-success"><?php echo $this->order->get_delivery_charges(); ?></span>
 							</li>
 
 							<li class="list-group-item d-flex justify-content-between bg-light">
 								<div class="text-success">
-									<h6 class="my-0"><?php esc_html_e( 'Transation Chanrges', 'munipay' ); ?></h6>
+									<h6 class="my-0"><?php esc_html_e( 'Transation Charges', 'munipay' ); ?></h6>
 								</div>
 								<span class="text-success"><?php echo $this->order->get_transation_charges(); ?></span>
 							</li>
@@ -155,7 +162,43 @@ class Checkout {
 			return;
 		}
 
-		echo 'Processing SmartPayables';
+		if ( false === $this->do_smart_payables() ) {
+			return;
+		}
+
+		$this->order->completed();
+		wp_safe_redirect(
+			add_query_arg(
+				[
+					'completed' => '1',
+					'order'     => $this->order->get_id(),
+				]
+			)
+		);
+		exit;
+	}
+
+	/**
+	 * New order notification email.
+	 *
+	 * @param Order $order Order completed.
+	 */
+	public function new_order_notification( $order ) {
+
+	}
+
+	/**
+	 * Clean after order completed.
+	 *
+	 * @param Order $order Order completed.
+	 */
+	public function clean_order_data( $order ) {
+		$full   = get_template_directory() . '/tmp/order_' . $order->get_id() . '_full.csv';
+		$upload = get_template_directory() . '/tmp/order_' . $order->get_id() . '.csv';
+
+		// Delete CSV files.
+		@unlink( $full );
+		@unlink( $upload );
 	}
 
 	/**
@@ -166,7 +209,7 @@ class Checkout {
 	private function set_values() {
 		$valid   = true;
 		$user_id = get_current_user_id();
-		$fields  = [ 'payment_address', 'payment_address_2', 'payment_country', 'payment_state', 'payment_city', 'payment_zipcode', 'payment_cc_name', 'payment_cc_number', 'payment_cc_expiration', 'payment_cc_cvv' ];
+		$fields  = [ 'payment_address', 'payment_address_2', 'payment_country', 'payment_state', 'payment_city', 'payment_zipcode', 'payment_cc_number', 'payment_cc_expiration', 'payment_cc_cvv' ];
 
 		foreach ( $fields as $field ) {
 			if ( empty( $_POST[ $field ] ) && 'payment_address_2' !== $field ) {
@@ -178,7 +221,7 @@ class Checkout {
 
 			$this->data[ $field ] = sanitize_text_field( $_POST[ $field ] );
 
-			if ( ! in_array( $field, [ 'payment_cc_name', 'payment_cc_number', 'payment_cc_expiration', 'payment_cc_cvv' ], true ) ) {
+			if ( ! in_array( $field, [ 'payment_cc_number', 'payment_cc_expiration', 'payment_cc_cvv' ], true ) ) {
 				update_user_meta( $user_id, $field, $this->data[ $field ] );
 			}
 		}
@@ -187,7 +230,9 @@ class Checkout {
 	}
 
 	/**
-	 * Process the paument.
+	 * Process the payment.
+	 *
+	 * @return bool
 	 */
 	private function do_payment() {
 		$authorize = new Authorize( $this );
@@ -200,6 +245,18 @@ class Checkout {
 		);
 
 		return $authorize->process();
+	}
+
+	/**
+	 * Process the smart payable upload.
+	 *
+	 * @return bool
+	 */
+	private function do_smart_payables() {
+		$this->errors->errors = [];
+
+		$smart = new Smart_Payables( $this );
+		return $smart->process();
 	}
 
 	/**

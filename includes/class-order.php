@@ -128,6 +128,14 @@ class Order extends Data {
 	}
 
 	/**
+	 * Mark order completed.
+	 */
+	public function completed() {
+		delete_user_meta( $this->current_user->ID, 'current_order' );
+		do_action( 'order_completed', $this );
+	}
+
+	/**
 	 * Get order date.
 	 *
 	 * @return string

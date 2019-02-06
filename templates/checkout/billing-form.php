@@ -262,19 +262,7 @@ $current_user = wp_get_current_user();
 
 <div class="row">
 
-	<div class="col-md-6 mb-3">
-
-		<label for="payment_cc_name"><?php esc_html_e( 'Name on card', 'munipay' ); ?></label>
-
-		<input type="text" class="form-control" id="payment_cc_name" name="payment_cc_name" required>
-
-		<div class="invalid-feedback">
-			<?php esc_html_e( 'Name on card is required', 'munipay' ); ?>
-		</div>
-
-	</div>
-
-	<div class="col-md-6 mb-3">
+	<div class="col-md-12 mb-3">
 
 		<label for="payment_cc_number"><?php esc_html_e( 'Credit card number', 'munipay' ); ?></label>
 
@@ -294,7 +282,7 @@ $current_user = wp_get_current_user();
 
 		<label for="payment_cc_expiration"><?php esc_html_e( 'Expiration', 'munipay' ); ?></label>
 
-		<input type="text" class="form-control" id="payment_cc_expiration" name="payment_cc_expiration" required>
+		<input type="text" class="form-control" id="payment_cc_expiration" name="payment_cc_expiration" required placeholder="MM / YY">
 
 		<div class="invalid-feedback">
 			<?php esc_html_e( 'Expiration date required', 'munipay' ); ?>

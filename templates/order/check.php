@@ -200,7 +200,7 @@ $check = $this->current_check;
 						'options' => [
 							'1' => esc_html__( 'USPS Priority - 2 Day ($15)', 'munipay' ),
 							'2' => esc_html__( 'USPS Priority Express Overnight ($45)', 'munipay' ),
-							'3' => esc_html__( 'BUNDLE ($36)', 'munipay' ),
+							'3' => esc_html__( 'UPS - 2 Day - Bundle ($36)', 'munipay' ),
 						],
 					]
 				);

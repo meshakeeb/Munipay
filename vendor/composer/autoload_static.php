@@ -36,6 +36,7 @@ class ComposerStaticInit20a90e5a47a8472fda3994caedd0bc48
         'Munipay\\Profile' => __DIR__ . '/../..' . '/includes/class-profile.php',
         'Munipay\\Registration' => __DIR__ . '/../..' . '/includes/class-registration.php',
         'Munipay\\Review_Order' => __DIR__ . '/../..' . '/includes/class-review-order.php',
+        'Munipay\\Smart_Payables' => __DIR__ . '/../..' . '/includes/class-smart-payables.php',
         'Munipay\\Theme_Setup' => __DIR__ . '/../..' . '/includes/class-theme-setup.php',
         'Munipay\\Traits\\Ajax' => __DIR__ . '/../..' . '/includes/traits/class-ajax.php',
         'Munipay\\Traits\\Hooker' => __DIR__ . '/../..' . '/includes/traits/class-hooker.php',

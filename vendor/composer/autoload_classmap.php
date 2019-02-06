@@ -21,6 +21,7 @@ return array(
     'Munipay\\Profile' => $baseDir . '/includes/class-profile.php',
     'Munipay\\Registration' => $baseDir . '/includes/class-registration.php',
     'Munipay\\Review_Order' => $baseDir . '/includes/class-review-order.php',
+    'Munipay\\Smart_Payables' => $baseDir . '/includes/class-smart-payables.php',
     'Munipay\\Theme_Setup' => $baseDir . '/includes/class-theme-setup.php',
     'Munipay\\Traits\\Ajax' => $baseDir . '/includes/traits/class-ajax.php',
     'Munipay\\Traits\\Hooker' => $baseDir . '/includes/traits/class-hooker.php',

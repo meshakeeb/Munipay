@@ -199,6 +199,10 @@ class Check extends Data {
 	 * Handle file upload.
 	 */
 	private function handle_upload() {
+		if ( ! isset( $_FILES['request_document'] ) || empty( $_FILES['request_document']['name'] ) ) {
+			return;
+		}
+
 		require_once( ABSPATH . 'wp-admin/includes/file.php' );
 
 		// Delete previous upload.
@@ -292,6 +296,42 @@ class Check extends Data {
 		];
 
 		return $this->format_price( $methods[ $method ], $context );
+	}
+
+	/**
+	 * Get postage code for smart payable.
+	 *
+	 * @return int
+	 */
+	public function get_postage_code() {
+		$method  = $this->get_meta( 'request_delivery_method' );
+		$methods = [
+			'1' => 3,
+			'2' => 8,
+			'3' => 8,
+		];
+
+		return $methods[ $method ];
+	}
+
+	/**
+	 * Get attached file path.
+	 *
+	 * @return string
+	 */
+	public function get_document_path() {
+		$attachment = $this->get_meta( 'request_document' );
+
+		return get_attached_file( $attachment );
+	}
+
+	/**
+	 * Get filename only.
+	 *
+	 * @return string
+	 */
+	public function get_document_name() {
+		return \basename( $this->get_document_path() );
 	}
 
 	/**
