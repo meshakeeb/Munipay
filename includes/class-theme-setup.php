@@ -289,8 +289,12 @@ class Theme_Setup {
 	 */
 	public function set_author_on_archive_page( $query ) {
 
-		if ( ! is_admin() && ! current_user_can( 'administrator' ) && $query->is_main_query() && is_post_type_archive() ) {
-			$query->set( 'author', get_current_user_id() );
+		if ( ! is_admin() && $query->is_main_query() && is_post_type_archive() ) {
+			if ( ! current_user_can( 'administrator' ) ) {
+				$query->set( 'author', get_current_user_id() );
+			}
+
+			$query->set( 'orderby', 'date ID' );
 		}
 	}
 }

@@ -65,6 +65,16 @@ class Review_Order {
 							$this->get_template( 'check' );
 						}
 						?>
+
+						<?php if ( $this->order->has_bundle() ) : ?>
+						<li class="list-group-item d-flex justify-content-between bg-light">
+							<div class="text-success">
+								<h6 class="my-0"><?php esc_html_e( 'Bundle Delivery Charges', 'munipay' ); ?></h6>
+							</div>
+							<span class="text-success">$36.00</span>
+						</li>
+						<?php endif; ?>
+
 					</ul>
 
 					<div class="d-flex justify-content-between p-4">

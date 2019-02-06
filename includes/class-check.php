@@ -137,6 +137,15 @@ class Check extends Data {
 					'approver_email'          => $values['approver_email'],
 					'approver_phone'          => $values['approver_phone'],
 
+					// Bundle.
+					'bundle_mailto'           => $values['bundle_mailto'],
+					'bundle_address'          => $values['bundle_address'],
+					'bundle_city'             => $values['bundle_city'],
+					'bundle_state'            => $values['bundle_state'],
+					'bundle_zip'              => $values['bundle_zip'],
+					'bundle_contents'         => $values['bundle_contents'],
+					'bundle_country'          => 'USA',
+
 					// Acounts.
 					'accounts'                => $values['accounts'],
 				],
@@ -193,6 +202,15 @@ class Check extends Data {
 			'approved_date'           => $values['approved_date'],
 			'approver_email'          => $values['approver_email'],
 			'approver_phone'          => $values['approver_phone'],
+
+			// Bundle.
+			'bundle_mailto'           => $values['bundle_mailto'],
+			'bundle_address'          => $values['bundle_address'],
+			'bundle_city'             => $values['bundle_city'],
+			'bundle_state'            => $values['bundle_state'],
+			'bundle_zip'              => $values['bundle_zip'],
+			'bundle_contents'         => $values['bundle_contents'],
+			'bundle_country'          => 'USA',
 
 			// Acounts.
 			'accounts'                => $values['accounts'],
@@ -306,7 +324,7 @@ class Check extends Data {
 		$methods = [
 			'1' => esc_html__( 'USPS Priority - 2 Day', 'munipay' ),
 			'2' => esc_html__( 'USPS Priority Express Overnight', 'munipay' ),
-			'3' => esc_html__( 'Bundle', 'munipay' ),
+			'3' => __( 'Bundle <em>(include once per order)</em>', 'munipay' ),
 		];
 
 		return 'view' === $context ? $methods[ $method ] : $method;
@@ -324,7 +342,7 @@ class Check extends Data {
 		$methods = [
 			'1' => 15,
 			'2' => 45,
-			'3' => 36,
+			'3' => 0,
 		];
 
 		return $this->format_price( $methods[ $method ], $context );

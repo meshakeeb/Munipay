@@ -49,6 +49,13 @@ class Order extends Data {
 	public $checks = array();
 
 	/**
+	 * Has order checks for bundle.
+	 *
+	 * @var bool
+	 */
+	private $has_bundle = null;
+
+	/**
 	 * Get the order if ID is passed, oterwise the check is new and empty.
 	 *
 	 * @param int $order Order to read.
@@ -96,7 +103,7 @@ class Order extends Data {
 		$order_id = wp_insert_post(
 			[
 				'post_author' => $values['requester_id'],
-				'post_date'   => date( 'Y-m-d H:i:s', strtotime( $values['request_date'] ) ),
+				'post_date'   => date( 'Y-m-d', strtotime( $values['request_date'] ) ) . ' ' . date( 'H:i:s' ),
 				'post_title'  => $values['request_name'],
 				'post_status' => 'publish',
 				'post_type'   => $this->object_type,
@@ -202,6 +209,10 @@ class Order extends Data {
 			$total += $check->get_total( 'raw' );
 		}
 
+		if ( $this->has_bundle() ) {
+			$total += 36;
+		}
+
 		return $this->format_price( $total, $context );
 	}
 
@@ -216,6 +227,10 @@ class Order extends Data {
 		$total = 0;
 		foreach ( $this->checks as $check ) {
 			$total += $check->get_delivery_fee( 'raw' );
+		}
+
+		if ( $this->has_bundle() ) {
+			$total += 36;
 		}
 
 		return $this->format_price( $total, $context );
@@ -244,6 +259,27 @@ class Order extends Data {
 	 */
 	public function has_checks() {
 		return ! empty( $this->checks );
+	}
+
+	/**
+	 * Has bundle checks.
+	 *
+	 * @return boolean
+	 */
+	public function has_bundle() {
+		if ( ! is_null( $this->has_bundle ) ) {
+			return $this->has_bundle;
+		}
+
+		$this->has_bundle = false;
+		foreach ( $this->checks as $check ) {
+			if ( '3' == $check->get_meta( 'request_delivery_method' ) ) {
+				$this->has_bundle = true;
+				break;
+			}
+		}
+
+		return $this->has_bundle;
 	}
 
 	/**

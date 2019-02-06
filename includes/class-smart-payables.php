@@ -52,13 +52,13 @@ class Smart_Payables {
 		$upload = get_template_directory() . '/tmp/order_' . $order->get_id() . '.csv';
 
 		// Set data.
-		$this->data['method_id']      = 2;
-		$this->data['userfile']       = curl_file_create( $upload, 'application/csv' );
-		$this->data['insert_include'] = 'multiple';
+		$this->data['method_id'] = 2;
+		$this->data['userfile']  = curl_file_create( $upload, 'application/csv' );
 
 		// Attachments.
 		foreach ( $order->checks as $index => $check ) {
 			if ( $document = $check->get_document_path() ) { // phpcs:ignore
+				$this->data['insert_include']                         = 'multiple';
 				$this->data[ 'insert_file_multiple[' . $index . ']' ] = curl_file_create( $document, 'application/pdf' );
 			}
 		}
@@ -165,6 +165,12 @@ class Smart_Payables {
 				'Memo',
 				'Postage Code',
 				'Insert PDF Filename',
+				'Bundle Mail To',
+				'Bundle Address',
+				'Bundle City',
+				'Bundle State',
+				'Bundle Zip',
+				'Bundle Country',
 			]
 		);
 
@@ -208,6 +214,7 @@ class Smart_Payables {
 		$count = 0;
 		foreach ( $order->checks as $check ) {
 			$count++;
+			$is_bundle = $order->has_bundle() && 0 === $check->get_delivery_fee( 'raw' );
 
 			// Upload CSV.
 			fputcsv(
@@ -229,6 +236,12 @@ class Smart_Payables {
 					$check->get_meta( 'request_description' ),
 					$check->get_postage_code(),
 					$check->get_document_name(),
+					$is_bundle ? $check->get_meta( 'bundle_mailto' ) : '',
+					$is_bundle ? $check->get_meta( 'bundle_address' ) : '',
+					$is_bundle ? $check->get_meta( 'bundle_city' ) : '',
+					$is_bundle ? $check->get_meta( 'bundle_state' ) : '',
+					$is_bundle ? $check->get_meta( 'bundle_zip' ) : '',
+					$is_bundle ? $check->get_meta( 'bundle_country' ) : '',
 				]
 			);
 

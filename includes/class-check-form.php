@@ -61,6 +61,8 @@ class Check_Form {
 
 			<?php $this->get_template( 'requester' ); ?>
 
+			<?php $this->get_template( 'bundle-info' ); ?>
+
 			<h3 class="mb-3"><?php esc_html_e( 'Requests', 'munipay' ); ?></h3>
 
 			<div id="orders" class="order-accordion">
@@ -87,6 +89,21 @@ class Check_Form {
 		</div>
 		<?php
 		return ob_get_clean();
+	}
+
+	/**
+	 * Get check with bundle info.
+	 *
+	 * @return Check
+	 */
+	public function get_check_with_bundle_info() {
+		foreach ( $this->order->checks as $check ) {
+			if ( $check->get_meta( 'bundle_mailto' ) ) {
+				return $check;
+			}
+		}
+
+		return null;
 	}
 
 	/**

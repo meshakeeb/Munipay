@@ -236,76 +236,6 @@ $check = $this->current_check;
 
 			</div>
 
-			<h5 class="pt-5 pb-3 bundle-fields"><?php esc_html_e( 'Bundle Package Info', 'munipay' ); ?></h5>
-
-			<div class="row bundle-fields">
-
-				<?php
-
-				Form::select(
-					[
-						'name'    => 'bundle_contents',
-						'title'   => esc_html__( 'Bundle Check Contents', 'munipay' ),
-						'value'   => $check->get_meta( 'bundle_contents' ),
-						'options' => [
-							'loose'    => esc_html__( 'Loose', 'munipay' ),
-							'envelope' => esc_html__( 'Envelope', 'munipay' ),
-						],
-					]
-				);
-
-				Form::text(
-					[
-						'name'  => 'bundle_mailto',
-						'title' => esc_html__( 'Bundle Mail To', 'munipay' ),
-						'value' => $check->get_meta( 'bundle_mailto' ),
-					]
-				);
-
-				Form::text(
-					[
-						'name'  => 'bundle_address',
-						'title' => esc_html__( 'Bundle Address', 'munipay' ),
-						'value' => $check->get_meta( 'bundle_address' ),
-					]
-				);
-
-				?>
-
-			</div>
-
-			<div class="row pt-4 bundle-fields">
-
-				<?php
-
-				Form::text(
-					[
-						'name'  => 'bundle_city',
-						'title' => esc_html__( 'Bundle City', 'munipay' ),
-						'value' => $check->get_meta( 'bundle_city' ),
-					]
-				);
-
-				Form::text(
-					[
-						'name'  => 'bundle_state',
-						'title' => esc_html__( 'Bundle State', 'munipay' ),
-						'value' => $check->get_meta( 'bundle_state' ),
-					]
-				);
-
-				Form::text(
-					[
-						'name'  => 'bundle_zip',
-						'title' => esc_html__( 'Bundle Zipcode', 'munipay' ),
-						'value' => $check->get_meta( 'bundle_zip' ),
-					]
-				);
-
-				?>
-
-			</div>
-
 			<h5 class="pt-5 pb-3"><?php esc_html_e( 'Approvals', 'munipay' ); ?></h5>
 
 			<div class="row">
@@ -425,6 +355,12 @@ $check = $this->current_check;
 
 			<div class="text-center mt-5">
 				<input type="hidden" name="check_id" value="<?php echo $check->get_id(); ?>">
+				<input type="hidden" class="bundle_contents" name="bundle_contents" value="<?php echo $check->get_meta( 'bundle_contents' ); ?>">
+				<input type="hidden" class="bundle_mailto" name="bundle_mailto" value="<?php echo $check->get_meta( 'bundle_mailto' ); ?>">
+				<input type="hidden" class="bundle_address" name="bundle_address" value="<?php echo $check->get_meta( 'bundle_address' ); ?>">
+				<input type="hidden" class="bundle_city" name="bundle_city" value="<?php echo $check->get_meta( 'bundle_city' ); ?>">
+				<input type="hidden" class="bundle_state" name="bundle_state" value="<?php echo $check->get_meta( 'bundle_state' ); ?>">
+				<input type="hidden" class="bundle_zip" name="bundle_zip" value="<?php echo $check->get_meta( 'bundle_zip' ); ?>">
 				<button type="button" class="btn btn-primary btn-lg order-check-save"><span><?php echo $check->get_id() ? esc_html__( 'Update Check Request', 'munipay' ) : esc_html__( 'Save Check Request', 'munipay' ); ?></span></button>
 			</div>
 

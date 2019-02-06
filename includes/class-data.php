@@ -161,7 +161,7 @@ abstract class Data {
 	 * @return string
 	 */
 	protected function format_price( $price, $context = 'view' ) {
-		if ( empty( $price ) ) {
+		if ( '' === $price ) {
 			return '';
 		}
 

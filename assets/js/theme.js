@@ -91,27 +91,42 @@
 						fields = select.closest( 'form' ).find( '.bundle-fields' )
 
 					app.hasBundle()
-					if ( '3' !== value ) {
-						fields.removeClass( 'd-flex' )
-						return
-					}
-
-					fields.addClass( 'd-flex' )
 				})
 			},
 
 			hasBundle: function() {
+				var bundleWrap = $( '#order-bundle' )
+
 				this.wrap.find( '.request-delivery-method' ).each(function() {
 					var select = $( this ),
 						value  = select.val()
 
 					if ( '3' === value ) {
 						munipay.hasBundle = true
+						bundleWrap.removeClass( 'd-none' )
 						return false
 					}
 
 					munipay.hasBundle = false
+					bundleWrap.addClass( 'd-none' )
 				})
+
+				bundleWrap.find( 'input,select' ).on( 'change', function() {
+					var input = $( this ),
+						selector = '.' + input.attr( 'id' )
+
+					$( selector ).val( input.val() )
+				})
+
+				if ( munipay.hasBundle ) {
+					var checkZero = $( '.order-check-0' )
+					bundleWrap.find( 'input,select' ).each(function() {
+						var input = $( this ),
+							selector = '.' + input.attr( 'id' )
+
+						checkZero.find( selector ).val( input.val() )
+					})
+				}
 			},
 
 			saveRequest: function() {
