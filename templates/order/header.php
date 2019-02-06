@@ -2,7 +2,7 @@
 /**
  * Order header.
  *
- * @package Aheto
+ * @package Munipay
  */
 
 ?>

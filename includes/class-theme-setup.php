@@ -37,11 +37,14 @@ class Theme_Setup {
 		add_filter( 'widget_text', 'do_shortcode' );
 
 		// Authenticate.
+		$this->action( 'template_include', 'reports' );
 		$this->action( 'template_redirect', 'authenticate_user' );
 
 		// Change email sernder name and email from.
 		$this->filter( 'wp_mail_from', 'mail_from' );
 		$this->filter( 'wp_mail_from_name', 'mail_from_name' );
+
+		$this->action( 'pre_get_posts', 'set_author_on_archive_page' );
 
 		// Initiate.
 		new Disable_Emojis;
@@ -200,9 +203,17 @@ class Theme_Setup {
 	 * @param stdClass $args  An object containing wp_nav_menu() arguments.
 	 */
 	public function add_loginout_link( $items, $args ) {
-		if ( is_user_logged_in() && in_array( $args->theme_location, [ 'main_navigation', 'footer_navigation' ] ) ) {
-			$items .= '<li class="nav-item"><a class="nav-link" href="' . wp_logout_url() . '">Log Out</a></li>';
+		if ( ! is_user_logged_in() || ! in_array( $args->theme_location, [ 'main_navigation', 'footer_navigation' ] ) ) {
+			return $items;
 		}
+
+		// Report Viewer.
+		if ( current_user_can( 'administrator' ) ) {
+			$items = '<li class="nav-item"><a class="nav-link" href="' . home_url( '/reports' ) . '">Reports</a></li>' . $items;
+		}
+
+		// Logout Link.
+		$items .= '<li class="nav-item"><a class="nav-link" href="' . wp_logout_url() . '">Log Out</a></li>';
 
 		return $items;
 	}
@@ -220,6 +231,32 @@ class Theme_Setup {
 		if ( ! is_user_logged_in() ) {
 			auth_redirect();
 		}
+	}
+
+	/**
+	 * Include reports.
+	 *
+	 * @param string $template Current template.
+	 */
+	public function reports( $template ) {
+		global $wp_query;
+
+		if ( is_user_logged_in() && 'reports' === get_query_var( 'name' ) ) {
+			$wp_query->is_404 = false;
+			$template         = locate_template( [ 'reports.php' ] );
+			$this->filter( 'pre_get_document_title', 'report_title' );
+		}
+
+		return $template;
+	}
+
+	/**
+	 * Report page title.
+	 *
+	 * @return string
+	 */
+	public function report_title() {
+		return 'Reports';
 	}
 
 	/**
@@ -242,5 +279,17 @@ class Theme_Setup {
 	 */
 	public function mail_from_name( $from_name ) {
 		return 'ericssonhelp@munipay.io';
+	}
+
+	/**
+	 * Set order author on archive page.
+	 *
+	 * @param WP_Query $query Current query instance.
+	 */
+	public function set_author_on_archive_page( $query ) {
+
+		if ( ! is_admin() && ! current_user_can( 'administrator' ) && $query->is_main_query() && is_post_type_archive() ) {
+			$query->set( 'author', get_current_user_id() );
+		}
 	}
 }

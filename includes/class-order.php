@@ -222,13 +222,13 @@ class Order extends Data {
 	}
 
 	/**
-	 * Get order transation charges.
+	 * Get order transaction charges.
 	 *
 	 * @param string $context Context: view or raw.
 	 *
 	 * @return mixed
 	 */
-	public function get_transation_charges( $context = 'view' ) {
+	public function get_transaction_charges( $context = 'view' ) {
 		$total = 0;
 		foreach ( $this->checks as $check ) {
 			$total += $check->get_transaction_fee( 'raw' );

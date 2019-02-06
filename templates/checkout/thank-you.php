@@ -2,14 +2,13 @@
 /**
  * Checkout billing form.
  *
- * @package Aheto
+ * @package Munipay
  */
 
 use Munipay\Form;
 use Munipay\Order;
 
-$order        = new Order( $_GET['order'] );
-$current_user = wp_get_current_user();
+$order = new Order( $_GET['order'] );
 
 $this->errors->add( 'success', __( 'Thank you. Your order has been received.', 'munipay' ) );
 ?>
@@ -47,9 +46,9 @@ $this->errors->add( 'success', __( 'Thank you. Your order has been received.', '
 
 				<li class="list-group-item d-flex justify-content-between bg-light">
 					<div class="text-success">
-						<h6 class="my-0"><?php esc_html_e( 'Transation Charges', 'munipay' ); ?></h6>
+						<h6 class="my-0"><?php esc_html_e( 'Transaction Charges', 'munipay' ); ?></h6>
 					</div>
-					<span class="text-success"><?php echo $order->get_transation_charges(); ?></span>
+					<span class="text-success"><?php echo $order->get_transaction_charges(); ?></span>
 				</li>
 
 				<li class="list-group-item d-flex justify-content-between">

@@ -2,7 +2,7 @@
 /**
  * Checkout billing form.
  *
- * @package Aheto
+ * @package Munipay
  */
 
 use Munipay\Form;

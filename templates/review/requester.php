@@ -2,7 +2,7 @@
 /**
  * Requester information.
  *
- * @package Aheto
+ * @package Munipay
  */
 
 use Munipay\Form;

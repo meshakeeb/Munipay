@@ -226,6 +226,29 @@ class Check extends Data {
 	}
 
 	/**
+	 * Get ceck status.
+	 *
+	 * @return string
+	 */
+	public function get_status() {
+		$status = $this->get_meta( 'smart_payable_status' );
+
+		return $status ? $status : esc_html__( 'Not Submitted', 'munipay' );
+	}
+
+	/**
+	 * Get tracking number.
+	 */
+	public function get_tracking_number() {
+		$status = $this->get_meta( 'smart_payable_tracking' );
+		if ( ! $status ) {
+			return;
+		}
+
+		echo '<span class="badge badge-success font-weight-normal">Tracking # ' . $status . '</span>';
+	}
+
+	/**
 	 * Get box title for accordion.
 	 */
 	public function get_box_title() {

@@ -2,7 +2,7 @@
 /**
  * Review header.
  *
- * @package Aheto
+ * @package Munipay
  */
 
 ?>

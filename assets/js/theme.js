@@ -36,6 +36,10 @@
 
 				if ( 'undefined' !== typeof jQuery.fn.datepicker ) {
 					$( '.js-datepicker', this.wrap ).datepicker()
+
+					$( '.report-datepicker' ).datepicker({
+						dateFormat: 'mm/dd/yy'
+					})
 				}
 			},
 

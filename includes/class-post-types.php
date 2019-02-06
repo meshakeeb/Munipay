@@ -96,7 +96,8 @@ class Post_Types {
 			'show_ui'             => true,
 			'menu_position'       => 25,
 			'menu_icon'           => 'dashicons-clipboard',
-			'rewrite'             => false,
+			'rewrite'             => [ 'slug' => 'order' ],
+			'has_archive'         => 'order-history',
 			'capability_type'     => 'post',
 			'exclude_from_search' => true,
 		];

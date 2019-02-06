@@ -2,7 +2,7 @@
 /**
  * Checkout header.
  *
- * @package Aheto
+ * @package Munipay
  */
 
 ?>

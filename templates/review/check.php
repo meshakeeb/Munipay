@@ -2,7 +2,7 @@
 /**
  * Single Check edit template.
  *
- * @package Aheto
+ * @package Munipay
  */
 
 use Munipay\Form;

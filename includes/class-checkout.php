@@ -50,7 +50,6 @@ class Checkout {
 		$this->errors = new WP_Error;
 		add_shortcode( 'checkout', [ $this, 'form' ] );
 		$this->action( 'template_redirect', 'save' );
-		$this->action( 'order_completed', 'new_order_notification' );
 		$this->action( 'order_completed', 'clean_order_data', 999 );
 	}
 
@@ -106,9 +105,9 @@ class Checkout {
 
 							<li class="list-group-item d-flex justify-content-between bg-light">
 								<div class="text-success">
-									<h6 class="my-0"><?php esc_html_e( 'Transation Charges', 'munipay' ); ?></h6>
+									<h6 class="my-0"><?php esc_html_e( 'Transaction Charges', 'munipay' ); ?></h6>
 								</div>
-								<span class="text-success"><?php echo $this->order->get_transation_charges(); ?></span>
+								<span class="text-success"><?php echo $this->order->get_transaction_charges(); ?></span>
 							</li>
 
 							<li class="list-group-item d-flex justify-content-between">
@@ -176,15 +175,6 @@ class Checkout {
 			)
 		);
 		exit;
-	}
-
-	/**
-	 * New order notification email.
-	 *
-	 * @param Order $order Order completed.
-	 */
-	public function new_order_notification( $order ) {
-
 	}
 
 	/**

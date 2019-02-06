@@ -73,6 +73,16 @@ abstract class Data {
 	}
 
 	/**
+	 * Setter property.
+	 *
+	 * @param string $key   Key to set.
+	 * @param mixed  $value Value to set.
+	 */
+	public function set_meta( $key, $value ) {
+		update_post_meta( $this->get_id(), $key, $value );
+	}
+
+	/**
 	 * Returns the unique ID for this object.
 	 *
 	 * @return int

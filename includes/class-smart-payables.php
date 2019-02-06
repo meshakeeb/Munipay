@@ -29,7 +29,7 @@ class Smart_Payables {
 	 *
 	 * @var array
 	 */
-	private $data = [];
+	public $data = [];
 
 	/**
 	 * Class constructor.
@@ -79,8 +79,8 @@ class Smart_Payables {
 
 		foreach ( $payments as $payment ) {
 			$check_id = $payment['trans_id'];
-			update_post_meta( $check_id, 'smart_payable_payment_id', $payment['payment_id'] );
 			update_post_meta( $check_id, 'smart_payable_status', $payment['status'] );
+			update_post_meta( $check_id, 'smart_payable_payment_id', $payment['payment_id'] );
 		}
 
 		return true;
@@ -91,13 +91,17 @@ class Smart_Payables {
 	 *
 	 * @param string $endpoint Endpoint to hit on the api.
 	 */
-	private function send( $endpoint ) {
+	public function send( $endpoint ) {
 		$curl = curl_init( $this->get_endpoint() . $endpoint );
 		curl_setopt( $curl, CURLOPT_POST, true );
 		curl_setopt( $curl, CURLOPT_POSTFIELDS, $this->data );
 		curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
 		$response = curl_exec( $curl );
 		curl_close( $curl );
+
+		if ( '[' === $response[0] ) {
+			return \json_decode( $response, true );
+		}
 
 		$has_error = false;
 		$content   = simplexml_load_string( utf8_encode( $response ) );
