@@ -53,6 +53,15 @@ class Check extends Data {
 		'request_delivery_date'   => '',
 		'request_document'        => '',
 
+		// Bundle.
+		'bundle_mailto'           => '',
+		'bundle_address'          => '',
+		'bundle_city'             => '',
+		'bundle_state'            => '',
+		'bundle_zip'              => '',
+		'bundle_contents'         => 'loose',
+		'bundle_country'          => 'USA',
+
 		// Approver.
 		'approver'                => '',
 		'approved_date'           => '',

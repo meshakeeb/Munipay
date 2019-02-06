@@ -25,6 +25,7 @@
 				this.misc()
 				this.accounts()
 				this.requests()
+				this.hasBundle()
 				this.reviewOrder()
 				this.formValidation()
 			},
@@ -76,8 +77,41 @@
 
 			requests: function() {
 				this.saveRequest()
+				this.bundleFields();
 				this.addNewRequest()
 				this.boxTitleHandler()
+			},
+
+			bundleFields: function() {
+				var app = this
+
+				app.wrap.on( 'change', '.request-delivery-method', function( event ) {
+					var select = $( this ),
+						value  = select.val(),
+						fields = select.closest( 'form' ).find( '.bundle-fields' )
+
+					app.hasBundle()
+					if ( '3' !== value ) {
+						fields.removeClass( 'd-flex' )
+						return
+					}
+
+					fields.addClass( 'd-flex' )
+				})
+			},
+
+			hasBundle: function() {
+				this.wrap.find( '.request-delivery-method' ).each(function() {
+					var select = $( this ),
+						value  = select.val()
+
+					if ( '3' === value ) {
+						munipay.hasBundle = true
+						return false
+					}
+
+					munipay.hasBundle = false
+				})
 			},
 
 			saveRequest: function() {

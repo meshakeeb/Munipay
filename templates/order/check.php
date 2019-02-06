@@ -197,6 +197,7 @@ $check = $this->current_check;
 						'name'    => 'request_delivery_method',
 						'title'   => esc_html__( 'Delivery method*', 'munipay' ),
 						'value'   => $check->get_meta( 'request_delivery_method' ),
+						'class'   => 'form-control request-delivery-method',
 						'options' => [
 							'1' => esc_html__( 'USPS Priority - 2 Day ($15)', 'munipay' ),
 							'2' => esc_html__( 'USPS Priority Express Overnight ($45)', 'munipay' ),
@@ -228,6 +229,76 @@ $check = $this->current_check;
 						'title'  => esc_html__( 'Document(s) to be mailed with check*', 'munipay' ),
 						'accept' => 'application/pdf',
 						'value'  => $check->get_meta( 'request_document' ),
+					]
+				);
+
+				?>
+
+			</div>
+
+			<h5 class="pt-5 pb-3 bundle-fields"><?php esc_html_e( 'Bundle Package Info', 'munipay' ); ?></h5>
+
+			<div class="row bundle-fields">
+
+				<?php
+
+				Form::select(
+					[
+						'name'    => 'bundle_contents',
+						'title'   => esc_html__( 'Bundle Check Contents', 'munipay' ),
+						'value'   => $check->get_meta( 'bundle_contents' ),
+						'options' => [
+							'loose'    => esc_html__( 'Loose', 'munipay' ),
+							'envelope' => esc_html__( 'Envelope', 'munipay' ),
+						],
+					]
+				);
+
+				Form::text(
+					[
+						'name'  => 'bundle_mailto',
+						'title' => esc_html__( 'Bundle Mail To', 'munipay' ),
+						'value' => $check->get_meta( 'bundle_mailto' ),
+					]
+				);
+
+				Form::text(
+					[
+						'name'  => 'bundle_address',
+						'title' => esc_html__( 'Bundle Address', 'munipay' ),
+						'value' => $check->get_meta( 'bundle_address' ),
+					]
+				);
+
+				?>
+
+			</div>
+
+			<div class="row pt-4 bundle-fields">
+
+				<?php
+
+				Form::text(
+					[
+						'name'  => 'bundle_city',
+						'title' => esc_html__( 'Bundle City', 'munipay' ),
+						'value' => $check->get_meta( 'bundle_city' ),
+					]
+				);
+
+				Form::text(
+					[
+						'name'  => 'bundle_state',
+						'title' => esc_html__( 'Bundle State', 'munipay' ),
+						'value' => $check->get_meta( 'bundle_state' ),
+					]
+				);
+
+				Form::text(
+					[
+						'name'  => 'bundle_zip',
+						'title' => esc_html__( 'Bundle Zipcode', 'munipay' ),
+						'value' => $check->get_meta( 'bundle_zip' ),
 					]
 				);
 

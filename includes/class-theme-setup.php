@@ -142,6 +142,7 @@ class Theme_Setup {
 			'bootstrap'    => $assets . '/vendor/bootstrap/bootstrap.min.css',
 			'font-awesome' => $assets . '/vendor/font-awesome/css/font-awesome.min.css',
 			'theme'        => $assets . '/css/theme.css',
+			'hasBundle'    => false,
 		];
 
 		wp_enqueue_style( 'dashicons' );
