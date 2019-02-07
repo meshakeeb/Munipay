@@ -50,6 +50,7 @@ class Theme_Setup {
 		new Disable_Emojis;
 		new Registration;
 		new Post_Types;
+		new Emails;
 		new Ajax;
 
 		// Shortcodes.
@@ -268,7 +269,7 @@ class Theme_Setup {
 	 * @return string
 	 */
 	public function mail_from( $from_email ) {
-		return 'Munipay';
+		return 'no-reply@munipay.io';
 	}
 
 	/**
@@ -279,7 +280,7 @@ class Theme_Setup {
 	 * @return string
 	 */
 	public function mail_from_name( $from_name ) {
-		return 'ericssonhelp@munipay.io';
+		return 'Munipay';
 	}
 
 	/**

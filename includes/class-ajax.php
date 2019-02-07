@@ -112,8 +112,9 @@ class Ajax {
 			return;
 		}
 
+		$old_status = $check->get_meta( 'smart_payable_status' );
 		$check->set_meta( 'smart_payable_status', $_GET['status'] );
-		do_action( 'munipay_payment_status_updated', $check, $_GET['status'] );
+		do_action( 'munipay_payment_status_updated', $check, $old_status, $_GET['status'] );
 
 		// Get Track info.
 		$smart                = Smart_Payables::create();
@@ -128,7 +129,7 @@ class Ajax {
 		foreach ( $response as $payment ) {
 			if ( absint( $payment['id'] ) === $payment_id ) {
 				$check->set_meta( 'smart_payable_tracking', $payment['tracking'] );
-				do_action( 'munipay_payment_tracking_found', $check, $payment );
+				do_action( 'munipay_payment_tracking_found', $check, $payment['tracking'], $payment );
 				break;
 			}
 		}

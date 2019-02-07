@@ -50,7 +50,7 @@ class Checkout {
 		$this->errors = new WP_Error;
 		add_shortcode( 'checkout', [ $this, 'form' ] );
 		$this->action( 'template_redirect', 'save' );
-		$this->action( 'order_completed', 'clean_order_data', 999 );
+		$this->action( 'munipay_order_completed', 'clean_order_data', 999 );
 	}
 
 	/**

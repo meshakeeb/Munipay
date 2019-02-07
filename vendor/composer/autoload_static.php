@@ -30,6 +30,7 @@ class ComposerStaticInit20a90e5a47a8472fda3994caedd0bc48
         'Munipay\\Checkout' => __DIR__ . '/../..' . '/includes/class-checkout.php',
         'Munipay\\Data' => __DIR__ . '/../..' . '/includes/class-data.php',
         'Munipay\\Disable_Emojis' => __DIR__ . '/../..' . '/includes/class-disable-emojis.php',
+        'Munipay\\Emails' => __DIR__ . '/../..' . '/includes/class-emails.php',
         'Munipay\\Form' => __DIR__ . '/../..' . '/includes/class-form.php',
         'Munipay\\Order' => __DIR__ . '/../..' . '/includes/class-order.php',
         'Munipay\\Post_Types' => __DIR__ . '/../..' . '/includes/class-post-types.php',

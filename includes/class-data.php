@@ -153,6 +153,15 @@ abstract class Data {
 	}
 
 	/**
+	 * Get post object.
+	 *
+	 * @return WP_Post
+	 */
+	public function get_object() {
+		return $this->object;
+	}
+
+	/**
 	 * Format price.
 	 *
 	 * @param float  $price   Raw price.
