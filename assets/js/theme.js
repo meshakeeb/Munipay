@@ -85,7 +85,8 @@
 
 			requests: function() {
 				this.saveRequest()
-				this.bundleFields();
+				this.deleteRequest()
+				this.bundleFields()
 				this.addNewRequest()
 				this.boxTitleHandler()
 
@@ -104,11 +105,27 @@
 				var app = this
 
 				app.wrap.on( 'change', '.request-delivery-method', function( event ) {
-					var select = $( this ),
-						value  = select.val(),
-						fields = select.closest( 'form' ).find( '.bundle-fields' )
-
 					app.hasBundle()
+				})
+
+				app.wrap.on( 'change', '.request-delivery-method', function( event ) {
+					var select = $( this ),
+						method = select.val(),
+						requestDate = new Date( $( '#request_date' ).val() ),
+						projectedDate = new Date( requestDate ),
+						addDays = '2' === method ? 1 : 2
+
+					// Add Days
+					projectedDate.setDate( projectedDate.getDate() + addDays )
+					if ( 0 === projectedDate.getDay() ) {
+						projectedDate.setDate( projectedDate.getDate() + addDays )
+					}
+
+					if ( 6 === projectedDate.getDay() ) {
+						projectedDate.setDate( projectedDate.getDate() + addDays + 1 )
+					}
+
+					select.closest( 'form' ).find( '[name="request_delivery_date"]' ).val( $.datepicker.formatDate( 'MM d, yy', projectedDate ) )
 				})
 			},
 
@@ -145,6 +162,35 @@
 						checkZero.find( selector ).val( input.val() )
 					})
 				}
+			},
+
+			deleteRequest: function() {
+				var app = this
+
+				app.wrap.on( 'click', '.order-check-delete', function( event ) {
+					event.preventDefault()
+					if ( false === confirm( 'Are you sure?' ) ) {
+						return
+					}
+
+					var button = $( this ),
+						data = {
+							check_id: button.parent().find( '[name="check_id"]' ).val()
+						},
+						rows = button.closest( '.order-check' )
+
+					button.prop( 'disabled', true )
+					rows.addClass( 'disabled' )
+
+					app.post( 'delete_check', data )
+						.done( function( result ) {
+							if ( result && ! result.success ) {
+								return
+							}
+
+							rows.remove()
+						})
+				})
 			},
 
 			saveRequest: function() {
@@ -240,7 +286,9 @@
 
 					app.wrap.append( request )
 
-					$( '.js-datepicker', app.wrap.find( '.order-check:last' ) ).datepicker()
+					request = app.wrap.find( '.order-check:last' )
+					$( '.js-datepicker', request ).datepicker()
+					$( '.request-delivery-method', request ).trigger( 'change' )
 				})
 			},
 

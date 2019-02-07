@@ -387,6 +387,7 @@ $check = $this->current_check;
 				<input type="hidden" class="bundle_city" name="bundle_city" value="<?php echo $check->get_meta( 'bundle_city' ); ?>">
 				<input type="hidden" class="bundle_state" name="bundle_state" value="<?php echo $check->get_meta( 'bundle_state' ); ?>">
 				<input type="hidden" class="bundle_zip" name="bundle_zip" value="<?php echo $check->get_meta( 'bundle_zip' ); ?>">
+				<button type="button" class="btn btn-danger btn-lg order-check-delete"><span><?php esc_html_e( 'Delete Check Request', 'munipay' ); ?></span></button>
 				<button type="submit" class="btn btn-primary btn-lg order-check-save"><span><?php echo $check->get_id() ? esc_html__( 'Update Check Request', 'munipay' ) : esc_html__( 'Save Check Request', 'munipay' ); ?></span></button>
 			</div>
 

@@ -93,7 +93,7 @@ $current_user = wp_get_current_user();
 	);
 	?>
 		<small class="form-text pl-2 text-muted"><?php esc_html_e( 'Address', 'munipay' ); ?></small>
-	
+
 
 	<div class="invalid-feedback">
 		<?php esc_html_e( 'Please enter your shipping address.', 'munipay' ); ?>

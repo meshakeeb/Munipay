@@ -148,7 +148,7 @@ class Order extends Data {
 	 * @return string
 	 */
 	public function get_order_date() {
-		return $this->get_id() > 1 ? mysql2date( get_option( 'date_format' ), $this->object->post_date ) : date( get_option( 'date_format' ) );
+		return $this->get_id() > 1 && $this->has_checks() ? mysql2date( get_option( 'date_format' ), $this->object->post_date ) : date( get_option( 'date_format' ) );
 	}
 
 	/**

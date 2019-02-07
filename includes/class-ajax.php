@@ -179,9 +179,16 @@ class Ajax {
 		// Delete Check.
 		Check::delete( $_POST['check_id'] );
 
+		if ( ! isset( $_POST['order_id'] ) ) {
+			$this->success(
+				[
+					'message' => 'Check successfully delete.',
+				]
+			);
+		}
+
 		// Get order total.
 		$order = new Order( $_POST['order_id'] );
-
 		$this->success(
 			[
 				'orderTotal' => $order->get_total(),
