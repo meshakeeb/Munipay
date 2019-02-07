@@ -15,28 +15,8 @@ wp_enqueue_script( 'jquery-ui-datepicker' );
 
 get_header();
 
-$form         = new stdClass;
-$form->errors = new WP_Error;
-
-$smart = new Smart_Payables( $form );
-
-// Default date.
-$to   = isset( $_POST['end_date'] ) ? $_POST['end_date'] : date( 'm/d/Y' );
-$from = isset( $_POST['start_date'] ) ? $_POST['start_date'] : date( 'm/d/Y', strtotime( '-30 day' ) );
-
-// Serch by field.
-if ( isset( $_POST['field_value'] ) && ! empty( $_POST['field_value'] ) ) {
-	$smart->data['q']      = $_POST['field_value'];
-	$smart->data['field '] = $_POST['field_name'];
-
-	$response = $smart->send( 'payments/search' );
-} else {
-	// Search by date.
-	$smart->data['from_date'] = $from;
-	$smart->data['to_date']   = $to;
-
-	$response = $smart->send( 'payments/byDate' );
-}
+$smart   = Smart_Payables::create();
+$reports = $smart->get_reports();
 ?>
 <div class="container mt-5 mb-5">
 
@@ -48,24 +28,41 @@ if ( isset( $_POST['field_value'] ) && ! empty( $_POST['field_value'] ) ) {
 
 			<div class="input-group mb-2 mr-sm-2">
 				<div class="input-group-prepend">
-					<div class="input-group-text">Search By</div>
+					<div class="input-group-text"><?php esc_html_e( 'Search By', 'munipay' ); ?></div>
 				</div>
-				<select class="form-control" name="field_name">
-					<option value="">Select a field</option>
-					<option value="id">Payment ID</option>
-					<option value="payee">Payee Name</option>
-					<option value="amount">Amount</option>
-					<option value="check_num">Check Number</option>
-					<option value="client_transaction_id">Client Transaction ID</option>
-					<option value="notes">Notes</option>
-					<option value="address">Address</option>
-					<option value="zip">Zipcode</option>
-					<option value="reference">Reference</option>
-				</select>
-				<input type="text" name="field_value" class="form-control" value="">
+				<?php
+
+				Form::select(
+					[
+						'name'    => 'field_name',
+						'value'   => isset( $smart->data['field'] ) ? $smart->data['field'] : '',
+						'options' => [
+							''                      => esc_html__( 'Select a field', 'munipay' ),
+							'id'                    => esc_html__( 'Payment ID', 'munipay' ),
+							'payee'                 => esc_html__( 'Payee Name', 'munipay' ),
+							'amount'                => esc_html__( 'Amount', 'munipay' ),
+							'check_num'             => esc_html__( 'Check Number', 'munipay' ),
+							'client_transaction_id' => esc_html__( 'Client Transaction ID', 'munipay' ),
+							'notes'                 => esc_html__( 'Notes', 'munipay' ),
+							'address'               => esc_html__( 'Address', 'munipay' ),
+							'zip'                   => esc_html__( 'Zipcode', 'munipay' ),
+							'reference'             => esc_html__( 'Reference', 'munipay' ),
+						],
+					],
+					true
+				);
+
+				Form::text(
+					[
+						'name'  => 'field_value',
+						'value' => isset( $smart->data['q'] ) ? $smart->data['q'] : '',
+					],
+					true
+				);
+				?>
 			</div>
 
-			<h5>OR</h5>
+			<h5><?php esc_html_e( 'OR', 'munipay' ); ?></h5>
 
 		</div>
 
@@ -73,50 +70,51 @@ if ( isset( $_POST['field_value'] ) && ! empty( $_POST['field_value'] ) ) {
 
 			<div class="input-group mb-2 mr-sm-2">
 				<div class="input-group-prepend">
-					<div class="input-group-text">Start Date</div>
+					<div class="input-group-text"><?php esc_html_e( 'Start Date', 'munipay' ); ?></div>
 				</div>
-				<input type="text" name="start_date" class="form-control report-datepicker" value="<?php echo $from; ?>">
+				<input type="text" name="start_date" class="form-control report-datepicker" value="<?php echo $reports['from']; ?>">
 
 				<div class="input-group-prepend">
-					<div class="input-group-text">End Date</div>
+					<div class="input-group-text"><?php esc_html_e( 'End Date', 'munipay' ); ?></div>
 				</div>
-				<input type="text" name="end_date" class="form-control report-datepicker" value="<?php echo $to; ?>">
+				<input type="text" name="end_date" class="form-control report-datepicker" value="<?php echo $reports['to']; ?>">
 
 			</div>
 
 		</div>
 
-		<button type="submit" class="btn btn-primary btn-sm mb-2">Submit</button>
+		<button type="submit" class="btn btn-secondary btn-sm mb-2" name="download_report"><?php esc_html_e( 'Download as CSV', 'munipay' ); ?></button>
+		<button type="submit" class="btn btn-primary btn-sm mb-2"><?php esc_html_e( 'Submit', 'munipay' ); ?></button>
 
 	</form>
 
-	<?php Form::display_errors( $form->errors ); ?>
+	<?php Form::display_errors( $smart->form->errors ); ?>
 
-	<?php if ( false !== $response ) : ?>
+	<?php if ( false !== $reports['response'] ) : ?>
 
 		<table class="table table-bordered table-striped mt-3">
 			<thead>
 				<tr>
-					<th>Payment ID</th>
-					<th>Payment Date</th>
-					<th>Payee</th>
-					<th>Status</th>
-					<th>Amount</th>
-					<th>Reference</th>
-					<th>Address 1</th>
-					<th>Address 2</th>
-					<th>City</th>
-					<th>State</th>
-					<th>Zipcode</th>
-					<th>Memo</th>
+					<th><?php esc_html_e( 'Payment ID', 'munipay' ); ?></th>
+					<th><?php esc_html_e( 'Payment Date', 'munipay' ); ?></th>
+					<th><?php esc_html_e( 'Payee', 'munipay' ); ?></th>
+					<th><?php esc_html_e( 'Status', 'munipay' ); ?></th>
+					<th><?php esc_html_e( 'Amount', 'munipay' ); ?></th>
+					<th><?php esc_html_e( 'Reference', 'munipay' ); ?></th>
+					<th><?php esc_html_e( 'Address 1', 'munipay' ); ?></th>
+					<th><?php esc_html_e( 'Address 2', 'munipay' ); ?></th>
+					<th><?php esc_html_e( 'City', 'munipay' ); ?></th>
+					<th><?php esc_html_e( 'State', 'munipay' ); ?></th>
+					<th><?php esc_html_e( 'Zipcode', 'munipay' ); ?></th>
+					<th><?php esc_html_e( 'Memo', 'munipay' ); ?></th>
 				</tr>
 			</thead>
 			<tbody>
 		<?php
-		$payments = $response['payments']['payment'];
+		$payments = $reports['response']['payments']['payment'];
 		if ( isset( $payments['payment_id'] ) ) {
 			$payments   = [];
-			$payments[] = $response['payments']['payment'];
+			$payments[] = $reports['response']['payments']['payment'];
 		}
 		$payments = array_reverse( $payments );
 		foreach ( $payments as $payment ) :

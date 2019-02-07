@@ -29,6 +29,7 @@ $order = $this->order;
 		Form::text(
 			[
 				'id'    => 'requester_email',
+				'type'  => 'email',
 				'title' => esc_html__( 'Email', 'munipay' ),
 				'value' => $order->get_requester_email(),
 			]

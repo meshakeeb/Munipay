@@ -24,9 +24,69 @@ class Ajax {
 	 */
 	public function __construct() {
 		add_action( 'init', [ $this, 'status_update' ] );
+		add_action( 'init', [ $this, 'download_report' ] );
 		$this->ajax( 'create_order', 'create_order' );
 		$this->ajax( 'update_check', 'update_check' );
 		$this->ajax( 'delete_check', 'delete_check' );
+	}
+
+	/**
+	 * Download CSV.
+	 */
+	public function download_report() {
+		if ( ! isset( $_POST['download_report'] ) ) {
+			return;
+		}
+
+		header( 'Content-Type: application/csv' );
+		header( 'Content-Disposition: attachment; filename=munipay-report-' . date( 'Y-m-d-H-i-s' ) . '.csv' );
+		header( 'Cache-Control: no-cache, no-store, must-revalidate' );
+		header( 'Pragma: no-cache' );
+		header( 'Expires: 0' );
+
+		$smart   = Smart_Payables::create();
+		$reports = $smart->get_reports();
+		if ( false === $reports['response'] ) {
+			return;
+		}
+
+		$payments = $reports['response']['payments']['payment'];
+		if ( isset( $payments['payment_id'] ) ) {
+			$payments   = [];
+			$payments[] = $reports['response']['payments']['payment'];
+		}
+		$payments = array_reverse( $payments );
+
+		echo join( ',', array_keys( $this->clean_row( $payments[0] ) ) ) . PHP_EOL;
+
+		foreach ( $payments as $payment ) {
+			echo join( ',', $this->clean_row( $payment ) ) . PHP_EOL;
+		}
+
+		exit;
+	}
+
+	/**
+	 * Clean report row.
+	 *
+	 * @param array $row Row to clean.
+	 *
+	 * @return array
+	 */
+	private function clean_row( $row ) {
+		unset(
+			$row['@attributes'],
+			$row['method_id'],
+			$row['date_exported']
+		);
+
+		foreach ( [ 'date_sent', 'trans_id', 'address2' ] as $col ) {
+			if ( is_array( $row[ $col ] ) ) {
+				unset( $row[ $col ] );
+			}
+		}
+
+		return $row;
 	}
 
 	/**
@@ -53,10 +113,10 @@ class Ajax {
 		}
 
 		$check->set_meta( 'smart_payable_status', $_GET['status'] );
-		do_action( 'payment_status_updated', $check, $_GET['status'] );
+		do_action( 'munipay_payment_status_updated', $check, $_GET['status'] );
 
 		// Get Track info.
-		$smart                = new Smart_Payables( null );
+		$smart                = Smart_Payables::create();
 		$smart->data['payee'] = $check->get_meta( 'payee_name' );
 		$smart->data['zip']   = $check->get_meta( 'payee_zipcode' );
 
@@ -68,7 +128,7 @@ class Ajax {
 		foreach ( $response as $payment ) {
 			if ( absint( $payment['id'] ) === $payment_id ) {
 				$check->set_meta( 'smart_payable_tracking', $payment['tracking'] );
-				do_action( 'payment_tracking_found', $check, $payment );
+				do_action( 'munipay_payment_tracking_found', $check, $payment );
 				break;
 			}
 		}

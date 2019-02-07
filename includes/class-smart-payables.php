@@ -10,6 +10,9 @@
 
 namespace Munipay;
 
+use stdClass;
+use WP_Error;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -22,7 +25,7 @@ class Smart_Payables {
 	 *
 	 * @var Checkout
 	 */
-	private $form = null;
+	public $form = null;
 
 	/**
 	 * Hold request data.
@@ -30,6 +33,22 @@ class Smart_Payables {
 	 * @var array
 	 */
 	public $data = [];
+
+	/**
+	 * Create instance.
+	 *
+	 * @param  object $form Any parent.
+	 *
+	 * @return Smart_Payables
+	 */
+	public static function create( $form = null ) {
+		if ( is_null( $form ) ) {
+			$form         = new stdClass;
+			$form->errors = new WP_Error;
+		}
+
+		return new Smart_Payables( $form );
+	}
 
 	/**
 	 * Class constructor.
@@ -84,6 +103,33 @@ class Smart_Payables {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Get reports.
+	 *
+	 * @return array
+	 */
+	public function get_reports() {
+		// Default date.
+		$to   = isset( $_POST['end_date'] ) ? $_POST['end_date'] : date( 'm/d/Y' );
+		$from = isset( $_POST['start_date'] ) ? $_POST['start_date'] : date( 'm/d/Y', strtotime( '-30 day' ) );
+
+		// Serch by field.
+		if ( isset( $_POST['field_name'], $_POST['field_value'] ) && ! empty( $_POST['field_name'] ) && ! empty( $_POST['field_value'] ) ) {
+			$this->data['q']      = $_POST['field_value'];
+			$this->data['field '] = $_POST['field_name'];
+
+			$response = $this->send( 'payments/search' );
+		} else {
+			// Search by date.
+			$this->data['from_date'] = $from;
+			$this->data['to_date']   = $to;
+
+			$response = $this->send( 'payments/byDate' );
+		}
+
+		return \compact( 'response', 'to', 'from' );
 	}
 
 	/**

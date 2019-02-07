@@ -139,7 +139,7 @@ class Order extends Data {
 	 */
 	public function completed() {
 		delete_user_meta( $this->current_user->ID, 'current_order' );
-		do_action( 'order_completed', $this );
+		do_action( 'munipay_order_completed', $this );
 	}
 
 	/**
