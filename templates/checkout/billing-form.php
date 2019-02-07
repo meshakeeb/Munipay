@@ -14,9 +14,8 @@ $current_user = wp_get_current_user();
 
 <div class="mb-3">
 
-	<label for="requester_name"><?php esc_html_e( 'Requester Name', 'munipay' ); ?></label>
-
 	<input type="text" class="form-control" id="requester_name" name="requester_name" value="<?php echo $order->get_requester_name(); ?>" required>
+	<small class="form-text pl-2 text-muted"><?php esc_html_e( 'Requester Name', 'munipay' ); ?></small>
 
 	<div class="invalid-feedback">
 		<?php esc_html_e( 'Valid requester name is required.', 'munipay' ); ?>
@@ -28,15 +27,10 @@ $current_user = wp_get_current_user();
 
 	<div class="col-md-6 mb-3">
 
-		<label for="requester_email"><?php esc_html_e( 'Email', 'munipay' ); ?></label>
 
 		<div class="input-group">
-
-			<div class="input-group-prepend">
-				<span class="input-group-text">@</span>
-			</div>
-
 			<input type="text" class="form-control" id="requester_email" name="requester_email" value="<?php echo $order->get_requester_email(); ?>" required>
+			<small class="form-text pl-2 text-muted"><?php esc_html_e( 'Email', 'munipay' ); ?></small>
 
 			<div class="invalid-feedback">
 				<?php esc_html_e( 'Valid email is required.', 'munipay' ); ?>
@@ -48,9 +42,8 @@ $current_user = wp_get_current_user();
 
 	<div class="col-md-6 mb-3">
 
-		<label for="requester_phone"><?php esc_html_e( 'Phone', 'munipay' ); ?></label>
-
 		<input type="text" class="form-control" id="requester_phone" name="requester_phone" value="<?php echo $order->get_requester_phone(); ?>" required>
+		<small class="form-text pl-2 text-muted"><?php esc_html_e( 'Phone', 'munipay' ); ?></small>
 
 		<div class="invalid-feedback">
 			<?php esc_html_e( 'Valid phone is required.', 'munipay' ); ?>
@@ -64,9 +57,8 @@ $current_user = wp_get_current_user();
 
 	<div class="col-md-6 mb-3">
 
-		<label for="requester_signum"><?php esc_html_e( 'Signum', 'munipay' ); ?></label>
-
 		<input type="text" class="form-control" id="requester_signum" name="requester_signum" value="<?php echo $order->get_requester_signum(); ?>" required>
+		<small class="form-text pl-2 text-muted"><?php esc_html_e( 'Signum', 'munipay' ); ?></small>
 
 		<div class="invalid-feedback">
 			<?php esc_html_e( 'Valid signum is required.', 'munipay' ); ?>
@@ -76,9 +68,8 @@ $current_user = wp_get_current_user();
 
 	<div class="col-md-6 mb-3">
 
-		<label for="requester_cost_center"><?php esc_html_e( 'Cost Center', 'munipay' ); ?></label>
-
 		<input type="text" class="form-control" id="requester_cost_center" name="requester_cost_center" value="<?php echo $order->get_requester_cost_center(); ?>" required>
+		<small class="form-text pl-2 text-muted"><?php esc_html_e( 'Cost Center', 'munipay' ); ?></small>
 
 		<div class="invalid-feedback">
 			<?php esc_html_e( 'Valid cost center is required.', 'munipay' ); ?>
@@ -89,8 +80,6 @@ $current_user = wp_get_current_user();
 </div>
 
 <div class="mb-3">
-
-	<label for="payment_address"><?php esc_html_e( 'Address', 'munipay' ); ?></label>
 
 	<?php
 	Form::text(
@@ -103,6 +92,8 @@ $current_user = wp_get_current_user();
 		true
 	);
 	?>
+		<small class="form-text pl-2 text-muted"><?php esc_html_e( 'Address', 'munipay' ); ?></small>
+	
 
 	<div class="invalid-feedback">
 		<?php esc_html_e( 'Please enter your shipping address.', 'munipay' ); ?>
@@ -111,8 +102,6 @@ $current_user = wp_get_current_user();
 </div>
 
 <div class="mb-3">
-
-	<label for="payment_address_2"><?php esc_html_e( 'Address 2', 'munipay' ); ?> <span class="text-muted"><?php esc_html_e( '(Optional)', 'munipay' ); ?></span></label>
 
 	<?php
 	Form::text(
@@ -124,6 +113,7 @@ $current_user = wp_get_current_user();
 		true
 	);
 	?>
+		<small class="form-text pl-2 text-muted"><?php esc_html_e( 'Address 2', 'munipay' ); ?> <?php esc_html_e( '(Optional)', 'munipay' ); ?></small>
 
 </div>
 
@@ -132,8 +122,6 @@ $current_user = wp_get_current_user();
 	<input type="hidden" name="payment_country" value="US">
 
 	<div class="col-md-5 mb-3">
-
-		<label for="payment_state"><?php esc_html_e( 'State', 'munipay' ); ?></label>
 
 		<?php
 		Form::select(
@@ -203,6 +191,7 @@ $current_user = wp_get_current_user();
 			true
 		);
 		?>
+		<small class="form-text pl-2 text-muted"><?php esc_html_e( 'State', 'munipay' ); ?></small>
 
 		<div class="invalid-feedback">
 			<?php esc_html_e( 'Please select a valid state.', 'munipay' ); ?>
@@ -211,9 +200,6 @@ $current_user = wp_get_current_user();
 	</div>
 
 	<div class="col-md-4 mb-3">
-
-		<label for="payment_city"><?php esc_html_e( 'City', 'munipay' ); ?></label>
-
 		<?php
 		Form::text(
 			[
@@ -225,6 +211,7 @@ $current_user = wp_get_current_user();
 			true
 		);
 		?>
+		<small class="form-text pl-2 text-muted"><?php esc_html_e( 'City', 'munipay' ); ?></small>
 
 		<div class="invalid-feedback">
 			<?php esc_html_e( 'Please provide a city.', 'munipay' ); ?>
@@ -233,8 +220,6 @@ $current_user = wp_get_current_user();
 	</div>
 
 	<div class="col-md-3 mb-3">
-
-		<label for="payment_zipcode"><?php esc_html_e( 'Zip Code', 'munipay' ); ?></label>
 
 		<?php
 		Form::text(
@@ -247,6 +232,7 @@ $current_user = wp_get_current_user();
 			true
 		);
 		?>
+		<small class="form-text pl-2 text-muted"><?php esc_html_e( 'Zip Code', 'munipay' ); ?></small>
 
 		<div class="invalid-feedback">
 			<?php esc_html_e( 'Zip code required.', 'munipay' ); ?>
@@ -264,9 +250,8 @@ $current_user = wp_get_current_user();
 
 	<div class="col-md-12 mb-3">
 
-		<label for="payment_cc_number"><?php esc_html_e( 'Credit card number', 'munipay' ); ?></label>
-
 		<input type="text" class="form-control" id="payment_cc_number" name="payment_cc_number" required>
+		<small class="form-text pl-2 text-muted"><?php esc_html_e( 'Credit card number', 'munipay' ); ?></small>
 
 		<div class="invalid-feedback">
 			<?php esc_html_e( 'Credit card number is required', 'munipay' ); ?>
@@ -280,9 +265,8 @@ $current_user = wp_get_current_user();
 
 	<div class="col-md-6 mb-3">
 
-		<label for="payment_cc_expiration"><?php esc_html_e( 'Expiration', 'munipay' ); ?></label>
-
 		<input type="text" class="form-control" id="payment_cc_expiration" name="payment_cc_expiration" required placeholder="MM / YY">
+		<small class="form-text pl-2 text-muted"><?php esc_html_e( 'Expiration', 'munipay' ); ?></small>
 
 		<div class="invalid-feedback">
 			<?php esc_html_e( 'Expiration date required', 'munipay' ); ?>
@@ -292,9 +276,8 @@ $current_user = wp_get_current_user();
 
 	<div class="col-md-6 mb-3">
 
-		<label for="payment_cc_cvv"><?php esc_html_e( 'CVV', 'munipay' ); ?></label>
-
 		<input type="text" class="form-control" id="payment_cc_cvv" name="payment_cc_cvv" required>
+		<small class="form-text pl-2 text-muted"><?php esc_html_e( 'CVV', 'munipay' ); ?></small>
 
 		<div class="invalid-feedback">
 			<?php esc_html_e( 'Security code required', 'munipay' ); ?>

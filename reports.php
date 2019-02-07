@@ -93,8 +93,8 @@ if ( isset( $_POST['field_value'] ) && ! empty( $_POST['field_value'] ) ) {
 	<?php Form::display_errors( $form->errors ); ?>
 
 	<?php if ( false !== $response ) : ?>
-
-		<table class="table table-bordered table-striped mt-3">
+		<div class="table-responsive">
+		<table class="table table-bordered table-striped mt-3 reports-table">
 			<thead>
 				<tr>
 					<th>Payment ID</th>
@@ -140,6 +140,7 @@ if ( isset( $_POST['field_value'] ) && ! empty( $_POST['field_value'] ) ) {
 		?>
 			</tbody>
 		</table>
+		</div>
 	<?php endif; ?>
 
 </div>

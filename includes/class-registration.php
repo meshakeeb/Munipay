@@ -77,8 +77,8 @@ class Registration {
 		<div class="row">
 		<?php foreach ( self::get_fields() as $id => $field ) { ?>
 			<p class="col-<?php echo $field['grid']; ?>">
-				<label for="<?php echo $id; ?>"><?php echo $field['title']; ?><br/>
-					<input type="text" id="<?php echo $id; ?>" name="<?php echo $id; ?>" value="<?php echo isset( $_POST[ $id ] ) ? esc_attr( $_POST[ $id ] ) : ''; ?>" class="input">
+				<label for="<?php echo $id; ?>">
+					<input type="text" id="<?php echo $id; ?>" name="<?php echo $id; ?>" placeholder="<?php echo $field['title']; ?>" value="<?php echo isset( $_POST[ $id ] ) ? esc_attr( $_POST[ $id ] ) : ''; ?>" class="input">
 				</label>
 			</p>
 		<?php } ?>
@@ -121,11 +121,8 @@ class Registration {
 		<table class="form-table">
 		<?php foreach ( $fields as $id => $field ) { ?>
 			<tr>
-				<th>
-					<label for="<?php echo $id; ?>"><?php echo $field['title']; ?></label>
-				</th>
 				<td>
-					<input type="text" id="<?php echo $id; ?>" name="<?php echo $id; ?>" value="<?php echo isset( $_POST[ $id ] ) ? esc_attr( $_POST[ $id ] ) : ''; ?>" class="regular-text">
+					<input type="text" id="<?php echo $id; ?>" name="<?php echo $id; ?>" placeholder="<?php echo $field['title']; ?>" value="<?php echo isset( $_POST[ $id ] ) ? esc_attr( $_POST[ $id ] ) : ''; ?>" class="regular-text">
 				</td>
 			</tr>
 		<?php } ?>
