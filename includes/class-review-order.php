@@ -55,7 +55,7 @@ class Review_Order {
 					<?php $this->get_template( 'requester' ); ?>
 				</div>
 
-				<div class="col-6 offset-2">
+				<div class="col-8">
 
 					<?php if ( $this->order->has_checks() ) : ?>
 					<ul class="list-group">

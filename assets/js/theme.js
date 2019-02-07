@@ -322,4 +322,10 @@
 		munipayApp.init();
 	});
 
+	$('#user_login').attr('placeholder','Username');
+	$('.login-action-login #user_login').attr('placeholder','Username or Email Address');
+	$('#user_pass').attr('placeholder','Password');
+	$('#user_email').attr('placeholder','Email Address');
+
+
 })( jQuery );

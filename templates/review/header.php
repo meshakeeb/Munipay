@@ -6,7 +6,7 @@
  */
 
 ?>
-<div class="jumbotron py-4 px-2 bg-warning">
+<div class="jumbotron intro">
 
 	<div class="container">
 
@@ -22,7 +22,7 @@
 			<?php esc_html_e( 'When everything’s correct, click the orange CHECK OUT button to go to the Order page.', 'munipay' ); ?>
 		</p>
 
-		<div class="alert alert-secondary mt-4" role="alert">
+		<div class="alert mt-4" role="alert">
 
 			<p class="h5 font-weight-normal">
 				<?php esc_html_e( 'If you have questions or need customer support, please email mana.sourcing@ericsson.com or call 469-266-5389.', 'munipay' ); ?>

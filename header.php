@@ -29,11 +29,11 @@
 
 			<div class="row align-items-center">
 
-				<div class="col-5">
+				<div class="col-md-5">
 					<a href="<?php home_url(); ?>" class="logo"><img src="<?php echo munipay()->assets() . '/images/logo.png'; ?>" class="img-responsive"></a>
 				</div>
 
-				<div class="col-7">
+				<div class="col-md-7">
 					<span class="link"><?php esc_html_e( 'ERICSSON CHECK REQUEST PORTAL', 'munipay' ); ?></span>
 				</div>
 

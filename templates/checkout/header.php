@@ -6,7 +6,7 @@
  */
 
 ?>
-<div class="jumbotron py-4 px-2 bg-warning">
+<div class="jumbotron intro">
 
 	<div class="container">
 
@@ -30,7 +30,7 @@
 			<?php esc_html_e( 'You’ll receive two email confirmations—one confirming the credit card charge and one with a data file confirming the details of your check requests.', 'munipay' ); ?>
 		</p>
 
-		<div class="alert alert-secondary mt-4" role="alert">
+		<div class="alert mt-4" role="alert">
 
 			<p class="h5 font-weight-normal">
 				<?php esc_html_e( 'Be sure to complete the entire check ordering process by 7 p.m. CT. If you have questions or need customer support, please email mana.sourcing@ericsson.com or call 469-266-5389.', 'munipay' ); ?>

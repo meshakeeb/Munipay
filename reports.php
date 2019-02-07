@@ -91,8 +91,8 @@ $reports = $smart->get_reports();
 	<?php Form::display_errors( $smart->form->errors ); ?>
 
 	<?php if ( false !== $reports['response'] ) : ?>
-
-		<table class="table table-bordered table-striped mt-3">
+		<div class="table-responsive">
+		<table class="table table-bordered table-striped mt-3 reports-table">
 			<thead>
 				<tr>
 					<th><?php esc_html_e( 'Payment ID', 'munipay' ); ?></th>
@@ -138,6 +138,7 @@ $reports = $smart->get_reports();
 		?>
 			</tbody>
 		</table>
+		</div>
 	<?php endif; ?>
 
 </div>
