@@ -10,7 +10,7 @@ use Munipay\Profile;
 
 $check = $this->current_check;
 ?>
-<div class="jumbotron p-4 order-check order-check-<?php echo $check->get_id(); ?>">
+<div class="jumbotron p-4 order-check order-check-<?php echo $check->get_id() . ( $check->get_id() > 0 ? ' saved' : '' ); ?>">
 
 	<div class="order-check-header" id="<?php $check->get_html_id( 'check-heading' ); ?>">
 
@@ -26,7 +26,7 @@ $check = $this->current_check;
 
 	<div id="<?php $check->get_html_id( 'order-check' ); ?>" class="mt-3 collapse" aria-labelledby="<?php $check->get_html_id( 'check-heading' ); ?>" data-parent="#orders">
 
-		<form class="">
+		<form class="needs-validation" novalidate>
 
 			<div class="row">
 
@@ -34,9 +34,10 @@ $check = $this->current_check;
 
 				Form::text(
 					[
-						'name'  => 'payee_name',
-						'title' => esc_html__( 'Payee Name*', 'munipay' ),
-						'value' => $check->get_meta( 'payee_name' ),
+						'name'     => 'payee_name',
+						'title'    => esc_html__( 'Payee Name*', 'munipay' ),
+						'value'    => $check->get_meta( 'payee_name' ),
+						'required' => '',
 					]
 				);
 
@@ -58,15 +59,17 @@ $check = $this->current_check;
 
 				Form::text(
 					[
-						'name'  => 'payee_address',
-						'title' => esc_html__( 'Delivery address for check*', 'munipay' ),
-						'value' => $check->get_meta( 'payee_address' ),
+						'name'     => 'payee_address',
+						'title'    => esc_html__( 'Delivery address for check*', 'munipay' ),
+						'value'    => $check->get_meta( 'payee_address' ),
+						'required' => '',
 					]
 				);
 
 				Form::text(
 					[
 						'name'  => 'payee_email',
+						'type'  => 'email',
 						'title' => esc_html__( 'Payee Email', 'munipay' ),
 						'value' => $check->get_meta( 'payee_email' ),
 					]
@@ -90,9 +93,10 @@ $check = $this->current_check;
 
 				Form::text(
 					[
-						'name'  => 'payee_phone',
-						'title' => esc_html__( 'Phone', 'munipay' ),
-						'value' => $check->get_meta( 'payee_phone' ),
+						'name'     => 'payee_phone',
+						'title'    => esc_html__( 'Phone*', 'munipay' ),
+						'value'    => $check->get_meta( 'payee_phone' ),
+						'required' => '',
 					]
 				);
 
@@ -106,25 +110,28 @@ $check = $this->current_check;
 
 				Form::text(
 					[
-						'name'  => 'payee_city',
-						'title' => esc_html__( 'City*', 'munipay' ),
-						'value' => $check->get_meta( 'payee_city' ),
+						'name'     => 'payee_city',
+						'title'    => esc_html__( 'City*', 'munipay' ),
+						'value'    => $check->get_meta( 'payee_city' ),
+						'required' => '',
 					]
 				);
 
 				Form::text(
 					[
-						'name'  => 'payee_state',
-						'title' => esc_html__( 'State*', 'munipay' ),
-						'value' => $check->get_meta( 'payee_state' ),
+						'name'     => 'payee_state',
+						'title'    => esc_html__( 'State*', 'munipay' ),
+						'value'    => $check->get_meta( 'payee_state' ),
+						'required' => '',
 					]
 				);
 
 				Form::text(
 					[
-						'name'  => 'payee_zipcode',
-						'title' => esc_html__( 'Zip Code*', 'munipay' ),
-						'value' => $check->get_meta( 'payee_zipcode' ),
+						'name'     => 'payee_zipcode',
+						'title'    => esc_html__( 'Zip Code*', 'munipay' ),
+						'value'    => $check->get_meta( 'payee_zipcode' ),
+						'required' => '',
 					]
 				);
 
@@ -154,9 +161,11 @@ $check = $this->current_check;
 
 				Form::text(
 					[
-						'name'  => 'request_description',
-						'title' => esc_html__( 'Memo (printed on stub) - 300-character limit', 'munipay' ),
-						'value' => $check->get_meta( 'request_description' ),
+						'name'      => 'request_description',
+						'title'     => esc_html__( 'Memo* (printed on stub) - 300-character limit', 'munipay' ),
+						'value'     => $check->get_meta( 'request_description' ),
+						'maxlength' => 300,
+						'required'  => '',
 					]
 				);
 
@@ -170,17 +179,19 @@ $check = $this->current_check;
 
 				Form::text(
 					[
-						'name'  => 'request_reason_2',
-						'title' => esc_html__( 'Notes (printed on check) - 25-character limit', 'munipay' ),
-						'value' => $check->get_meta( 'request_reason_2' ),
+						'name'      => 'request_reason_2',
+						'title'     => esc_html__( 'Notes (printed on check) - 25-character limit', 'munipay' ),
+						'value'     => $check->get_meta( 'request_reason_2' ),
+						'maxlength' => 25,
 					]
 				);
 
 				Form::text(
 					[
-						'name'  => 'request_amount',
-						'title' => esc_html__( 'Amount*', 'munipay' ),
-						'value' => $check->get_meta( 'request_amount' ),
+						'name'     => 'request_amount',
+						'title'    => esc_html__( 'Amount*', 'munipay' ),
+						'value'    => $check->get_meta( 'request_amount' ),
+						'required' => '',
 					]
 				);
 
@@ -194,14 +205,15 @@ $check = $this->current_check;
 
 				Form::select(
 					[
-						'name'    => 'request_delivery_method',
-						'title'   => esc_html__( 'Delivery method*', 'munipay' ),
-						'value'   => $check->get_meta( 'request_delivery_method' ),
-						'class'   => 'form-control request-delivery-method',
-						'options' => [
+						'name'     => 'request_delivery_method',
+						'title'    => esc_html__( 'Delivery method*', 'munipay' ),
+						'value'    => $check->get_meta( 'request_delivery_method' ),
+						'class'    => 'form-control request-delivery-method',
+						'required' => '',
+						'options'  => [
 							'1' => esc_html__( 'USPS Priority - 2 Day ($15)', 'munipay' ),
 							'2' => esc_html__( 'USPS Priority Express Overnight ($45)', 'munipay' ),
-							'3' => esc_html__( 'UPS - 2 Day - Bundle ($36)', 'munipay' ),
+							'3' => esc_html__( 'USPS Priority - 2 Day - Bundle ($36)', 'munipay' ),
 						],
 					]
 				);
@@ -216,10 +228,11 @@ $check = $this->current_check;
 
 				Form::text(
 					[
-						'name'  => 'request_delivery_date',
-						'title' => esc_html__( 'Projected delivery date*', 'munipay' ),
-						'value' => $check->get_meta( 'request_delivery_date' ),
-						'class' => 'form-control js-datepicker',
+						'name'     => 'request_delivery_date',
+						'title'    => esc_html__( 'Projected delivery date*', 'munipay' ),
+						'value'    => $check->get_meta( 'request_delivery_date' ),
+						'class'    => 'form-control readonly',
+						'required' => '',
 					]
 				);
 
@@ -253,10 +266,11 @@ $check = $this->current_check;
 
 				Form::text(
 					[
-						'name'  => 'approved_date',
-						'title' => esc_html__( 'Date approved*', 'munipay' ),
-						'value' => $check->get_meta( 'approved_date' ),
-						'class' => 'form-control js-datepicker',
+						'name'     => 'approved_date',
+						'title'    => esc_html__( 'Date approved*', 'munipay' ),
+						'value'    => $check->get_meta( 'approved_date' ),
+						'class'    => 'form-control js-datepicker',
+						'required' => '',
 					]
 				);
 
@@ -270,17 +284,20 @@ $check = $this->current_check;
 
 				Form::text(
 					[
-						'name'  => 'approver_email',
-						'title' => esc_html__( 'Email*', 'munipay' ),
-						'value' => $check->get_meta( 'approver_email' ),
+						'name'     => 'approver_email',
+						'type'     => 'email',
+						'title'    => esc_html__( 'Email*', 'munipay' ),
+						'value'    => $check->get_meta( 'approver_email' ),
+						'required' => '',
 					]
 				);
 
 				Form::text(
 					[
-						'name'  => 'approver_phone',
-						'title' => esc_html__( 'Phone*', 'munipay' ),
-						'value' => $check->get_meta( 'approver_phone' ),
+						'name'     => 'approver_phone',
+						'title'    => esc_html__( 'Phone*', 'munipay' ),
+						'value'    => $check->get_meta( 'approver_phone' ),
+						'required' => '',
 					]
 				);
 
@@ -303,41 +320,50 @@ $check = $this->current_check;
 
 					Form::text(
 						[
-							'name'  => 'accounts[' . $index . '][cost_center]',
-							'title' => esc_html__( 'Cost center', 'munipay' ),
-							'value' => $account['cost_center'],
+							'name'      => 'accounts[' . $index . '][cost_center]',
+							'title'     => esc_html__( 'Cost center', 'munipay' ),
+							'value'     => $account['cost_center'],
+							'maxlength' => 10,
 						]
 					);
 
 					Form::text(
 						[
-							'name'  => 'accounts[' . $index . '][network]',
-							'title' => esc_html__( 'Network', 'munipay' ),
-							'value' => $account['network'],
+							'name'      => 'accounts[' . $index . '][network]',
+							'title'     => esc_html__( 'Network', 'munipay' ),
+							'value'     => $account['network'],
+							'maxlength' => 8,
 						]
 					);
 
 					Form::text(
 						[
-							'name'  => 'accounts[' . $index . '][activity_code]',
-							'title' => esc_html__( 'Activity Code', 'munipay' ),
-							'value' => $account['activity_code'],
+							'name'      => 'accounts[' . $index . '][activity_code]',
+							'title'     => esc_html__( 'Activity Code', 'munipay' ),
+							'value'     => $account['activity_code'],
+							'maxlength' => 4,
 						]
 					);
 
 					Form::text(
 						[
-							'name'  => 'accounts[' . $index . '][gl_code]',
-							'title' => esc_html__( 'GL code*', 'munipay' ),
-							'value' => $account['gl_code'],
+							'name'      => 'accounts[' . $index . '][gl_code]',
+							'title'     => esc_html__( 'GL code*', 'munipay' ),
+							'value'     => $account['gl_code'],
+							'maxlength' => 6,
+							'required'  => '',
 						]
 					);
 
 					Form::text(
 						[
-							'name'  => 'accounts[' . $index . '][percentage]',
-							'title' => esc_html__( '% of total*', 'munipay' ),
-							'value' => $account['percentage'],
+							'type'     => 'number',
+							'min'      => 0,
+							'max'      => 100,
+							'name'     => 'accounts[' . $index . '][percentage]',
+							'title'    => esc_html__( '% of total*', 'munipay' ),
+							'value'    => $account['percentage'],
+							'required' => '',
 						]
 					);
 
@@ -361,7 +387,7 @@ $check = $this->current_check;
 				<input type="hidden" class="bundle_city" name="bundle_city" value="<?php echo $check->get_meta( 'bundle_city' ); ?>">
 				<input type="hidden" class="bundle_state" name="bundle_state" value="<?php echo $check->get_meta( 'bundle_state' ); ?>">
 				<input type="hidden" class="bundle_zip" name="bundle_zip" value="<?php echo $check->get_meta( 'bundle_zip' ); ?>">
-				<button type="button" class="btn btn-primary btn-lg order-check-save"><span><?php echo $check->get_id() ? esc_html__( 'Update Check Request', 'munipay' ) : esc_html__( 'Save Check Request', 'munipay' ); ?></span></button>
+				<button type="submit" class="btn btn-primary btn-lg order-check-save"><span><?php echo $check->get_id() ? esc_html__( 'Update Check Request', 'munipay' ) : esc_html__( 'Save Check Request', 'munipay' ); ?></span></button>
 			</div>
 
 		</form>

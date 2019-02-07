@@ -66,7 +66,7 @@ class Registration {
 	 * @return string
 	 */
 	public function login_redirect() {
-		return home_url( 'profile' );
+		return home_url();
 	}
 
 	/**

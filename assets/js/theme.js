@@ -27,7 +27,6 @@
 				this.requests()
 				this.hasBundle()
 				this.reviewOrder()
-				this.formValidation()
 			},
 
 			misc: function() {
@@ -42,6 +41,15 @@
 						dateFormat: 'mm/dd/yy'
 					})
 				}
+
+				$( document.body ).on( 'submit', '.needs-validation', function( event ) {
+					if ( false === this.checkValidity() ) {
+						event.preventDefault()
+						event.stopPropagation()
+					}
+
+					this.classList.add( 'was-validated' )
+				})
 			},
 
 			accounts: function() {
@@ -80,6 +88,16 @@
 				this.bundleFields();
 				this.addNewRequest()
 				this.boxTitleHandler()
+
+				this.wrap.on( 'change', '.custom-file-input', function() {
+					var input = $( this )
+
+					if ( input.val() ) {
+						input.next().text( input.val().match( /[\/\\]([\w\d\s\.\-\(\)]+)$/ ).pop() )
+					} else {
+						input.next().text( 'Choose file...' )
+					}
+				})
 			},
 
 			bundleFields: function() {
@@ -132,10 +150,15 @@
 			saveRequest: function() {
 				var app = this
 
-				app.wrap.on( 'click', '.order-check-save', function( event ) {
+				app.wrap.on( 'submit', '.needs-validation', function( event ) {
 					event.preventDefault()
 
-					var button = $( this )
+					if ( false === this.checkValidity() ) {
+						this.classList.add( 'was-validated' )
+						return
+					}
+
+					var button = $( this ).find( '.order-check-save' )
 
 					button.prop( 'disabled', true )
 
@@ -144,7 +167,7 @@
 						return
 					}
 
-					app.saveCheck( button )
+					app.saveCheck( button, this )
 				})
 			},
 
@@ -167,9 +190,9 @@
 					})
 			},
 
-			saveCheck: function( button ) {
+			saveCheck: function( button, form ) {
 				var app  = this,
-					formData = new FormData( button.closest( 'form' )[0] )
+					formData = new FormData( form )
 
 				formData.append( 'order_id', munipay.orderID )
 				formData.append( 'requester_id', munipay.userID )
@@ -197,6 +220,7 @@
 
 					button.html( '<span>' + munipay.l10n.button_update + '</span>' )
 					button.prev( 'input' ).val( result.checkID )
+					button.closest( '.order-check' ).addClass( 'saved' )
 				})
 			},
 
@@ -273,25 +297,6 @@
 							orderTotal.html( result.orderTotal )
 						})
 				})
-			},
-
-			formValidation: function() {
-				window.addEventListener( 'load', function() {
-					// Fetch all the forms we want to apply custom Bootstrap validation styles to
-					var forms = document.getElementsByClassName( 'needs-validation' )
-
-					// Loop over them and prevent submission
-					var validation = Array.prototype.filter.call( forms, function( form ) {
-						form.addEventListener( 'submit', function( event ) {
-							if ( false === form.checkValidity() ) {
-								event.preventDefault()
-								event.stopPropagation()
-							}
-
-							form.classList.add( 'was-validated' )
-						}, false )
-					})
-				}, false )
 			},
 
 			formatMoney: function( amount ) {

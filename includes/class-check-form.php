@@ -82,7 +82,7 @@ class Check_Form {
 				</div>
 
 				<button type="button" class="button btn btn-primary btn-lg order-request-add"><span><?php esc_html_e( 'Add New Request', 'munipay' ); ?></span></button>
-				<a href="<?php echo home_url( '/review-checks' ); ?>" class="btn btn-warning btn-lg"><?php esc_html_e( 'Review Request', 'munipay' ); ?></a>
+				<a href="<?php echo home_url( '/review-checks' ); ?>" class="btn btn-warning btn-lg"><?php esc_html_e( 'Review Requests', 'munipay' ); ?></a>
 
 			</div>
 
