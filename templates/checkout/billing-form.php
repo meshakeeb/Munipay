@@ -250,7 +250,7 @@ $current_user = wp_get_current_user();
 
 	<div class="col-md-12 mb-3">
 
-		<input type="text" class="form-control" id="payment_cc_number" name="payment_cc_number" required>
+		<input type="text" class="form-control" id="payment_cc_number" name="payment_cc_number" autocomplete="off" required>
 		<small class="form-text pl-2 text-muted"><?php esc_html_e( 'Credit card number', 'munipay' ); ?></small>
 
 		<div class="invalid-feedback">
@@ -265,7 +265,7 @@ $current_user = wp_get_current_user();
 
 	<div class="col-md-6 mb-3">
 
-		<input type="text" class="form-control" id="payment_cc_expiration" name="payment_cc_expiration" required placeholder="MM / YY">
+		<input type="text" class="form-control" id="payment_cc_expiration" name="payment_cc_expiration" autocomplete="off" placeholder="MM / YY" required>
 		<small class="form-text pl-2 text-muted"><?php esc_html_e( 'Expiration', 'munipay' ); ?></small>
 
 		<div class="invalid-feedback">
@@ -276,7 +276,7 @@ $current_user = wp_get_current_user();
 
 	<div class="col-md-6 mb-3">
 
-		<input type="text" class="form-control" id="payment_cc_cvv" name="payment_cc_cvv" required>
+		<input type="text" class="form-control" id="payment_cc_cvv" name="payment_cc_cvv" autocomplete="off" required>
 		<small class="form-text pl-2 text-muted"><?php esc_html_e( 'CVV', 'munipay' ); ?></small>
 
 		<div class="invalid-feedback">
