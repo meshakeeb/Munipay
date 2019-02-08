@@ -290,7 +290,7 @@ class Profile {
 	 * @return array
 	 */
 	public static function get_users_choice( $all = false ) {
-		$users = get_users( [ 'role__not_in' => [ 'author', 'contributor', 'subscriber' ] ] );
+		$users = get_users( [ 'role__in' => [ 'editor' ] ] );
 		if ( false === $all ) {
 			return [ '' => 'Select One' ] + wp_list_pluck( $users, 'display_name', 'ID' );
 		}

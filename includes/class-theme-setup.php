@@ -25,6 +25,7 @@ class Theme_Setup {
 	 * The class constructor.
 	 */
 	public function __construct() {
+		$this->action( 'init', 'change_role_names' );
 		$this->action( 'after_setup_theme', 'setup_theme', 2 );
 		$this->action( 'after_setup_theme', 'register_nav_menus' );
 		$this->action( 'wp_enqueue_scripts', 'enqueue' );
@@ -176,6 +177,20 @@ class Theme_Setup {
 				],
 			]
 		);
+	}
+
+	/**
+	 * Change default role names.
+	 */
+	public function change_role_names() {
+		global $wp_roles;
+		$wp_roles = wp_roles();
+
+		$wp_roles->roles['editor']['name'] = esc_html__( 'Approvers', 'munipay' );
+		$wp_roles->role_names['editor']    = esc_html__( 'Approvers', 'munipay' );
+
+		$wp_roles->roles['author']['name'] = esc_html__( 'Requesters', 'munipay' );
+		$wp_roles->role_names['author']    = esc_html__( 'Requesters', 'munipay' );
 	}
 
 	/**
