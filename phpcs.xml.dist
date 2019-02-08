@@ -31,31 +31,32 @@
 			<property name="text_domain" type="array" value="munipay" />
 		</properties>
 	</rule>
+
 	<rule ref="WordPress.Files.FileName.InvalidClassFileName">
 		<exclude-pattern>includes/**/abstract-*.php</exclude-pattern>
 		<exclude-pattern>includes/**/interface-*.php</exclude-pattern>
 		<exclude-pattern>tests/*</exclude-pattern>
 	</rule>
+
 	<rule ref="WordPress.Files.FileName.NotHyphenatedLowercase">
 		<exclude-pattern>languages/</exclude-pattern>
 	</rule>
+
 	<rule ref="WordPress.NamingConventions.ValidHookName">
 		<properties>
 			<property name="additionalWordDelimiters" value="-/."/>
 		</properties>
 	</rule>
+
 	<rule ref="Generic.Commenting">
 		<exclude-pattern>tests/</exclude-pattern>
 		<exclude-pattern>tests/</exclude-pattern>
 	</rule>
+
 	<rule ref="Squiz.Commenting">
 		<exclude-pattern>tests/</exclude-pattern>
 		<exclude name="Squiz.Commenting.LongConditionClosingComment" />
 		<exclude name="Squiz.Commenting.PostStatementComment" />
 	</rule>
-	<!-- <rule ref="PEAR.Functions.FunctionCallSignature.SpaceAfterCloseBracket"><severity>0</severity></rule>
-	<rule ref="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket"><severity>0</severity></rule>
-	<rule ref="PEAR.Functions.FunctionCallSignature.MultipleArguments"><severity>0</severity></rule>
-	<rule ref="PEAR.Functions.FunctionCallSignature.CloseBracketLine"><severity>0</severity></rule> -->
 
 </ruleset>
