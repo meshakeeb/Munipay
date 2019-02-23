@@ -91,7 +91,7 @@ class Emails {
 	 */
 	public function status_updated( $check, $old_status, $new_status ) {
 		$user    = get_user_by( 'ID', $check->get_object()->post_author );
-		$subject = sprintf( 'Status update for check # %s', $check->get_id() );
+		$subject = sprintf( 'Status update for request # %s', $check->get_id() );
 		$message = $this->get_message( 'user-status-update', compact( 'check', 'old_status', 'new_status', 'user' ) );
 
 		return $this->send(
@@ -112,7 +112,7 @@ class Emails {
 	 */
 	public function tracking_number_generated( $check, $tracking, $payment ) {
 		$user    = get_user_by( 'ID', $check->get_object()->post_author );
-		$subject = sprintf( 'Tracking number for check # %s', $check->get_id() );
+		$subject = sprintf( 'Tracking number for request # %s', $check->get_id() );
 		$message = $this->get_message( 'user-tracking-number', compact( 'check', 'tracking', 'payment', 'user' ) );
 
 		return $this->send(

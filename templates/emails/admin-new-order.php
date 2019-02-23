@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || exit;
 <table>
 	<thead>
 		<tr>
-			<th>Check #</th>
+			<th>Request #</th>
 			<th>Recipient</th>
 			<th>Reason</th>
 			<th>Amount</th>

@@ -81,6 +81,22 @@
 
 					$( this ).closest( '.check-account' ).remove()
 				})
+
+				this.wrap.on( 'input', '.cost-center, .network', function( event ) {
+					event.preventDefault()
+
+					var input = $( this ),
+						group = input.closest( '.check-account' )
+
+					if ( input.hasClass( 'cost-center' ) ) {
+						group.find( '.network' ).prop( 'disabled', input.val().length > 0 )
+					}
+
+					if ( input.hasClass( 'network' ) ) {
+						group.find( '.cost-center' ).prop( 'disabled', input.val().length > 0 )
+						group.find( '.activity-code' ).prop( 'required', input.val().length > 0 )
+					}
+				})
 			},
 
 			requests: function() {

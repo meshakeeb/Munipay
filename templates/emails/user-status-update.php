@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 </p>
 
 <p>
-	The status of check # <?php echo $check->get_id(); ?> has changed from <?php echo $old_status; ?> to <?php echo $new_status; ?>.
+	The status of request # <?php echo $check->get_id(); ?> has changed from <?php echo $old_status; ?> to <?php echo $new_status; ?>.
 </p>
 
 <p>

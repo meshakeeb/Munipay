@@ -323,6 +323,7 @@ $check = $this->current_check;
 							'name'      => 'accounts[' . $index . '][cost_center]',
 							'title'     => esc_html__( 'Cost center', 'munipay' ),
 							'value'     => $account['cost_center'],
+							'class'     => 'form-control cost-center',
 							'maxlength' => 10,
 						]
 					);
@@ -332,6 +333,7 @@ $check = $this->current_check;
 							'name'      => 'accounts[' . $index . '][network]',
 							'title'     => esc_html__( 'Network', 'munipay' ),
 							'value'     => $account['network'],
+							'class'     => 'form-control network',
 							'maxlength' => 8,
 						]
 					);
@@ -341,6 +343,7 @@ $check = $this->current_check;
 							'name'      => 'accounts[' . $index . '][activity_code]',
 							'title'     => esc_html__( 'Activity Code', 'munipay' ),
 							'value'     => $account['activity_code'],
+							'class'     => 'form-control activity-code',
 							'maxlength' => 4,
 						]
 					);

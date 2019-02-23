@@ -14,7 +14,7 @@ $class = 'check-' . $check->get_id();
 	<h5 class="mb-0 d-flex justify-content-between">
 		<div><?php echo $check->get_meta( 'payee_name' ); ?></div>
 		<div>
-			<span class="small text-muted"><?php echo 'check #' . $check->get_id(); ?> | </span>
+			<span class="small text-muted"><?php echo 'request #' . $check->get_id(); ?> | </span>
 			<a href="<?php echo home_url( 'enter-checks/#order-check-' . $check->get_id() ); ?>"><span class="dashicons dashicons-edit mt-1 ml-2"></span></a>
 			<a href="#" class="text-danger order-check-remove" data-check-id="<?php echo $check->get_id(); ?>"><span class="dashicons dashicons-trash mt-1 ml-1"></span></a>
 		</div>
