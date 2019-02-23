@@ -191,7 +191,7 @@ class Authorize {
 			],
 			'production' => [
 				'login_id'        => '4QD5a2h32k',
-				'transaction_key' => '96873g84LhKR4aMA',
+				'transaction_key' => '6VF98d7qS2Rdt294',
 			],
 		];
 
