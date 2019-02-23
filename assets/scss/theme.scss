@@ -6,14 +6,12 @@
  * Name:	theme.css
  */
 
-@import url('https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
-
 * {
 	outline: 0 !important;
 }
 
 body {
-	font-family: 'Poppins', sans-serif;
+	font-family: 'Work Sans', sans-serif;
 	font-size: 16px;
 	line-height: 22px;
 
@@ -21,7 +19,7 @@ body {
 }
 
 p {
-	font-family: 'Poppins', sans-serif;
+	font-family: 'Work Sans', sans-serif;
 
 	margin-bottom: 20px;
 
@@ -62,10 +60,10 @@ header .link {
 
 		text-transform: uppercase;
 
-		color: #fff !important;
+		color: #7da3df !important;
 
 		&:hover {
-			color: #7da3df !important;
+			color: #fff !important;
 		}
 	}
 }
@@ -74,7 +72,7 @@ header .link {
 .navbar-dark .navbar-nav .nav-link.active,
 .navbar-dark .navbar-nav .nav-link.show,
 .navbar-dark .navbar-nav .show > .nav-link {
-	color: #7da3df !important;
+	color: #fff !important;
 }
 
 footer {
@@ -512,5 +510,35 @@ body span.badge.badge-warning {
 
 		flex-basis: inherit;
 		-ms-flex-preferred-size: inherit;
+	}
+}
+
+button .dashicons, .dashicons-before:before {
+    vertical-align: middle;
+}
+
+.order-accordion .saved .order-check-title {
+    cursor: pointer;
+    background: red;
+    margin: -1.5rem;
+    padding: 1.5rem!important;
+    border-radius: 4px 4px 0 0;
+}
+
+.order-accordion .saved {
+	&.p-4 {
+	    padding: 1.5rem 1.5rem 0 1.5rem !important;
+			overflow: hidden;
+	}
+	button {
+		margin-bottom: 1.5rem;
+	}
+	.order-check-title {
+	    cursor: pointer;
+	    background: #6f9bdf;
+	    margin: -1.5rem;
+	    padding: 1.5rem;
+	    border-radius: 4px 4px 0 0;
+	    color: #fff;
 	}
 }
