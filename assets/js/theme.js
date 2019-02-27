@@ -86,15 +86,15 @@
 					event.preventDefault()
 
 					var input = $( this ),
-						group = input.closest( '.check-account' )
+						group = input.closest( '.check-account' ),
+						state = input.val().length > 0
 
 					if ( input.hasClass( 'cost-center' ) ) {
-						group.find( '.network' ).prop( 'disabled', input.val().length > 0 )
-					}
-
-					if ( input.hasClass( 'network' ) ) {
-						group.find( '.cost-center' ).prop( 'disabled', input.val().length > 0 )
-						group.find( '.activity-code' ).prop( 'required', input.val().length > 0 )
+						group.find( '.network' ).prop( 'disabled', state )
+						group.find( '.activity-code' ).prop( 'disabled', state )
+					} else if ( input.hasClass( 'network' ) ) {
+						group.find( '.cost-center' ).prop( 'disabled', state )
+						group.find( '.activity-code' ).prop( 'required', state )
 					}
 				})
 			},
