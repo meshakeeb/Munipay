@@ -56,8 +56,8 @@ class Smart_Payables {
 	 * @param Checkout $form Checkout instance.
 	 */
 	public function __construct( $form ) {
+		$this->reset();
 		$this->form = $form;
-		$this->data = $this->get_credentials();
 	}
 
 	/**
@@ -102,7 +102,23 @@ class Smart_Payables {
 			update_post_meta( $check_id, 'smart_payable_payment_id', $payment['payment_id'] );
 		}
 
-		return true;
+		return $this->confirm_payments( $response['@attributes']['fileid'] );
+	}
+
+	/**
+	 * Confirm payments.
+	 *
+	 * @param string $file_id File id to confirm.
+	 *
+	 * @return bool
+	 */
+	private function confirm_payments( $file_id ) {
+		$this->reset();
+		$this->data['item'] = 'file-' . $file_id;
+
+		$response = $this->send( 'payments/confirm' );
+
+		return false === $response ? false : true;
 	}
 
 	/**
@@ -358,5 +374,12 @@ class Smart_Payables {
 		];
 
 		return MUNIPAY_SANDBOX ? $credentials['sandbox'] : $credentials['production'];
+	}
+
+	/**
+	 * Reset data.
+	 */
+	private function reset() {
+		$this->data = $this->get_credentials();
 	}
 }
