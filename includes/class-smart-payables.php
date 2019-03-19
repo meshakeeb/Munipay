@@ -77,6 +77,7 @@ class Smart_Payables {
 		// Attachments.
 		foreach ( $order->checks as $index => $check ) {
 			if ( $document = $check->get_document_path() ) { // phpcs:ignore
+				$this->data['insert_print']                           = 'black_white';
 				$this->data['insert_include']                         = 'multiple';
 				$this->data[ 'insert_file_multiple[' . $index . ']' ] = curl_file_create( $document, 'application/pdf' );
 			}
