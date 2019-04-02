@@ -61,8 +61,6 @@ class Check_Form {
 
 			<?php $this->get_template( 'requester' ); ?>
 
-			<?php $this->get_template( 'bundle-info' ); ?>
-
 			<h3 class="mb-3"><?php esc_html_e( 'Requests', 'munipay' ); ?></h3>
 
 			<div id="orders" class="order-accordion">
@@ -73,6 +71,8 @@ class Check_Form {
 				}
 				?>
 			</div>
+
+			<?php $this->get_template( 'bundle-info' ); ?>
 
 			<div class="text-center my-5">
 

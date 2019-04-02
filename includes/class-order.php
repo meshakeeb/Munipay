@@ -125,7 +125,7 @@ class Order extends Data {
 		wp_update_post(
 			[
 				'ID'         => $order_id,
-				'post_title' => 'Order # ' . $order_id,
+				'post_title' => 'Munipay # ' . $order_id,
 				'post_name'  => 'order-' . $order_id,
 			]
 		);

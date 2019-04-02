@@ -109,7 +109,7 @@ class Authorize {
 		// Create order information.
 		$order = new AnetAPI\OrderType;
 		$order->setInvoiceNumber( $current_order->get_id() );
-		$order->setDescription( 'Order # ' . $current_order->get_id() );
+		$order->setDescription( 'Munipay # ' . $current_order->get_id() );
 
 		// Set the customer's Bill To address.
 		$customer_address = new AnetAPI\CustomerAddressType;
@@ -191,7 +191,7 @@ class Authorize {
 			],
 			'production' => [
 				'login_id'        => '4QD5a2h32k',
-				'transaction_key' => '6VF98d7qS2Rdt294',
+				'transaction_key' => '38VqLH797yTp5Y6m',
 			],
 		];
 

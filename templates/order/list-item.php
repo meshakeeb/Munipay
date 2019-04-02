@@ -16,7 +16,7 @@ $order = new Order( get_the_ID() );
 
 		<li class="list-group-item col-12 bg-light">
 			<div class="text-success">
-				<h5 class="my-0"><?php esc_html_e( 'Order number # ', 'munipay' ); ?><?php echo $order->get_id(); ?></h5>
+				<h5 class="my-0"><?php esc_html_e( 'Munipay # ', 'munipay' ); ?><?php echo $order->get_id(); ?></h5>
 			</div>
 		</li>
 
@@ -43,7 +43,7 @@ $order = new Order( get_the_ID() );
 		<?php foreach ( $order->checks as $check ) : ?>
 		<li class="list-group-item col-12 d-flex justify-content-between lh-condensed">
 			<div>
-				<span class="badge badge-secondary font-weight-normal">Request # <?php echo $check->get_id(); ?></span>
+				<span class="badge badge-secondary font-weight-normal">Check # <?php echo $check->get_payment_id(); ?></span>
 				<?php $check->get_tracking_number(); ?>
 				<span class="badge badge-warning font-weight-normal"><?php echo $check->get_status(); ?></span>
 				<h6 class="mt-1 mb-0"><?php echo $check->get_meta( 'payee_name' ); ?></h6>

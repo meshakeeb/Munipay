@@ -111,7 +111,7 @@ $this->errors->add( 'success', __( 'Thank you. Your order has been received.', '
 				</li>
 
 				<li class="list-group-item col-12 d-flex justify-content-between lh-condensed">
-					<strong><?php _e( 'Order number:', 'munipay' ); ?></strong>
+					<strong><?php _e( 'Munipay number:', 'munipay' ); ?></strong>
 					<span># <?php echo $order->get_id(); ?></span>
 				</li>
 

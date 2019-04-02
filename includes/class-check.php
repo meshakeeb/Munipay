@@ -401,6 +401,15 @@ class Check extends Data {
 	}
 
 	/**
+	 * Get smartpayable payment id.
+	 *
+	 * @return string
+	 */
+	public function get_payment_id() {
+		return $this->get_meta( 'smart_payable_payment_id', true );
+	}
+
+	/**
 	 * Delete check.
 	 *
 	 * @param int $id Check id to delete.
