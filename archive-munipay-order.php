@@ -19,6 +19,8 @@ get_header();
 		the_post();
 		get_template_part( 'templates/order/list', 'item' );
 	}
+
+	get_template_part( 'templates/pagination' );
 	?>
 
 </div>
