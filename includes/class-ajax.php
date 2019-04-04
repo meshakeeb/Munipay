@@ -92,7 +92,7 @@ class Ajax {
 	/**
 	 * Update check status.
 	 *
-	 * @link http://mydomain.com/?action=status_update&&id=&status=Processing&transaction_id
+	 * @link http://mydomain.com/?action=status_update&id=&status=Processing&transaction_id
 	 */
 	public function status_update() {
 
@@ -104,35 +104,43 @@ class Ajax {
 			return;
 		}
 
-		$check             = new Check( absint( $_GET['transaction_id'] ) );
+		$check = new Check( absint( $_GET['transaction_id'] ) );
+		if ( empty( $check->get_object() ) ) {
+			wp_send_json( [ 'error' => 'No check found' ] );
+		}
 		$payment_id        = absint( $_GET['id'] );
-		$stored_payment_id = absint( $check->get_meta( 'smart_payable_payment_id' ) );
+		$stored_payment_id = absint( $check->get_payment_id() );
 
 		if ( $payment_id !== $stored_payment_id ) {
-			return;
+			wp_send_json( [ 'error' => 'Payment id didn\'t matched' ] );
 		}
 
+		$new_status = $_GET['status'];
 		$old_status = $check->get_meta( 'smart_payable_status' );
-		$check->set_meta( 'smart_payable_status', $_GET['status'] );
-		do_action( 'munipay_payment_status_updated', $check, $old_status, $_GET['status'] );
+		$check->set_meta( 'smart_payable_status', $new_status );
+		do_action( 'munipay_payment_status_updated', $check, $old_status, $new_status );
 
 		// Get Track info.
 		$smart                = Smart_Payables::create();
 		$smart->data['payee'] = $check->get_meta( 'payee_name' );
 		$smart->data['zip']   = $check->get_meta( 'payee_zipcode' );
 
+		$message  = 'Status updated to ' . $new_status . '.';
 		$response = $smart->send( 'payments/track_payment' );
 		if ( false === $response ) {
-			return;
+			wp_send_json( [ 'message' => $message ] );
 		}
 
 		foreach ( $response as $payment ) {
 			if ( absint( $payment['id'] ) === $payment_id ) {
 				$check->set_meta( 'smart_payable_tracking', $payment['tracking'] );
 				do_action( 'munipay_payment_tracking_found', $check, $payment['tracking'], $payment );
+				$message .= ' Tracking number found # ' . $payment['tracking'];
 				break;
 			}
 		}
+
+		wp_send_json( [ 'message' => $message ] );
 	}
 
 	/**

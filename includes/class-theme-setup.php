@@ -245,6 +245,10 @@ class Theme_Setup {
 			return;
 		}
 
+		if ( isset( $_GET['action'] ) && 'status_update' === $_GET['action'] ) {
+			return;
+		}
+
 		if ( ! is_user_logged_in() ) {
 			auth_redirect();
 		}
