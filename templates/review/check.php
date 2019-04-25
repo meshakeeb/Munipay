@@ -29,6 +29,7 @@ $class = 'check-' . $check->get_id();
 	<span class="text-success"><?php echo $check->get_amount(); ?></span>
 </li>
 
+<?php if ( '3' !== $check->get_delivery_method( 'raw' ) ) : ?>
 <li class="list-group-item d-flex justify-content-between lh-condensed border-bottom-0 border-top-0 py-0 <?php echo $class; ?>">
 	<div>
 		<h6 class="my-0"><?php esc_html_e( 'Delivery fee', 'munipay' ); ?></h6>
@@ -36,6 +37,7 @@ $class = 'check-' . $check->get_id();
 	</div>
 	<span class="text-success"><?php echo $check->get_delivery_fee(); ?></span>
 </li>
+<?php endif; ?>
 
 <li class="list-group-item d-flex justify-content-between lh-condensed border-bottom-0 border-top-0 <?php echo $class; ?>">
 	<div>
@@ -47,7 +49,7 @@ $class = 'check-' . $check->get_id();
 
 <li class="list-group-item d-flex justify-content-between border-top-0 <?php echo $class; ?>">
 	<div>
-		<h6 class="my-0"><?php esc_html_e( 'Sub Total', 'munipay' ); ?></h6>
+		<h6 class="my-0"><?php esc_html_e( 'Subtotal', 'munipay' ); ?></h6>
 	</div>
 	<span><?php echo $check->get_total(); ?></span>
 </li>

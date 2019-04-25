@@ -69,7 +69,7 @@ class Review_Order {
 						<?php if ( $this->order->has_bundle() ) : ?>
 						<li class="list-group-item d-flex justify-content-between bg-light">
 							<div class="text-success">
-								<h6 class="my-0"><?php esc_html_e( 'Bundle Delivery Charges', 'munipay' ); ?></h6>
+								<h6 class="my-0"><?php esc_html_e( 'Bundle delivery charges', 'munipay' ); ?></h6>
 							</div>
 							<span class="text-success">$36.00</span>
 						</li>
@@ -79,7 +79,7 @@ class Review_Order {
 
 					<div class="d-flex justify-content-between p-4">
 						<div>
-							<h4 class="my-0"><?php esc_html_e( 'Total Charge', 'munipay' ); ?></h4>
+							<h4 class="my-0"><?php esc_html_e( 'Total charge', 'munipay' ); ?></h4>
 						</div>
 						<h3 class="my-0" id="order-total-amount"><?php echo $this->order->get_total(); ?></h3>
 					</div>

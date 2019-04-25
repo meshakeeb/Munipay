@@ -57,6 +57,7 @@ class Form {
 
 		$args['name']        = empty( $args['name'] ) ? $args['id'] : $args['name'];
 		$args['placeholder'] = empty( $args['placeholder'] ) ? $args['title'] : $args['placeholder'];
+		$args['placeholder'] = str_replace( '*', '', $args['placeholder'] );
 
 		$title = $args['title'];
 		unset( $args['title'] );
