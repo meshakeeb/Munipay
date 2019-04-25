@@ -372,11 +372,11 @@ class Smart_Payables {
 		$credentials = [
 			'sandbox'    => [
 				'client_id' => '497',
-				'akey'      => 'NEkJZEhKGhfLpmNaVxSrOjuCDOmnkl/nxEGnnqgDoQajMVH4IRY3Ppe7Z9OfUT3Zq6Gsrxp+909kpikVVZuvZ+hm5PtFR5hgWT/L2Pm27pN423nXTzyjN4ZcX4V+bmkq',
+				'akey'      => 'k242pdATzIQp5tl1IzL3VZIh9SoopcHB3V9hG36QmyO7Yxk8+wfkqPL4fPGAJarRU8Ba1CRxxOcvq81hrh3pPgMTG1Rj7zDqjsgwyMPiAg6bX3Vz1MciqmSOFR9Pk9w5',
 			],
 			'production' => [
 				'client_id' => '497',
-				'akey'      => 'H5v735noNZX9Kq1HvhVHx/Bor+w1jUWuFkFZXLh08nWmiJOGbIYUxOigHYxeKr86CTVkqLvwAx25DANGTQrwMF0nBypimTXNzPvBcxLZOnCbQS+1MXYGn/5Ldh5vwypT',
+				'akey'      => '0cri5fUOzDdxMAAgubf7I9YkgMxeGuiPCvXOnFdVvCBuyneiIIEvMkEzHOYH6g3IrPj5pQfRmkpSilV6nrSfoRNfHuPFHozp/Haw2HHL7lfsSqTPn87pvcAdASsP0aOu',
 			],
 		];
 

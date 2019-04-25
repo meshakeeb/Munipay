@@ -23,7 +23,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'MUNIPAY_SANDBOX', true );
+define( 'MUNIPAY_SANDBOX', false );
 
 /**
  * Start the engine.

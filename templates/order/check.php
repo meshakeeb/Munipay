@@ -35,7 +35,7 @@ $check = $this->current_check;
 				Form::text(
 					[
 						'name'     => 'payee_name',
-						'title'    => esc_html__( 'Payee Name*', 'munipay' ),
+						'title'    => esc_html__( 'Payee name*', 'munipay' ),
 						'value'    => $check->get_meta( 'payee_name' ),
 						'required' => '',
 					]
@@ -44,7 +44,7 @@ $check = $this->current_check;
 				Form::text(
 					[
 						'name'  => 'payee_number',
-						'title' => esc_html__( 'Payee Number', 'munipay' ),
+						'title' => esc_html__( 'Payee number', 'munipay' ),
 						'value' => $check->get_meta( 'payee_number' ),
 					]
 				);
@@ -70,7 +70,7 @@ $check = $this->current_check;
 					[
 						'name'  => 'payee_email',
 						'type'  => 'email',
-						'title' => esc_html__( 'Payee Email', 'munipay' ),
+						'title' => esc_html__( 'Payee email', 'munipay' ),
 						'value' => $check->get_meta( 'payee_email' ),
 					]
 				);
@@ -129,7 +129,7 @@ $check = $this->current_check;
 				Form::text(
 					[
 						'name'     => 'payee_zipcode',
-						'title'    => esc_html__( 'Zip Code*', 'munipay' ),
+						'title'    => esc_html__( 'Zip code*', 'munipay' ),
 						'value'    => $check->get_meta( 'payee_zipcode' ),
 						'required' => '',
 					]
@@ -139,7 +139,7 @@ $check = $this->current_check;
 
 			</div>
 
-			<h5 class="pt-5 pb-3"><?php esc_html_e( 'Request Details', 'munipay' ); ?></h5>
+			<h5 class="pt-5 pb-3"><?php esc_html_e( 'Request details', 'munipay' ); ?></h5>
 
 			<div class="row">
 
@@ -162,7 +162,7 @@ $check = $this->current_check;
 				Form::text(
 					[
 						'name'      => 'request_description',
-						'title'     => esc_html__( 'Memo* (printed on stub) - 300-character limit', 'munipay' ),
+						'title'     => esc_html__( 'Memo printed on stub (300 characters)', 'munipay' ),
 						'value'     => $check->get_meta( 'request_description' ),
 						'maxlength' => 300,
 						'required'  => '',
@@ -180,7 +180,7 @@ $check = $this->current_check;
 				Form::text(
 					[
 						'name'      => 'request_reason_2',
-						'title'     => esc_html__( 'Notes (printed on check) - 25-character limit', 'munipay' ),
+						'title'     => esc_html__( 'Notes printed on check (25 characters)', 'munipay' ),
 						'value'     => $check->get_meta( 'request_reason_2' ),
 						'maxlength' => 25,
 					]
@@ -305,7 +305,7 @@ $check = $this->current_check;
 
 			</div>
 
-			<h5 class="pt-5"><?php esc_html_e( 'Internal Accounting Information', 'munipay' ); ?></h5>
+			<h5 class="pt-5"><?php esc_html_e( 'Internal acounting information', 'munipay' ); ?></h5>
 
 			<p>
 				<?php esc_html_e( 'You can allocate this check amount (payment, transaction, delivery) by percentage to as many cost centers as needed. Click + for additional field.', 'munipay' ); ?>
@@ -341,7 +341,7 @@ $check = $this->current_check;
 					Form::text(
 						[
 							'name'      => 'accounts[' . $index . '][activity_code]',
-							'title'     => esc_html__( 'Activity Code', 'munipay' ),
+							'title'     => esc_html__( 'Activity code', 'munipay' ),
 							'value'     => $account['activity_code'],
 							'class'     => 'form-control activity-code',
 							'maxlength' => 4,

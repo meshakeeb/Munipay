@@ -358,7 +358,7 @@ class Check extends Data {
 		$methods = [
 			'1' => 3,
 			'2' => 8,
-			'3' => 8,
+			'3' => '',
 		];
 
 		return $methods[ $method ];
