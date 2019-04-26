@@ -120,6 +120,11 @@ class Ajax {
 		$check->set_meta( 'smart_payable_status', $new_status );
 		do_action( 'munipay_payment_status_updated', $check, $old_status, $new_status );
 
+		// Check number.
+		if ( isset( $_GET['check_number'] ) && ! empty( $_GET['check_number'] ) ) {
+			$check->set_meta( 'smart_payable_check_number', absint( $_GET['check_number'] ) );
+		}
+
 		// Get Track info.
 		$smart                = Smart_Payables::create();
 		$smart->data['payee'] = $check->get_meta( 'payee_name' );

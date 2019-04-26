@@ -264,15 +264,36 @@ class Check extends Data {
 	}
 
 	/**
+	 * Get smartpayable payment id.
+	 *
+	 * @return string
+	 */
+	public function get_payment_id() {
+		return $this->get_meta( 'smart_payable_payment_id', true );
+	}
+
+	/**
 	 * Get tracking number.
 	 */
 	public function get_tracking_number() {
-		$status = $this->get_meta( 'smart_payable_tracking' );
-		if ( ! $status ) {
+		$number = $this->get_meta( 'smart_payable_tracking' );
+		if ( ! $number ) {
 			return;
 		}
 
-		echo '<span class="badge badge-success font-weight-normal">Tracking # ' . $status . '</span>';
+		echo '<span class="badge badge-success font-weight-normal">Tracking # ' . $number . '</span>';
+	}
+
+	/**
+	 * Get check number.
+	 */
+	public function get_check_number() {
+		$number = $this->get_meta( 'smart_payable_check_number' );
+		if ( ! $number ) {
+			return;
+		}
+
+		echo '<span class="badge badge-success font-weight-normal">Check # ' . $number . '</span>';
 	}
 
 	/**
@@ -398,15 +419,6 @@ class Check extends Data {
 		$total += $this->get_transaction_fee( 'raw' );
 
 		return $this->format_price( $total, $context );
-	}
-
-	/**
-	 * Get smartpayable payment id.
-	 *
-	 * @return string
-	 */
-	public function get_payment_id() {
-		return $this->get_meta( 'smart_payable_payment_id', true );
 	}
 
 	/**

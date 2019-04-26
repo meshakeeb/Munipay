@@ -44,7 +44,7 @@ $order = new Order( get_the_ID() );
 		<li class="list-group-item col-12 d-flex justify-content-between lh-condensed">
 			<div>
 				<span class="badge badge-secondary font-weight-normal">Payment ID <?php echo $check->get_payment_id(); ?></span>
-                <?php esc_html__( 'Check Number', 'munipay' ); ?>
+				<?php $check->get_check_number(); ?>
 				<?php $check->get_tracking_number(); ?>
 				<span class="badge badge-warning font-weight-normal"><?php echo $check->get_status(); ?></span>
 				<h6 class="mt-1 mb-0"><?php echo $check->get_meta( 'payee_name' ); ?></h6>
