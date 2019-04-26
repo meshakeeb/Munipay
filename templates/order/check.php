@@ -325,6 +325,7 @@ $check = $this->current_check;
 							'value'     => $account['cost_center'],
 							'class'     => 'form-control cost-center',
 							'maxlength' => 10,
+							'required'  => '',
 						]
 					);
 
@@ -335,6 +336,7 @@ $check = $this->current_check;
 							'value'     => $account['network'],
 							'class'     => 'form-control network',
 							'maxlength' => 8,
+							'required'  => '',
 						]
 					);
 
@@ -345,6 +347,7 @@ $check = $this->current_check;
 							'value'     => $account['activity_code'],
 							'class'     => 'form-control activity-code',
 							'maxlength' => 4,
+							'required'  => '',
 						]
 					);
 
