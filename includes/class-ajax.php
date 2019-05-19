@@ -57,9 +57,49 @@ class Ajax {
 		}
 		$payments = array_reverse( $payments );
 
-		echo join( ',', array_keys( $this->clean_row( $payments[0] ) ) ) . PHP_EOL;
+		$columns  = [
+			'payment_id',
+			'client_id',
+			'client',
+			'company_name',
+			'status_id',
+			'status',
+			'submit_ts',
+			'id',
+			'user_id',
+			'admin_id',
+			'date_submitted',
+			'date_updated',
+			'date_sent',
+			'confirmed',
+			'deleted',
+			'payee',
+			'amount',
+			'pay',
+			'wmc_fee',
+			'postage_fee',
+			'extra_fee',
+			'trans_id',
+			'reference',
+			'address',
+			'address2',
+			'city',
+			'state',
+			'zip	country	memo',
+			'postage_code',
+			'mail_to_payee',
+			'logo_file',
+			'check_num',
+			'tracking_number',
+			'check_author',
+		];
+		echo join( ',', $columns ) . PHP_EOL;
 
 		foreach ( $payments as $payment ) {
+			if ( 'rainy day printing' === strtolower( $payment['payee'] ) ) {
+				continue;
+			}
+
 			echo join( ',', $this->clean_row( $payment ) ) . PHP_EOL;
 		}
 
@@ -80,10 +120,16 @@ class Ajax {
 			$row['date_exported']
 		);
 
-		foreach ( [ 'date_sent', 'trans_id', 'address2' ] as $col ) {
+		$row['check_author'] = Check::get_username_by_check( $row['trans_id'] );
+
+		foreach ( [ 'trans_id', 'address2' ] as $col ) {
 			if ( is_array( $row[ $col ] ) ) {
 				unset( $row[ $col ] );
 			}
+		}
+
+		foreach ( [ 'submit_ts', 'date_submitted', 'date_updated', 'date_sent' ] as $col ) {
+			$row[ $col ] = date( 'm/d/Y', $row[ $col ] );
 		}
 
 		return $row;

@@ -429,4 +429,21 @@ class Check extends Data {
 	public static function delete( $id ) {
 		wp_delete_post( $id, true );
 	}
+
+	/**
+	 * Get author name by check number.
+	 *
+	 * @param int $check_id Check id.
+	 *
+	 * @return string
+	 */
+	public static function get_username_by_check( $check_id ) {
+		$check_id = absint( $check_id );
+		if ( $check_id < 1 ) {
+			return '';
+		}
+
+		$author_id = get_post_field( 'post_author', $check_id );
+		return get_the_author_meta( 'display_name', $author_id );
+	}
 }

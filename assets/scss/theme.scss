@@ -1,4 +1,4 @@
-// compileCompressed: ../css/$1.css
+// compileExpanded: ../css/$1.css
 
 /*!
  * Theme:	Munipay.io
@@ -100,8 +100,20 @@ body {
 }
 
 .order-accordion {
+	counter-reset: request-counter;
+
 	.order-check-title {
 		cursor: pointer;
+		padding-left: 1.5rem;
+		position: relative;
+
+		&:before {
+			counter-increment: request-counter;
+			content: counter(request-counter) ". ";
+			display: inline-block;
+			position: absolute;
+			left: 0;
+		}
 	}
 
 	.order-check-header .dashicons {
@@ -132,6 +144,31 @@ body {
 
 	.order-check-delete {
 		display: none;
+	}
+
+	.saved {
+		&.p-4 {
+			padding: 1.5rem 1.5rem 0 1.5rem !important;
+				overflow: hidden;
+		}
+
+		button {
+			margin-bottom: 1.5rem;
+		}
+
+		.order-check-title {
+			cursor: pointer;
+			background: #6f9bdf;
+			margin: -1.5rem;
+			padding: 1.5rem;
+			border-radius: 4px 4px 0 0;
+			color: #fff;
+			padding-left: 3rem;
+
+			&:before {
+				left: 1.5rem
+			}
+		}
 	}
 }
 
@@ -514,31 +551,5 @@ body span.badge.badge-warning {
 }
 
 button .dashicons, .dashicons-before:before {
-    vertical-align: middle;
-}
-
-.order-accordion .saved .order-check-title {
-    cursor: pointer;
-    background: red;
-    margin: -1.5rem;
-    padding: 1.5rem!important;
-    border-radius: 4px 4px 0 0;
-}
-
-.order-accordion .saved {
-	&.p-4 {
-	    padding: 1.5rem 1.5rem 0 1.5rem !important;
-			overflow: hidden;
-	}
-	button {
-		margin-bottom: 1.5rem;
-	}
-	.order-check-title {
-	    cursor: pointer;
-	    background: #6f9bdf;
-	    margin: -1.5rem;
-	    padding: 1.5rem;
-	    border-radius: 4px 4px 0 0;
-	    color: #fff;
-	}
+	vertical-align: middle;
 }

@@ -8,6 +8,7 @@
  */
 
 use Munipay\Form;
+use Munipay\Check;
 use Munipay\Smart_Payables;
 
 wp_enqueue_style( 'jquery-ui-base', 'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.min.css' );
@@ -96,6 +97,7 @@ $reports = $smart->get_reports();
 			<thead>
 				<tr>
 					<th><?php esc_html_e( 'Payment ID', 'munipay' ); ?></th>
+					<th><?php esc_html_e( 'Check Number', 'munipay' ); ?></th>
 					<th><?php esc_html_e( 'Payment Date', 'munipay' ); ?></th>
 					<th><?php esc_html_e( 'Payee', 'munipay' ); ?></th>
 					<th><?php esc_html_e( 'Status', 'munipay' ); ?></th>
@@ -107,6 +109,8 @@ $reports = $smart->get_reports();
 					<th><?php esc_html_e( 'State', 'munipay' ); ?></th>
 					<th><?php esc_html_e( 'Zipcode', 'munipay' ); ?></th>
 					<th><?php esc_html_e( 'Memo', 'munipay' ); ?></th>
+					<th><?php esc_html_e( 'Tracking Number', 'munipay' ); ?></th>
+					<th><?php esc_html_e( 'User Name', 'munipay' ); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -118,9 +122,14 @@ $reports = $smart->get_reports();
 		}
 		$payments = array_reverse( $payments );
 		foreach ( $payments as $payment ) :
+
+			if ( 'rainy day printing' === strtolower( $payment['payee'] ) ) {
+				continue;
+			}
 			?>
 			<tr>
 				<td><?php echo $payment['payment_id']; ?></td>
+				<td><?php echo $payment['check_num']; ?></td>
 				<td><?php echo date( 'm/d/Y', $payment['date_updated'] ); ?></td>
 				<td><?php echo $payment['payee']; ?></td>
 				<td><?php echo $payment['status']; ?></td>
@@ -132,6 +141,8 @@ $reports = $smart->get_reports();
 				<td><?php echo $payment['state']; ?></td>
 				<td><?php echo $payment['zip']; ?></td>
 				<td><?php echo $payment['memo']; ?></td>
+				<td><?php echo $payment['tracking']; ?></td>
+				<td><?php echo Check::get_username_by_check( $payment['trans_id'] ); ?></td>
 			</tr>
 			<?php
 		endforeach;
