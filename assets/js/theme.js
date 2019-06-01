@@ -97,6 +97,8 @@
 						group.find( '.activity-code' ).prop( 'required', state )
 					}
 				})
+
+				this.wrap.find( '.cost-center, .network' ).trigger( 'input' )
 			},
 
 			requests: function() {
@@ -223,6 +225,7 @@
 					var button = $( this ).find( '.order-check-save' )
 
 					button.prop( 'disabled', true )
+					button.addClass( 'button--loading disabled' )
 
 					if ( 0 === munipay.orderID ) {
 						app.saveOrder( button )
@@ -241,6 +244,7 @@
 				app.post( 'create_order', data )
 					.always(function() {
 						button.prop( 'disabled', false )
+						button.removeClass( 'button--loading disabled' )
 					})
 					.done( function( result ) {
 						if ( result && ! result.success ) {
@@ -261,7 +265,6 @@
 				formData.append( 'action', 'munipay_update_check' )
 				formData.append( 'security', munipay.security )
 
-				button.addClass( 'button--loading disabled' )
 				$.ajax({
 					type:'POST',
 					url: munipay.endpoint,
