@@ -129,7 +129,7 @@
 				app.wrap.on( 'change', '.request-delivery-method', function( event ) {
 					var select = $( this ),
 						method = select.val(),
-						requestDate = new Date( $( '#request_date' ).val() ),
+						requestDate = new Date(),
 						projectedDate = new Date( requestDate ),
 						addDays = '2' === method ? 1 : 2
 

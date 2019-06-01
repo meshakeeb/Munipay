@@ -13,6 +13,7 @@ return array(
     'Munipay\\Check' => $baseDir . '/includes/class-check.php',
     'Munipay\\Check_Form' => $baseDir . '/includes/class-check-form.php',
     'Munipay\\Checkout' => $baseDir . '/includes/class-checkout.php',
+    'Munipay\\Crons' => $baseDir . '/includes/class-crons.php',
     'Munipay\\Data' => $baseDir . '/includes/class-data.php',
     'Munipay\\Disable_Emojis' => $baseDir . '/includes/class-disable-emojis.php',
     'Munipay\\Emails' => $baseDir . '/includes/class-emails.php',

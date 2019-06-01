@@ -386,7 +386,7 @@ class Smart_Payables {
 	/**
 	 * Reset data.
 	 */
-	private function reset() {
+	public function reset() {
 		$this->data = $this->get_credentials();
 	}
 }

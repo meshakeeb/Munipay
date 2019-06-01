@@ -52,6 +52,7 @@ class Theme_Setup {
 		new Registration;
 		new Post_Types;
 		new Emails;
+		new Crons;
 		new Ajax;
 
 		// Shortcodes.
