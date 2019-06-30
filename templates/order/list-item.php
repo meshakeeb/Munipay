@@ -41,7 +41,7 @@ $order = new Order( get_the_ID() );
 		</li>
 
 		<?php foreach ( $order->checks as $check ) : ?>
-		<li class="list-group-item col-12 d-flex justify-content-between lh-condensed">
+		<li class="list-group-item col-12 d-flex justify-content-between lh-condensed" id="check-<?php echo $check->get_id(); ?>">
 			<div>
 				<span class="badge badge-secondary font-weight-normal">Payment ID <?php echo $check->get_payment_id(); ?></span>
 				<?php $check->get_check_number(); ?>

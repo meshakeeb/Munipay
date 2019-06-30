@@ -38,25 +38,8 @@ class Crons {
 	 * Find tracking number for checks.
 	 */
 	public function find_tracking_number() {
-		$checks = new \WP_Query(
-			[
-				'posts_per_page' => -1,
-				'post_type'      => 'munipay-check',
-				'meta_query'     => [
-					[
-						'key'     => 'smart_payable_tracking',
-						'compare' => 'NOT EXISTS',
-					],
-				],
-
-				// Query performance optimization.
-				'fields'         => 'ids',
-				'no_found_rows'  => true,
-			]
-		);
-
 		$smart = Smart_Payables::create();
-		foreach ( $checks->posts as $check_id ) {
+		foreach ( $this->get_check_ids() as $check_id ) {
 			$check = new Check( $check_id );
 
 			$smart->reset();
@@ -64,13 +47,17 @@ class Crons {
 			$smart->data['zip']   = $check->get_meta( 'payee_zipcode' );
 
 			$response = $smart->send( 'payments/track_payment' );
-			if ( false === $response ) {
+			if ( false === $response || empty( $response ) ) {
 				continue;
 			}
 
 			foreach ( $response as $payment ) {
+				if ( empty( $payment['tracking'] ) ) {
+					continue;
+				}
+
 				$check = $this->get_check_by_payment_id( $payment['id'] );
-				if ( false === $check ) {
+				if ( false === $check || ! empty( $check->get_meta( 'smart_payable_tracking' ) ) ) {
 					continue;
 				}
 
@@ -80,15 +67,58 @@ class Crons {
 
 				if ( $old_status !== $new_status ) {
 					$check->set_meta( 'smart_payable_status', $new_status );
-					do_action( 'munipay_payment_status_updated', $check, $old_status, $new_status );
-
 				}
 
 				// Update Tracking number.
 				$check->set_meta( 'smart_payable_tracking', $payment['tracking'] );
-				do_action( 'munipay_payment_tracking_found', $check, $payment['tracking'], $payment );
 			}
 		}
+	}
+
+	/**
+	 * Get checks ids.
+	 *
+	 * @return array
+	 */
+	private function get_check_ids() {
+		add_filter( 'posts_where', [ $this, 'modify_the_posts_where' ] );
+		$checks = new \WP_Query(
+			[
+				'posts_per_page' => -1,
+				'post_type'      => 'munipay-check',
+				'meta_query'     => [
+					'relation' => 'OR',
+					[
+						'key'     => 'smart_payable_tracking',
+						'compare' => 'NOT EXISTS',
+					],
+					[
+						'key'     => 'smart_payable_tracking',
+						'value'   => 'is_null',
+						'compare' => '=',
+					],
+				],
+
+				// Query performance optimization.
+				'fields'         => 'ids',
+				'no_found_rows'  => true,
+			]
+		);
+
+		remove_filter( 'posts_where', [ $this, 'modify_the_posts_where' ] );
+
+		return $checks->posts;
+	}
+
+	/**
+	 * Modify where clause.
+	 *
+	 * @param string $clause Clause.
+	 *
+	 * @return string
+	 */
+	public function modify_the_posts_where( $clause = '' ) {
+		return str_replace( "meta_value = 'is_null'", 'meta_value IS NULL', $clause );
 	}
 
 	/**
